@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data files (large)
+data/hetionet/*.json
+data/hetionet/*.json.bz2
+data/hetionet/*.pkl
+data/pubmed/
+data/dailymed/
+
+# Generated visualizations
+visualizations/*.html
+visualizations/*.png
+
+# Vector stores
+vector_store/
+*.faiss
+*.index
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+
+# API keys
+*_api_key.txt
+credentials.json
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Model files (if any)
+models/
+*.pth
+*.pt
+*.h5
+*.ckpt
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Keep data directory structure but ignore contents
+data/hetionet/.gitkeep
+!data/hetionet/.gitkeep
+
+# Keep visualizations directory but ignore contents
+visualizations/.gitkeep
+!visualizations/.gitkeep
