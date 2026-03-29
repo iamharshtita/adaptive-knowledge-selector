@@ -40,6 +40,7 @@ data/hetionet/*.json.bz2
 data/hetionet/*.pkl
 data/pubmed/
 data/dailymed/
+data/tool_selector/*
 
 # Generated visualizations
 visualizations/*.html
