@@ -262,7 +262,7 @@ if __name__ == "__main__":
         rel_types = ['treats', 'causes']  # Default to diseases and side effects
 
     # Load graph
-    pickle_path = "data/hetionet/hetionet_graph.pkl"
+    pickle_path = "data/hetionet/hetionet_filtered.pkl"
     if not os.path.exists(pickle_path):
         print("❌ Knowledge graph not found!")
         print("Run: python scripts/setup_hetionet.py")

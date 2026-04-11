@@ -2,6 +2,13 @@
 
 Complete documentation for the Adaptive Knowledge Source Selection System.
 
+## Main Guides
+
+Comprehensive guides for getting started:
+
+- [Knowledge Graph Guide](KNOWLEDGE_GRAPH_GUIDE.md) - Complete guide with prerequisites, setup flow, and API reference
+- [Visualization Guide](VISUALIZATION_GUIDE.md) - Complete visualization guide with all methods and examples
+
 ## Setup Guides
 
 Get started quickly with these setup guides:
@@ -9,17 +16,11 @@ Get started quickly with these setup guides:
 - [Setup Guide](setup/SETUP_GUIDE.md) - Complete installation and setup instructions
 - [Hetionet Quick Start](setup/HETIONET_QUICK_START.md) - Quick start guide for Hetionet knowledge graph
 
-## Visualization Guides
-
-Learn how to visualize and explore the knowledge graph:
-
-- [Visualization Guide](visualization/VISUALIZATION_GUIDE.md) - Complete visualization guide with all methods
-- [Quick Viz Guide](visualization/QUICK_VIZ_GUIDE.md) - Quick reference for creating interactive visualizations
-
 ## Reference Documentation
 
 Technical references and resources:
 
+- [Filtered KG Guide](reference/FILTERED_KG_GUIDE.md) - Details about the filtered knowledge graph
 - [Graph Explanation](reference/GRAPH_EXPLANATION.md) - Technical details on graph structure and implementation
 - [Resource Access Guide](reference/RESOURCE_ACCESS_GUIDE.md) - How to access all knowledge sources
 

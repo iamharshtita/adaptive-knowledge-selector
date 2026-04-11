@@ -198,15 +198,16 @@ python3 scripts/viz_by_relationship.py ibuprofen treats,causes,binds
 
 Comprehensive documentation available in the [docs/](docs/) folder:
 
+- **Main Guides**
+  - [Knowledge Graph Guide](docs/KNOWLEDGE_GRAPH_GUIDE.md) - Complete KG guide with prerequisites & flow
+  - [Visualization Guide](docs/VISUALIZATION_GUIDE.md) - Complete visualization guide
+
 - **Setup Guides**
   - [Complete Setup Guide](docs/setup/SETUP_GUIDE.md)
   - [Hetionet Quick Start](docs/setup/HETIONET_QUICK_START.md)
 
-- **Visualization Guides**
-  - [Full Visualization Guide](docs/visualization/VISUALIZATION_GUIDE.md)
-  - [Quick Viz Reference](docs/visualization/QUICK_VIZ_GUIDE.md)
-
 - **Technical References**
+  - [Filtered KG Guide](docs/reference/FILTERED_KG_GUIDE.md)
   - [Graph Structure Explanation](docs/reference/GRAPH_EXPLANATION.md)
   - [Resource Access Guide](docs/reference/RESOURCE_ACCESS_GUIDE.md)
 

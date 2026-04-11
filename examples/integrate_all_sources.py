@@ -20,7 +20,7 @@ class UnifiedKnowledgeSystem:
     Unified system that integrates all knowledge sources
     """
 
-    def __init__(self, email: str, ncbi_api_key: str = None, llm_api_key: str = None):
+    def __init__(self, email: str, ncbi_api_key: str = None, llm_api_key: str = None, use_filtered_kg: bool = True):
         """
         Initialize all knowledge sources
 
@@ -28,6 +28,7 @@ class UnifiedKnowledgeSystem:
             email: Email for NCBI/PubMed
             ncbi_api_key: NCBI API key (optional)
             llm_api_key: API key for LLM (if using commercial model)
+            use_filtered_kg: If True, use filtered KG (treats, causes, presents only). Default: True
         """
         print("Initializing Unified Knowledge System...")
 
@@ -37,16 +38,26 @@ class UnifiedKnowledgeSystem:
 
         print("2. Loading Knowledge Graph Source...")
         self.kg_source = KnowledgeGraphSource()
-        # Try to load Hetionet from pickle (fast) or JSON
-        pickle_path = "data/hetionet/hetionet_graph.pkl"
+
+        # Choose between filtered or full graph
+        if use_filtered_kg:
+            pickle_path = "data/hetionet/hetionet_filtered.pkl"
+            graph_type = "Filtered (treats, causes, presents)"
+        else:
+            pickle_path = "data/hetionet/hetionet_graph.pkl"
+            graph_type = "Full"
+
         json_path = "data/hetionet/hetionet-v1.0.json"
 
         if os.path.exists(pickle_path):
-            print("   Loading Hetionet from pickle (fast)...")
+            print(f"   Loading {graph_type} Hetionet from pickle (fast)...")
             self.kg_source.load_graph(pickle_path)
-        elif os.path.exists(json_path):
+        elif os.path.exists(json_path) and not use_filtered_kg:
             print("   Loading Hetionet from JSON (slower)...")
             self.kg_source.load_hetionet(json_path)
+        elif use_filtered_kg:
+            print("   ⚠️  Filtered graph not found. Run: python scripts/filter_hetionet.py")
+            print("   Continuing without knowledge graph...")
         else:
             print("   ⚠️  Hetionet not found. Run: python scripts/setup_hetionet.py")
             print("   Continuing without knowledge graph...")

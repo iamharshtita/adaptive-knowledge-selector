@@ -79,6 +79,97 @@ class KnowledgeGraphSource:
             print("Hetionet file not found. You can download it from:")
             print("https://github.com/hetio/hetionet/raw/master/hetnet/json/hetionet-v1.0.json.bz2")
 
+    def filter_by_relationships(self, allowed_relations: List[str], remove_isolated_nodes: bool = True):
+        """
+        Filter the graph to keep only specific relationship types.
+        This removes all edges that don't match the allowed relations.
+
+        Args:
+            allowed_relations: List of relationship types to keep (e.g., ['treats', 'causes', 'presents'])
+            remove_isolated_nodes: If True, remove nodes that have no edges after filtering
+
+        Returns:
+            Dict with statistics about removed edges and nodes
+        """
+        print(f"\n🔍 Filtering graph to keep only: {', '.join(allowed_relations)}")
+
+        # Get initial counts
+        initial_nodes = self.graph.number_of_nodes()
+        initial_edges = self.graph.number_of_edges()
+
+        # Find edges to remove
+        edges_to_remove = []
+        edges_kept = 0
+
+        for u, v, key, data in self.graph.edges(keys=True, data=True):
+            relation = data.get('relation', 'unknown')
+            if relation not in allowed_relations:
+                edges_to_remove.append((u, v, key))
+            else:
+                edges_kept += 1
+
+        # Remove edges
+        print(f"   Removing {len(edges_to_remove):,} edges...")
+        for u, v, key in edges_to_remove:
+            self.graph.remove_edge(u, v, key)
+
+        print(f"   ✓ Kept {edges_kept:,} edges with allowed relationships")
+
+        # Optionally remove isolated nodes
+        nodes_removed = 0
+        if remove_isolated_nodes:
+            print("   Removing isolated nodes (nodes with no edges)...")
+            isolated_nodes = list(nx.isolates(self.graph))
+            self.graph.remove_nodes_from(isolated_nodes)
+            nodes_removed = len(isolated_nodes)
+
+            # Update node_types dict
+            for node in isolated_nodes:
+                if node in self.node_types:
+                    del self.node_types[node]
+
+            print(f"   ✓ Removed {nodes_removed:,} isolated nodes")
+
+        # Final counts
+        final_nodes = self.graph.number_of_nodes()
+        final_edges = self.graph.number_of_edges()
+
+        # Show relationship breakdown
+        print("\n📊 Filtered Graph Summary:")
+        print(f"   Nodes: {initial_nodes:,} → {final_nodes:,} ({initial_nodes - final_nodes:,} removed)")
+        print(f"   Edges: {initial_edges:,} → {final_edges:,} ({initial_edges - final_edges:,} removed)")
+
+        # Count edges by relationship type
+        rel_counts = {}
+        for _, _, data in self.graph.edges(data=True):
+            rel = data.get('relation', 'unknown')
+            rel_counts[rel] = rel_counts.get(rel, 0) + 1
+
+        print("\n   Relationships kept:")
+        for rel, count in sorted(rel_counts.items(), key=lambda x: x[1], reverse=True):
+            print(f"      {rel}: {count:,}")
+
+        # Count nodes by type
+        node_type_counts = {}
+        for _, data in self.graph.nodes(data=True):
+            node_type = data.get('type', 'unknown')
+            node_type_counts[node_type] = node_type_counts.get(node_type, 0) + 1
+
+        print("\n   Node types remaining:")
+        for node_type, count in sorted(node_type_counts.items(), key=lambda x: x[1], reverse=True):
+            print(f"      {node_type}: {count:,}")
+
+        return {
+            'initial_nodes': initial_nodes,
+            'final_nodes': final_nodes,
+            'nodes_removed': initial_nodes - final_nodes,
+            'initial_edges': initial_edges,
+            'final_edges': final_edges,
+            'edges_removed': initial_edges - final_edges,
+            'relationships_kept': rel_counts,
+            'node_types': node_type_counts
+        }
+
     def search_drug_by_name(self, drug_name: str) -> List[str]:
         """
         Search for drugs by name (case-insensitive partial match)

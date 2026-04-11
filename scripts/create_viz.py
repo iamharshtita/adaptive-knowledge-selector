@@ -331,7 +331,7 @@ if __name__ == "__main__":
     drug_name = ' '.join(sys.argv[1:])
 
     # Load graph
-    pickle_path = "data/hetionet/hetionet_graph.pkl"
+    pickle_path = "data/hetionet/hetionet_filtered.pkl"
     if not os.path.exists(pickle_path):
         print("❌ Knowledge graph not found!")
         print("Run: python scripts/setup_hetionet.py")
