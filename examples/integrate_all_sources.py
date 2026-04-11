@@ -13,6 +13,7 @@ from knowledge_sources.text_knowledge import TextKnowledgeSource
 from knowledge_sources.knowledge_graph import KnowledgeGraphSource
 from knowledge_sources.tool_api_source import ToolAPISource
 from knowledge_sources.llm_source import LLMSource
+from knowledge_sources.pdf_knowledge import PDFKnowledgeSource
 
 
 class UnifiedKnowledgeSystem:
@@ -57,6 +58,18 @@ class UnifiedKnowledgeSystem:
         print("4. Loading LLM Source...")
         # Change model_type to 'biogpt' for local, 'gpt4' for commercial
         self.llm_source = LLMSource(model_type="gpt4", api_key=llm_api_key)
+
+        print("5. Loading PDF Knowledge Source...")
+        self.pdf_source = PDFKnowledgeSource()
+        pdf_store_path = "data/pdf_knowledge"
+        if os.path.exists(pdf_store_path):
+            print("   Loading pre-computed PDF vector store...")
+            try:
+                self.pdf_source.load_vector_store(pdf_store_path)
+            except Exception as e:
+                print(f"   Error loading vector store: {e}")
+        else:
+            print("   ⚠️  PDF vector store not found. You can build it by running scripts/index_pdfs.py")
 
         print("\nAll sources initialized successfully!\n")
 
@@ -125,6 +138,22 @@ class UnifiedKnowledgeSystem:
         except Exception as e:
             print(f"Error querying LLM: {e}")
 
+        # 5. PDF Knowledge Source
+        print(f"\n\n### SOURCE 5: PDF Knowledge (Internal Documents) ###")
+        try:
+            pdf_results = self.pdf_source.semantic_search(query, top_k=2)
+            if pdf_results:
+                print(f"Found {len(pdf_results)} relevant chunks from PDFs:")
+                for i, result in enumerate(pdf_results, 1):
+                    source_file = result['metadata'].get('source', 'Unknown')
+                    page = result['metadata'].get('page', 0)
+                    print(f"\n{i}. [Score: {result['score']:.4f}] {source_file} (Page {page})")
+                    print(f"   Excerpt: {result['text'][:150]}...")
+            else:
+                print("No relevant PDF excerpts found")
+        except Exception as e:
+            print(f"Error querying PDF Source (Make sure the vector store is built!): {e}")
+
         print("\n" + "=" * 80)
 
     def demonstrate_source_selection(self):
@@ -159,6 +188,12 @@ class UnifiedKnowledgeSystem:
                 'best_source': 'Text Knowledge',
                 'reason': 'Recent research papers from PubMed',
                 'drug': 'aspirin'
+            },
+            {
+                'query': 'Summary of internal protocol for medication X',
+                'best_source': 'PDF Knowledge Source',
+                'reason': 'Proprietary or local document search using FAISS vector store',
+                'drug': None
             }
         ]
 
