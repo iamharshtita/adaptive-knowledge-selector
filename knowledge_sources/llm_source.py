@@ -38,12 +38,17 @@ MODEL COMPARISON FOR MEDICAL TASKS:
      * Similar to Llama 2 but more efficient
      * Same limitations for medical domain
 
+4. **Google Gemini (API-based)**
+   - Gemini 2.0 Flash: Fast, free tier (15 RPM, 1M tokens/day)
+     * Pros: Free, strong medical reasoning, easy API
+     * Cons: Rate limits on free tier
+
 RECOMMENDATION FOR THIS PROJECT:
 ================================
 Best Approach: Hybrid
 - Query Encoding: sentence-transformers/all-MiniLM-L6-v2 (as specified)
 - Generation:
-  * Primary: GPT-4 or Claude (via API) - best quality
+  * Primary: Gemini (free tier) or GPT-4 (paid) - best quality
   * Alternative: BioGPT - medical-specific, can run locally
   * Budget/Offline: Llama 2 7B/13B - but expect lower accuracy
 
@@ -61,16 +66,24 @@ class LLMSource:
     Provides access to Language Model for conceptual explanations
     """
 
-    def __init__(self, model_type: str = "gpt4", api_key: str = None):
+    def __init__(self, model_type: str = "gemini", api_key: str = None):
         """
         Initialize LLM source
 
         Args:
-            model_type: 'gpt4', 'claude', 'biogpt', 'llama2', 'mistral'
+            model_type: 'gemini', 'gpt4', 'claude', 'biogpt', 'llama2', 'mistral'
             api_key: API key for commercial models
         """
         self.model_type = model_type
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        # Resolve API key based on model type
+        if api_key:
+            self.api_key = api_key
+        elif model_type == "gemini":
+            self.api_key = os.getenv("GEMINI_API_KEY")
+        elif model_type == "claude":
+            self.api_key = os.getenv("ANTHROPIC_API_KEY")
+        else:
+            self.api_key = os.getenv("OPENAI_API_KEY")
         self.model = None
         self.tokenizer = None
         self.pipeline = None
@@ -79,7 +92,9 @@ class LLMSource:
 
     def _initialize_model(self):
         """Initialize the selected model"""
-        if self.model_type == "gpt4":
+        if self.model_type == "gemini":
+            self._setup_gemini()
+        elif self.model_type == "gpt4":
             self._setup_gpt4()
         elif self.model_type == "claude":
             self._setup_claude()
@@ -91,6 +106,16 @@ class LLMSource:
             self._setup_mistral()
         else:
             raise ValueError(f"Unknown model type: {self.model_type}")
+
+    def _setup_gemini(self):
+        """Setup Google Gemini"""
+        try:
+            from google import genai
+            self.client = genai.Client(api_key=self.api_key)
+            self.gemini_model = "gemini-2.0-flash"
+            print(f"Gemini initialized successfully (model: {self.gemini_model})")
+        except ImportError:
+            print("Error: Install google-genai package: pip install google-genai")
 
     def _setup_gpt4(self):
         """Setup OpenAI GPT-4"""
@@ -195,7 +220,9 @@ class LLMSource:
         Returns:
             Generated text
         """
-        if self.model_type == "gpt4":
+        if self.model_type == "gemini":
+            return self._generate_gemini(prompt, max_tokens, temperature)
+        elif self.model_type == "gpt4":
             return self._generate_gpt4(prompt, max_tokens, temperature)
         elif self.model_type == "claude":
             return self._generate_claude(prompt, max_tokens, temperature)
@@ -203,6 +230,26 @@ class LLMSource:
             return self._generate_huggingface(prompt, max_tokens, temperature)
         else:
             return "Model not initialized"
+
+    def _generate_gemini(self, prompt: str, max_tokens: int, temperature: float) -> str:
+        """Generate using Google Gemini"""
+        try:
+            from google.genai import types
+            medical_prompt = (
+                "You are a medical expert assistant. "
+                "Provide accurate, evidence-based information.\n\n" + prompt
+            )
+            response = self.client.models.generate_content(
+                model=self.gemini_model,
+                contents=medical_prompt,
+                config=types.GenerateContentConfig(
+                    max_output_tokens=max_tokens,
+                    temperature=temperature,
+                ),
+            )
+            return response.text
+        except Exception as e:
+            return f"Error generating with Gemini: {e}"
 
     def _generate_gpt4(self, prompt: str, max_tokens: int, temperature: float) -> str:
         """Generate using GPT-4"""
@@ -334,47 +381,29 @@ Summary:"""
 
 # Example usage
 if __name__ == "__main__":
+    from dotenv import load_dotenv
+    load_dotenv()
+
     print("=" * 70)
     print("LLM Source - Model Comparison Demo")
     print("=" * 70)
 
-    # Test with different models
-    # Note: You'll need appropriate API keys or model access
-
-    # Example 1: Using GPT-4 (requires API key)
-    print("\n### Testing GPT-4 ###")
+    # Example 1: Using Gemini (free, default)
+    print("\n### Testing Gemini (Default) ###")
     try:
-        llm_gpt4 = LLMSource(model_type="gpt4", api_key=os.getenv("OPENAI_API_KEY"))
-        response = llm_gpt4.explain_concept("How does insulin work in the body?")
-        print(f"GPT-4 Response:\n{response}\n")
-    except Exception as e:
-        print(f"GPT-4 not available: {e}\n")
+        llm = LLMSource(model_type="gemini")
+        response = llm.explain_concept("How does insulin work in the body?")
+        print(f"Gemini Response:\n{response}\n")
 
-    # Example 2: Using BioGPT (free, runs locally)
-    print("\n### Testing BioGPT (Medical-Specific) ###")
-    try:
-        llm_biogpt = LLMSource(model_type="biogpt")
-        response = llm_biogpt.explain_concept("What is diabetes mellitus?")
-        print(f"BioGPT Response:\n{response}\n")
+        response2 = llm.answer_question("What drugs interact with aspirin?")
+        print(f"Gemini Q&A:\n{response2}\n")
     except Exception as e:
-        print(f"BioGPT not available: {e}\n")
-
-    # Example 3: Using Llama 2 (requires HuggingFace token)
-    print("\n### Testing Llama 2 ###")
-    print("Note: Llama 2 is NOT specialized for medical content")
-    print("Expected quality: Lower than GPT-4 or BioGPT for medical tasks")
-    try:
-        llm_llama = LLMSource(model_type="llama2")
-        response = llm_llama.answer_question("What drugs interact with aspirin?")
-        print(f"Llama 2 Response:\n{response}\n")
-    except Exception as e:
-        print(f"Llama 2 not available: {e}\n")
+        print(f"Gemini not available: {e}\n")
 
     print("\n" + "=" * 70)
     print("RECOMMENDATIONS:")
     print("=" * 70)
-    print("1. For BEST quality: Use GPT-4 or Claude (commercial APIs)")
-    print("2. For MEDICAL-specific: Use BioGPT (free, medical-trained)")
-    print("3. For GENERAL/offline: Use Llama 2 (but expect lower medical accuracy)")
-    print("4. For THIS PROJECT: Consider GPT-4 API for LLM source")
+    print("1. Default: Gemini (free tier, strong medical reasoning)")
+    print("2. Premium: GPT-4 or Claude (commercial APIs, best quality)")
+    print("3. Offline: BioGPT (medical-specific, runs locally)")
     print("=" * 70)
