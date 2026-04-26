@@ -9,7 +9,6 @@ import os
 # Add parent directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from knowledge_sources.text_knowledge import TextKnowledgeSource
 from knowledge_sources.knowledge_graph import KnowledgeGraphSource
 from knowledge_sources.tool_api_source import ToolAPISource
 from knowledge_sources.llm_source import LLMSource
@@ -20,22 +19,17 @@ class UnifiedKnowledgeSystem:
     Unified system that integrates all knowledge sources
     """
 
-    def __init__(self, email: str, ncbi_api_key: str = None, llm_api_key: str = None):
+    def __init__(self, llm_api_key: str = None):
         """
         Initialize all knowledge sources
 
         Args:
-            email: Email for NCBI/PubMed
-            ncbi_api_key: NCBI API key (optional)
             llm_api_key: API key for LLM (if using commercial model)
         """
         print("Initializing Unified Knowledge System...")
 
         # Initialize all sources
-        print("1. Loading Text Knowledge Source...")
-        self.text_source = TextKnowledgeSource(email=email, api_key=ncbi_api_key)
-
-        print("2. Loading Knowledge Graph Source...")
+        print("1. Loading Knowledge Graph Source...")
         self.kg_source = KnowledgeGraphSource()
         # Try to load Hetionet from pickle (fast) or JSON
         pickle_path = "data/hetionet/hetionet_graph.pkl"
@@ -48,13 +42,13 @@ class UnifiedKnowledgeSystem:
             print("   Loading Hetionet from JSON (slower)...")
             self.kg_source.load_hetionet(json_path)
         else:
-            print("   ⚠️  Hetionet not found. Run: python scripts/setup_hetionet.py")
+            print("   Warning: Hetionet not found. Run: python scripts/setup_hetionet.py")
             print("   Continuing without knowledge graph...")
 
-        print("3. Loading Tool/API Source...")
+        print("2. Loading Tool/API Source...")
         self.tool_source = ToolAPISource()
 
-        print("4. Loading LLM Source...")
+        print("3. Loading LLM Source...")
         # Change model_type to 'biogpt' for local, 'gpt4' for commercial
         self.llm_source = LLMSource(model_type="gpt4", api_key=llm_api_key)
 
@@ -72,24 +66,9 @@ class UnifiedKnowledgeSystem:
         print(f"Query: {query}")
         print("=" * 80)
 
-        # 1. Text Knowledge Source
-        print("\n### SOURCE 1: Text Knowledge (PubMed) ###")
-        try:
-            pubmed_results = self.text_source.search_pubmed(query, max_results=3)
-            if pubmed_results:
-                print(f"Found {len(pubmed_results)} articles:")
-                for i, article in enumerate(pubmed_results, 1):
-                    print(f"\n{i}. {article['title']}")
-                    print(f"   PMID: {article['pmid']}")
-                    print(f"   Abstract: {article['abstract'][:150]}...")
-            else:
-                print("No PubMed results found")
-        except Exception as e:
-            print(f"Error querying PubMed: {e}")
-
-        # 2. Knowledge Graph Source
+        # 1. Knowledge Graph Source
         if drug_name:
-            print(f"\n\n### SOURCE 2: Knowledge Graph (Drug Interactions for {drug_name}) ###")
+            print(f"\n\n### SOURCE 1: Knowledge Graph (Drug Interactions for {drug_name}) ###")
             try:
                 interactions = self.kg_source.query_drug_interactions(drug_name)
                 if interactions:
@@ -102,23 +81,17 @@ class UnifiedKnowledgeSystem:
             except Exception as e:
                 print(f"Error querying knowledge graph: {e}")
 
-        # 3. Tool/API Source
-        if drug_name:
-            print(f"\n\n### SOURCE 3: Tool/API (RxNorm Interactions for {drug_name}) ###")
-            try:
-                api_interactions = self.tool_source.get_drug_interactions(drug_name)
-                if api_interactions:
-                    print(f"Found {len(api_interactions)} interactions from RxNorm:")
-                    for i, interaction in enumerate(api_interactions[:5], 1):
-                        print(f"{i}. {interaction['drug']}: {interaction['severity']}")
-                        print(f"   {interaction['description'][:100]}...")
-                else:
-                    print(f"No RxNorm interactions found for {drug_name}")
-            except Exception as e:
-                print(f"Error querying RxNorm: {e}")
+        # 2. Tool/API Source
+        print(f"\n\n### SOURCE 2: Tool/API ###")
+        try:
+            result = self.tool_source.query(query)
+            print(f"Function: {result.get('function', 'N/A')}")
+            print(f"Answer: {result.get('answer', 'N/A')}")
+        except Exception as e:
+            print(f"Error querying Tool/API: {e}")
 
-        # 4. LLM Source
-        print(f"\n\n### SOURCE 4: LLM (Parametric Knowledge) ###")
+        # 3. LLM Source
+        print(f"\n\n### SOURCE 3: LLM (Parametric Knowledge) ###")
         try:
             llm_response = self.llm_source.answer_question(query)
             print(f"LLM Response:\n{llm_response}")
@@ -155,10 +128,10 @@ class UnifiedKnowledgeSystem:
                 'drug': None
             },
             {
-                'query': 'Latest research on aspirin benefits',
-                'best_source': 'Text Knowledge',
-                'reason': 'Recent research papers from PubMed',
-                'drug': 'aspirin'
+                'query': 'What do PDFs say about knowledge representation?',
+                'best_source': 'PDF Knowledge',
+                'reason': 'Document-based search in research papers',
+                'drug': None
             }
         ]
 
@@ -173,17 +146,11 @@ class UnifiedKnowledgeSystem:
 # Example usage
 if __name__ == "__main__":
     # Setup
-    EMAIL = "your.email@example.com"  # Required for PubMed
-    NCBI_KEY = os.getenv("NCBI_API_KEY")  # Optional but recommended
-    LLM_KEY = os.getenv("OPENAI_API_KEY")  # For GPT-4, or use None for local models
+    LLM_KEY = os.getenv("GROQ_API_KEY")  # For Groq, or use OPENAI_API_KEY for GPT-4
 
     try:
         # Initialize unified system
-        system = UnifiedKnowledgeSystem(
-            email=EMAIL,
-            ncbi_api_key=NCBI_KEY,
-            llm_api_key=LLM_KEY
-        )
+        system = UnifiedKnowledgeSystem(llm_api_key=LLM_KEY)
 
         # Example 1: Query about drug interactions
         print("\n" + "=" * 80)
@@ -221,6 +188,6 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Error: {e}")
         print("\nMake sure you have:")
-        print("1. Set NCBI_API_KEY in your .env file")
-        print("2. Set OPENAI_API_KEY if using GPT-4")
-        print("3. Installed all requirements: pip install -r requirements.txt")
+        print("1. Set GROQ_API_KEY or OPENAI_API_KEY in your .env file")
+        print("2. Installed all requirements: pip install -r requirements.txt")
+        print("3. Run python scripts/setup_hetionet.py to set up the knowledge graph")

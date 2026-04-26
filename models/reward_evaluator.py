@@ -4,11 +4,12 @@ import re
 
 
 # Which sources are good for which types of queries
+# Updated to prefer LLM for general concepts, PDF only for document-specific queries
 SOURCE_PREFERENCES = {
     "KnowledgeGraphSource": ["interaction", "treatment"],
-    "ToolAPISource": ["dosage", "label", "interaction"],
-    "LLMSource": ["concept", "general"],
-    "PDFKnowledgeSource": ["document", "research", "concept"],
+    "ToolAPISource": ["dosage", "label"],
+    "LLMSource": ["concept", "general", "side_effects"],
+    "PDFKnowledgeSource": ["document", "research"],
 }
 
 
@@ -69,12 +70,20 @@ class RewardEvaluator:
         """
         Give the agent a reward based on whether it picked a good source.
 
-        Reward scheme:
+        Enhanced reward system with:
+        1. Base rewards for source-query matching
+        2. Confidence bonus for high-confidence answers
+        3. Penalties for common misrouting patterns
+
+        Base reward scheme:
           +1.0 = perfect choice, got good results
           +0.5 = acceptable alternative source, got results
           +0.3 = right source but nothing came back (weird query maybe)
-          +0.2 = wrong source but somehow got something
-          -0.3 = wrong source and no results (bad pick)
+          +0.0 = wrong source but got something (discouraged)
+          -0.5 = wrong source and no results (bad pick)
+
+        Confidence bonus: +0.2 * confidence
+        Misrouting penalty: -0.3 for known bad patterns
         """
         qtype = classify_query(query)
         got_results = RewardEvaluator._check_if_useful(results)
@@ -85,20 +94,68 @@ class RewardEvaluator:
         # Is it at least an acceptable backup?
         is_ok_match = RewardEvaluator._is_acceptable_backup(qtype, source_name)
 
-        # Assign reward based on match + result quality
+        # Base reward based on match + result quality
         if is_good_match and got_results:
-            return 1.0
+            base_reward = 1.0
+        elif is_ok_match and got_results:
+            base_reward = 0.5
+        elif is_good_match and not got_results:
+            base_reward = 0.3
+        elif not is_good_match and got_results:
+            base_reward = 0.0  # Changed from 0.2 - don't reward wrong source
+        else:
+            base_reward = -0.5  # Changed from -0.3 - stronger penalty
 
-        if is_ok_match and got_results:
-            return 0.5
+        # Extract confidence score if available
+        confidence = 0.5  # default if not provided
+        if isinstance(results, dict) and 'confidence' in results:
+            confidence = results['confidence']
 
-        if is_good_match and not got_results:
-            return 0.3
+        # Confidence bonus (scaled)
+        confidence_bonus = 0.2 * confidence
 
-        if not is_good_match and got_results:
-            return 0.2
+        # Apply specific penalties for common misrouting patterns
+        misrouting_penalty = 0.0
 
-        return -0.3
+        # Penalty 1: PDF for drug interactions (should use KG)
+        if source_name == "PDFKnowledgeSource" and qtype == "interaction":
+            misrouting_penalty = -0.4
+            # Even worse if low confidence
+            if confidence < 0.6:
+                misrouting_penalty = -0.6
+
+        # Penalty 2: PDF for calculations (should use ToolAPI)
+        if source_name == "PDFKnowledgeSource" and qtype == "dosage":
+            misrouting_penalty = -0.5
+
+        # Penalty 3: PDF for conceptual "how does X work" (should use LLM)
+        if source_name == "PDFKnowledgeSource" and qtype == "concept":
+            # Only penalize if it's a general mechanism question, not document-specific
+            if not any(word in query.lower() for word in ['paper', 'document', 'krr']):
+                misrouting_penalty = -0.3
+                # But allow it if confidence is high (PDF might have good content)
+                if confidence > 0.7:
+                    misrouting_penalty = 0.0
+
+        # Penalty 4: LLM for specific drug interactions (should use KG)
+        if source_name == "LLMSource" and qtype == "interaction":
+            misrouting_penalty = -0.2
+
+        # Penalty 5: KG for calculations (should use ToolAPI)
+        if source_name == "KnowledgeGraphSource" and qtype == "dosage":
+            misrouting_penalty = -0.4
+
+        # Bonus: Reward perfect routing with high confidence
+        perfect_bonus = 0.0
+        if is_good_match and confidence > 0.8:
+            perfect_bonus = 0.15  # extra reward for confident correct picks
+
+        final_reward = base_reward + confidence_bonus + misrouting_penalty + perfect_bonus
+
+        # Clamp to reasonable range
+        final_reward = max(-1.0, min(final_reward, 1.5))
+
+        return final_reward
 
     @staticmethod
     def _check_if_useful(results):
