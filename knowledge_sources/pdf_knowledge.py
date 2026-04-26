@@ -562,6 +562,7 @@ class PDFKnowledgeSource:
                 "source": "PDFKnowledgeSource",
                 "answer": f"No relevant PDF chunks found for: '{text}'",
                 "score": 0.0,
+                "confidence": 0.0,  # No results = no confidence
                 "pdf_source": None,
                 "page": None,
                 "results": [],
@@ -592,6 +593,7 @@ class PDFKnowledgeSource:
             "source": "PDFKnowledgeSource",
             "answer": consolidated_answer,
             "score": score,
+            "confidence": score,  # FAISS similarity score (0-1) is our confidence
             "pdf_source": pdf_source,
             "page": page_num,
             "line_range": f"{approx_start_line}-{approx_end_line}",

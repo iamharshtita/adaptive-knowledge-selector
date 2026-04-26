@@ -327,7 +327,8 @@ class ToolAPISource:
         def _missing(*fields):
             return {
                 'function': fn_name, 'args': {}, 'result': None,
-                'answer': f"Could not extract: {', '.join(fields)}."
+                'answer': f"Could not extract: {', '.join(fields)}.",
+                'confidence': 0.0  # Missing parameters = no confidence
             }
 
         if fn_name == 'search_drug_label':
@@ -414,8 +415,18 @@ class ToolAPISource:
 
         else:
             answer = f"Unknown function: {fn_name}"
+            result = None
 
-        return {'function': fn_name, 'args': args, 'result': result, 'answer': answer}
+        # Confidence: 1.0 if we got a result, 0.0 if we didn't
+        confidence = 1.0 if result is not None else 0.0
+
+        return {
+            'function': fn_name,
+            'args': args,
+            'result': result,
+            'answer': answer,
+            'confidence': confidence
+        }
 
 if __name__ == "__main__":
     print("=" * 70)

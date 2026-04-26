@@ -390,6 +390,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"Could not identify a drug name in: '{text}'",
+                "confidence": 0.0,  # No entity found = no confidence
                 "results": [],
             }
 
@@ -409,6 +410,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"Error processing query: {e}",
+                "confidence": 0.0,  # Error = no confidence
                 "results": [],
             }
 
@@ -419,6 +421,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "confidence": 0.0,  # Drug not found
                 "results": [],
             }
 
@@ -450,6 +453,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"No drug interactions found for '{drug_name}' in the knowledge graph.",
+                "confidence": 0.0,  # No results found
                 "results": [],
             }
 
@@ -465,9 +469,13 @@ class KnowledgeGraphSource:
         if len(interactions) > 20:
             lines.append(f"  ... and {len(interactions) - 20} more")
 
+        # Confidence based on number of interactions found (capped at 1.0)
+        confidence = min(len(interactions) / 10.0, 1.0)
+
         return {
             "source": "KnowledgeGraphSource",
             "answer": "\n".join(lines),
+            "confidence": confidence,
             "results": interactions,
         }
 
@@ -478,6 +486,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "confidence": 0.0,  # Drug not found
                 "results": [],
             }
 
@@ -500,6 +509,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"No disease treatments found for '{drug_name}' in the knowledge graph.",
+                "confidence": 0.0,
                 "results": [],
             }
 
@@ -515,9 +525,12 @@ class KnowledgeGraphSource:
         if len(treatments) > 15:
             lines.append(f"  ... and {len(treatments) - 15} more")
 
+        confidence = min(len(treatments) / 5.0, 1.0)
+
         return {
             "source": "KnowledgeGraphSource",
             "answer": "\n".join(lines),
+            "confidence": confidence,
             "results": treatments,
         }
 
@@ -528,6 +541,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "confidence": 0.0,  # Drug not found
                 "results": [],
             }
 
@@ -550,6 +564,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"No gene/protein targets found for '{drug_name}' in the knowledge graph.",
+                "confidence": 0.0,
                 "results": [],
             }
 
@@ -565,9 +580,12 @@ class KnowledgeGraphSource:
         if len(targets) > 15:
             lines.append(f"  ... and {len(targets) - 15} more")
 
+        confidence = min(len(targets) / 8.0, 1.0)
+
         return {
             "source": "KnowledgeGraphSource",
             "answer": "\n".join(lines),
+            "confidence": confidence,
             "results": targets,
         }
 
@@ -578,6 +596,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "confidence": 0.0,  # Drug not found
                 "results": [],
             }
 
@@ -599,6 +618,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"No side effects found for '{drug_name}' in the knowledge graph.",
+                "confidence": 0.0,
                 "results": [],
             }
 
@@ -614,9 +634,12 @@ class KnowledgeGraphSource:
         if len(side_effects) > 20:
             lines.append(f"  ... and {len(side_effects) - 20} more")
 
+        confidence = min(len(side_effects) / 15.0, 1.0)
+
         return {
             "source": "KnowledgeGraphSource",
             "answer": "\n".join(lines),
+            "confidence": confidence,
             "results": side_effects,
         }
 
@@ -627,6 +650,7 @@ class KnowledgeGraphSource:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "confidence": 0.0,  # Drug not found
                 "results": [],
             }
 
@@ -657,9 +681,13 @@ class KnowledgeGraphSource:
             if len(entities) > 3:
                 lines.append(f"    ... and {len(entities) - 3} more")
 
+        total_entities = sum(len(v) for v in by_type.values())
+        confidence = min(total_entities / 20.0, 1.0)
+
         return {
             "source": "KnowledgeGraphSource",
             "answer": "\n".join(lines),
+            "confidence": confidence,
             "results": by_type,
         }
 
