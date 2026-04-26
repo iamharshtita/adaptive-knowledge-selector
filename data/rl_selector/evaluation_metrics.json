@@ -1,0 +1,57 @@
+{
+  "manual": {
+    "accuracy": 0.8266129032258065,
+    "source_metrics": {
+      "KnowledgeGraphSource": {
+        "precision": 0.9411764705882353,
+        "recall": 0.7619047619047619,
+        "f1": 0.8421052631578947,
+        "support": 63
+      },
+      "ToolAPISource": {
+        "precision": 0.7948717948717948,
+        "recall": 0.9841269841269841,
+        "f1": 0.8794326241134751,
+        "support": 63
+      },
+      "LLMSource": {
+        "precision": 0.7391304347826086,
+        "recall": 0.8225806451612904,
+        "f1": 0.7786259541984734,
+        "support": 62
+      },
+      "PDFKnowledgeSource": {
+        "precision": 0.88,
+        "recall": 0.7333333333333333,
+        "f1": 0.8,
+        "support": 60
+      }
+    },
+    "confusion_matrix": {
+      "KnowledgeGraphSource": {
+        "KnowledgeGraphSource": 48,
+        "ToolAPISource": 12,
+        "LLMSource": 3,
+        "PDFKnowledgeSource": 0
+      },
+      "ToolAPISource": {
+        "ToolAPISource": 62,
+        "PDFKnowledgeSource": 1,
+        "KnowledgeGraphSource": 0,
+        "LLMSource": 0
+      },
+      "LLMSource": {
+        "LLMSource": 51,
+        "PDFKnowledgeSource": 5,
+        "ToolAPISource": 3,
+        "KnowledgeGraphSource": 3
+      },
+      "PDFKnowledgeSource": {
+        "PDFKnowledgeSource": 44,
+        "LLMSource": 15,
+        "ToolAPISource": 1,
+        "KnowledgeGraphSource": 0
+      }
+    }
+  }
+}
