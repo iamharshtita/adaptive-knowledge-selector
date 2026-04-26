@@ -66,18 +66,20 @@ class LLMSource:
     Provides access to Language Model for conceptual explanations
     """
 
-    def __init__(self, model_type: str = "gemini", api_key: str = None):
+    def __init__(self, model_type: str = "groq", api_key: str = None):
         """
         Initialize LLM source
 
         Args:
-            model_type: 'gemini', 'gpt4', 'claude', 'biogpt', 'llama2', 'mistral'
+            model_type: 'groq', 'gemini', 'gpt4', 'claude', 'biogpt', 'llama2', 'mistral'
             api_key: API key for commercial models
         """
         self.model_type = model_type
         # Resolve API key based on model type
         if api_key:
             self.api_key = api_key
+        elif model_type == "groq":
+            self.api_key = os.getenv("GROQ_API_KEY")
         elif model_type == "gemini":
             self.api_key = os.getenv("GEMINI_API_KEY")
         elif model_type == "claude":
@@ -88,11 +90,20 @@ class LLMSource:
         self.tokenizer = None
         self.pipeline = None
 
+        # Groq client (primary or fallback)
+        self.groq_client = None
+        self.groq_api_key = os.getenv("GROQ_API_KEY")
+
         self._initialize_model()
+        # Setup Groq as fallback for non-groq models too
+        if self.model_type != "groq":
+            self._setup_groq_fallback()
 
     def _initialize_model(self):
         """Initialize the selected model"""
-        if self.model_type == "gemini":
+        if self.model_type == "groq":
+            self._setup_groq_primary()
+        elif self.model_type == "gemini":
             self._setup_gemini()
         elif self.model_type == "gpt4":
             self._setup_gpt4()
@@ -107,6 +118,17 @@ class LLMSource:
         else:
             raise ValueError(f"Unknown model type: {self.model_type}")
 
+    def _setup_groq_primary(self):
+        """Setup Groq as the primary LLM"""
+        try:
+            from groq import Groq
+            self.groq_client = Groq(api_key=self.api_key or self.groq_api_key)
+            print(f"Groq initialized as PRIMARY LLM (model: llama-3.3-70b-versatile)")
+        except ImportError:
+            print("Error: Install groq package: pip install groq")
+        except Exception as e:
+            print(f"Error initializing Groq: {e}")
+
     def _setup_gemini(self):
         """Setup Google Gemini"""
         try:
@@ -116,6 +138,19 @@ class LLMSource:
             print(f"Gemini initialized successfully (model: {self.gemini_model})")
         except ImportError:
             print("Error: Install google-genai package: pip install google-genai")
+
+    def _setup_groq_fallback(self):
+        """Setup Groq as automatic fallback for when primary LLM hits quota"""
+        if not self.groq_api_key:
+            return
+        try:
+            from groq import Groq
+            self.groq_client = Groq(api_key=self.groq_api_key)
+            print("Groq fallback initialized (model: llama-3.3-70b-versatile)")
+        except ImportError:
+            print("Groq fallback not available (install: pip install groq)")
+        except Exception as e:
+            print(f"Groq fallback setup failed: {e}")
 
     def _setup_gpt4(self):
         """Setup OpenAI GPT-4"""
@@ -220,7 +255,9 @@ class LLMSource:
         Returns:
             Generated text
         """
-        if self.model_type == "gemini":
+        if self.model_type == "groq":
+            return self._generate_groq(prompt, max_tokens, temperature)
+        elif self.model_type == "gemini":
             return self._generate_gemini(prompt, max_tokens, temperature)
         elif self.model_type == "gpt4":
             return self._generate_gpt4(prompt, max_tokens, temperature)
@@ -232,7 +269,7 @@ class LLMSource:
             return "Model not initialized"
 
     def _generate_gemini(self, prompt: str, max_tokens: int, temperature: float) -> str:
-        """Generate using Google Gemini"""
+        """Generate using Google Gemini, with automatic Groq fallback on quota errors"""
         try:
             from google.genai import types
             medical_prompt = (
@@ -249,7 +286,30 @@ class LLMSource:
             )
             return response.text
         except Exception as e:
+            # Fall back to Groq for ANY Gemini error (quota, timeout, 500, etc.)
+            if self.groq_client:
+                reason = "quota hit" if ('429' in str(e) or 'RESOURCE_EXHAUSTED' in str(e)) else str(type(e).__name__)
+                print(f"  ⚡ Gemini {reason} — falling back to Groq")
+                return self._generate_groq(prompt, max_tokens, temperature)
             return f"Error generating with Gemini: {e}"
+
+    def _generate_groq(self, prompt: str, max_tokens: int, temperature: float) -> str:
+        """Generate using Groq (Llama 3.3 70B)"""
+        if not self.groq_client:
+            return "Error: Groq client not initialized. Set GROQ_API_KEY in your environment."
+        try:
+            response = self.groq_client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[
+                    {"role": "system", "content": "You are a medical expert assistant. Provide accurate, evidence-based information."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            return f"Error generating with Groq: {e}"
 
     def _generate_gpt4(self, prompt: str, max_tokens: int, temperature: float) -> str:
         """Generate using GPT-4"""
@@ -378,32 +438,47 @@ Summary:"""
 
         return self.generate(prompt, max_tokens=200, temperature=0.3)
 
+    def query(self, text: str) -> Dict[str, Any]:
+        """
+        Unified query interface — takes any text query, generates an
+        answer using the configured LLM, and returns a standardised dict.
 
-# Example usage
+        Args:
+            text: Free-text medical question
+
+        Returns:
+            Dict with 'answer' (str) and 'source' name
+        """
+        answer = self.answer_question(text)
+        return {
+            "source": "LLMSource",
+            "answer": answer,
+        }
+
+
 if __name__ == "__main__":
-    from dotenv import load_dotenv
-    load_dotenv()
+    import sys
 
     print("=" * 70)
-    print("LLM Source - Model Comparison Demo")
+    print("  LLM SOURCE — Standalone Test")
     print("=" * 70)
 
-    # Example 1: Using Gemini (free, default)
-    print("\n### Testing Gemini (Default) ###")
-    try:
-        llm = LLMSource(model_type="gemini")
-        response = llm.explain_concept("How does insulin work in the body?")
-        print(f"Gemini Response:\n{response}\n")
+    llm = LLMSource(model_type="groq")
 
-        response2 = llm.answer_question("What drugs interact with aspirin?")
-        print(f"Gemini Q&A:\n{response2}\n")
-    except Exception as e:
-        print(f"Gemini not available: {e}\n")
+    queries = [
+        "How does insulin regulate blood sugar?",
+        "What are the side effects of metformin?",
+        "Explain the mechanism of action of aspirin",
+    ]
 
-    print("\n" + "=" * 70)
-    print("RECOMMENDATIONS:")
-    print("=" * 70)
-    print("1. Default: Gemini (free tier, strong medical reasoning)")
-    print("2. Premium: GPT-4 or Claude (commercial APIs, best quality)")
-    print("3. Offline: BioGPT (medical-specific, runs locally)")
-    print("=" * 70)
+    for q in queries:
+        print(f"\n{'─' * 60}")
+        print(f"🔎 Query: {q}")
+        print(f"{'─' * 60}")
+        out = llm.query(q)
+        print(out["answer"][:300])
+
+    print(f"\n{'=' * 70}")
+    print("✅ Done")
+    print(f"{'=' * 70}")
+

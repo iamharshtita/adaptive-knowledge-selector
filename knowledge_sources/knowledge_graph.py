@@ -79,26 +79,62 @@ class KnowledgeGraphSource:
             print("Hetionet file not found. You can download it from:")
             print("https://github.com/hetio/hetionet/raw/master/hetnet/json/hetionet-v1.0.json.bz2")
 
+    # Common drug name aliases → Hetionet formal names
+    _DRUG_ALIASES = {
+        "aspirin": "acetylsalicylic acid",
+        "tylenol": "acetaminophen",
+        "advil": "ibuprofen",
+        "motrin": "ibuprofen",
+        "lipitor": "atorvastatin",
+        "zocor": "simvastatin",
+        "glucophage": "metformin",
+        "coumadin": "warfarin",
+        "plavix": "clopidogrel",
+        "prilosec": "omeprazole",
+        "nexium": "esomeprazole",
+        "zoloft": "sertraline",
+        "prozac": "fluoxetine",
+        "lasix": "furosemide",
+        "synthroid": "levothyroxine",
+        "xanax": "alprazolam",
+        "ambien": "zolpidem",
+        "viagra": "sildenafil",
+        "cialis": "tadalafil",
+        "celebrex": "celecoxib",
+        "humira": "adalimumab",
+        "eliquis": "apixaban",
+        "jardiance": "empagliflozin",
+        "ozempic": "semaglutide",
+        "trulicity": "dulaglutide",
+    }
+
     def search_drug_by_name(self, drug_name: str) -> List[str]:
         """
-        Search for drugs by name (case-insensitive partial match)
+        Search for drugs by name (case-insensitive partial match).
+        Resolves common/brand names via alias map.
 
         Args:
-            drug_name: Drug name to search for
+            drug_name: Drug name to search for (common or formal)
 
         Returns:
             List of matching drug node IDs
         """
         matches = []
-        drug_name_lower = drug_name.lower()
+        drug_name_lower = drug_name.lower().strip()
+
+        # 1. Try alias resolution first
+        search_terms = [drug_name_lower]
+        if drug_name_lower in self._DRUG_ALIASES:
+            search_terms.append(self._DRUG_ALIASES[drug_name_lower])
 
         for node_id, data in self.graph.nodes(data=True):
             node_type = data.get('type', '')
-            if node_type == 'Compound':  # Hetionet uses 'Compound' for drugs
+            if node_type == 'Compound':
                 node_name = data.get('name', '').lower()
-                # Check if search term appears in the name
-                if drug_name_lower in node_name:
-                    matches.append(node_id)
+                for term in search_terms:
+                    if term in node_name or node_name in term:
+                        matches.append(node_id)
+                        break
 
         return matches
 
@@ -129,7 +165,10 @@ class KnowledgeGraphSource:
             List of interacting drugs with relationship details
         """
         if drug_name not in self.graph:
-            return []
+            matches = self.search_drug_by_name(drug_name)
+            if not matches:
+                return []
+            drug_name = matches[0]
 
         interactions = []
 
@@ -164,7 +203,10 @@ class KnowledgeGraphSource:
             List of targets with mechanism details
         """
         if drug_name not in self.graph:
-            return []
+            matches = self.search_drug_by_name(drug_name)
+            if not matches:
+                return []
+            drug_name = matches[0]
 
         targets = []
 
@@ -190,15 +232,23 @@ class KnowledgeGraphSource:
         """
         treatments = []
 
-        # Look for incoming edges to the disease
-        if disease_name in self.graph:
-            for source, target, key, data in self.graph.in_edges(disease_name, data=True, keys=True):
-                if data.get('relation') in ['treats', 'prevents']:
-                    treatments.append({
-                        'drug': source,
-                        'relation': data.get('relation'),
-                        'indication': data.get('indication', 'No indication available')
-                    })
+        # Resolve plain disease name to node ID if needed
+        if disease_name not in self.graph:
+            disease_lower = disease_name.lower()
+            for node_id, data in self.graph.nodes(data=True):
+                if data.get('type') == 'Disease' and disease_lower in data.get('name', '').lower():
+                    disease_name = node_id
+                    break
+            else:
+                return []
+
+        for source, target, key, data in self.graph.in_edges(disease_name, data=True, keys=True):
+            if data.get('relation') in ['treats', 'prevents']:
+                treatments.append({
+                    'drug': source,
+                    'relation': data.get('relation'),
+                    'indication': data.get('indication', 'No indication available')
+                })
 
         return treatments
 
@@ -276,7 +326,9 @@ class KnowledgeGraphSource:
 
     def save_graph(self, path: str):
         """Save graph to disk"""
-        os.makedirs(os.path.dirname(path), exist_ok=True)
+        dir_name = os.path.dirname(path)
+        if dir_name:
+            os.makedirs(dir_name, exist_ok=True)
         with open(path, 'wb') as f:
             pickle.dump({
                 'graph': self.graph,
@@ -301,77 +353,100 @@ class KnowledgeGraphSource:
             'is_connected': nx.is_weakly_connected(self.graph)
         }
 
+    def query(self, text: str) -> Dict[str, Any]:
+        """
+        Unified query interface — takes free-text, extracts a drug name,
+        finds it in the graph, and returns its relationships.
+
+        Args:
+            text: Free-text query (should mention a drug)
+
+        Returns:
+            Dict with 'answer' (str summary) and 'results' (raw neighbor list)
+        """
+        import re
+
+        # Try to extract drug name from text
+        drug_name = None
+        # Pattern: look for known drug-like words
+        for word in re.findall(r'\b[A-Za-z]{3,}\b', text):
+            if word.lower() in self._DRUG_ALIASES or self.search_drug_by_name(word):
+                drug_name = word
+                break
+
+        if not drug_name:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"Could not identify a drug name in: '{text}'",
+                "results": [],
+            }
+
+        matches = self.search_drug_by_name(drug_name)
+        if not matches:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "results": [],
+            }
+
+        node_id = matches[0]
+        neighbors = self.get_neighbors(node_id)
+
+        # Format neighbors into readable lines
+        lines = [f"Drug: {drug_name} (node: {node_id})", f"Connected entities: {len(neighbors)}", ""]
+        for i, n in enumerate(neighbors[:15], 1):
+            data = self.graph.nodes.get(n, {})
+            name = data.get("name", n)
+            ntype = data.get("type", "Unknown")
+            lines.append(f"  {i}. [{ntype}] {name}")
+        if len(neighbors) > 15:
+            lines.append(f"  ... and {len(neighbors) - 15} more")
+
+        return {
+            "source": "KnowledgeGraphSource",
+            "answer": "\n".join(lines),
+            "results": neighbors,
+        }
+
 
 # Example usage
 if __name__ == "__main__":
     import sys
 
-    print("=" * 80)
-    print("HETIONET KNOWLEDGE GRAPH DEMO")
-    print("=" * 80)
+    print("=" * 70)
+    print("  KNOWLEDGE GRAPH SOURCE — Standalone Test")
+    print("=" * 70)
 
-    # Initialize
     kg = KnowledgeGraphSource()
 
-    # Check if Hetionet is available
-    hetionet_path = "data/hetionet/hetionet-v1.0.json"
+    # Load graph
     pickle_path = "data/hetionet/hetionet_graph.pkl"
+    json_path = "data/hetionet/hetionet-v1.0.json"
 
     if os.path.exists(pickle_path):
-        print(f"\nLoading from pickle (fast): {pickle_path}")
         kg.load_graph(pickle_path)
-    elif os.path.exists(hetionet_path):
-        print(f"\nLoading from JSON: {hetionet_path}")
-        kg.load_hetionet(hetionet_path)
+    elif os.path.exists(json_path):
+        kg.load_hetionet(json_path)
     else:
-        print("\n❌ Hetionet not found!")
-        print("\nTo download Hetionet, run:")
-        print("  python scripts/setup_hetionet.py")
-        print("\nOr manually download:")
-        print("  wget https://github.com/hetio/hetionet/raw/master/hetnet/json/hetionet-v1.0.json.bz2")
-        print("  bunzip2 hetionet-v1.0.json.bz2")
-        print("  mv hetionet-v1.0.json data/hetionet/")
+        print("❌ Hetionet data not found. Run: python scripts/setup_hetionet.py")
         sys.exit(1)
 
-    # Statistics
-    print("\n=== Graph Statistics ===")
-    stats = kg.get_statistics()
-    for key, value in stats.items():
-        print(f"  {key}: {value:,}" if isinstance(value, int) else f"  {key}: {value}")
+    print(f"Graph: {kg.graph.number_of_nodes():,} nodes, {kg.graph.number_of_edges():,} edges\n")
 
-    # Sample node types
-    print("\n=== Sample Node Types ===")
-    node_types = {}
-    for _, data in list(kg.graph.nodes(data=True))[:1000]:
-        node_type = data.get('type', 'unknown')
-        node_types[node_type] = node_types.get(node_type, 0) + 1
+    queries = [
+        "What drugs interact with aspirin?",
+        "Show relationships for metformin",
+        "Tell me about ibuprofen side effects",
+    ]
 
-    for node_type, count in sorted(node_types.items(), key=lambda x: x[1], reverse=True):
-        print(f"  {node_type}: {count}")
+    for q in queries:
+        print(f"\n{'─' * 60}")
+        print(f"🔎 Query: {q}")
+        print(f"{'─' * 60}")
+        out = kg.query(q)
+        print(out["answer"])
 
-    # Sample edge types
-    print("\n=== Sample Relationship Types ===")
-    edge_types = {}
-    for _, _, data in list(kg.graph.edges(data=True))[:1000]:
-        edge_type = data.get('relation', 'unknown')
-        edge_types[edge_type] = edge_types.get(edge_type, 0) + 1
+    print(f"\n{'=' * 70}")
+    print("✅ Done")
+    print(f"{'=' * 70}")
 
-    for edge_type, count in sorted(edge_types.items(), key=lambda x: x[1], reverse=True)[:10]:
-        print(f"  {edge_type}: {count}")
-
-    # Example: Search for a drug
-    print("\n=== Drug Search Example ===")
-    search_results = kg.search_drug_by_name("Metformin")
-    if search_results:
-        print(f"Found {len(search_results)} matches for 'Metformin':")
-        for drug_id in search_results[:3]:
-            print(f"  - {drug_id}")
-            # Get neighbors
-            neighbors = kg.get_neighbors(drug_id)
-            print(f"    Connected to {len(neighbors)} entities")
-    else:
-        print("No matches found")
-
-    print("\n" + "=" * 80)
-    print("✓ Demo complete!")
-    print("=" * 80)

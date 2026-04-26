@@ -355,25 +355,31 @@ class ToolAPISource:
 
         return {'function': fn_name, 'args': args, 'result': result, 'answer': answer}
 
-# To use from another module:
-#   from knowledge_sources.tool_api_source import ToolAPISource
-#   tool = ToolAPISource()
-#   result = tool.query("What are the indications for aspirin?")
-#   print(result['answer'])
+if __name__ == "__main__":
+    print("=" * 70)
+    print("  TOOL API SOURCE — Standalone Test")
+    print("=" * 70)
 
-# if __name__ == "__main__":
-#     tool = ToolAPISource()
-#     # Test data — uncomment to run test:
-#     # queries = [
-#     #     "What are the indications for aspirin?",
-#     #     "What adverse events have been reported for ibuprofen?",
-#     #     "Calculate BMI for 70 kg and 1.75 m",
-#     #     "Creatinine clearance for 65 year old male 80 kg creatinine 1.2",
-#     #     "Ideal body weight for 175 cm male",
-#     #     "Pediatric dose for a child weighing 20 kg adult dose 400 mg",
-#     # ]
-#     # for q in queries:
-#     #     out = tool.query(q)
-#     #     print(f"\nQ: {q}")
-#     #     print(f"   fn={out['function']}  args={out['args']}")
-#     #     print(f"   {out['answer'][:120]}")
+    tool = ToolAPISource()
+
+    queries = [
+        "What are the indications for aspirin?",
+        "What adverse events have been reported for ibuprofen?",
+        "Calculate BMI for 70 kg and 1.75 m",
+        "Creatinine clearance for 65 year old male 80 kg creatinine 1.2",
+        "Ideal body weight for 175 cm male",
+        "Pediatric dose for a child weighing 20 kg adult dose 400 mg",
+    ]
+
+    for q in queries:
+        print(f"\n{'─' * 60}")
+        print(f"🔎 Query: {q}")
+        print(f"{'─' * 60}")
+        out = tool.query(q)
+        print(f"Function: {out['function']}")
+        print(f"Answer:   {out['answer'][:200]}")
+
+    print(f"\n{'=' * 70}")
+    print("✅ Done")
+    print(f"{'=' * 70}")
+

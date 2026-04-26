@@ -90,12 +90,13 @@ class TextKnowledgeSource:
                         abstract_parts = article_data['Abstract']['AbstractText']
                         abstract = " ".join([str(part) for part in abstract_parts])
 
+                    dates = article_data.get('ArticleDate', [])
                     results.append({
                         'pmid': str(medline['PMID']),
                         'title': str(article_data['ArticleTitle']),
                         'abstract': abstract,
                         'journal': str(article_data.get('Journal', {}).get('Title', '')),
-                        'pub_date': str(article_data.get('ArticleDate', [{}])[0].get('Year', ''))
+                        'pub_date': str(dates[0].get('Year', '')) if dates else ''
                     })
                 except Exception as e:
                     print(f"Error parsing article: {e}")
@@ -228,45 +229,67 @@ class TextKnowledgeSource:
         print(f"Vector store loaded from {path}")
 
 
-# Example usage
+    def query(self, text: str, max_results: int = 5) -> Dict[str, Any]:
+        """
+        Unified query interface — takes any text query, searches PubMed,
+        and returns a standardised result dict.
+
+        Args:
+            text: Free-text medical query
+
+        Returns:
+            Dict with 'answer' (str summary) and 'results' (raw list)
+        """
+        results = self.search_pubmed(text, max_results=max_results)
+
+        if not results:
+            return {
+                "source": "TextKnowledgeSource",
+                "answer": f"No PubMed articles found for: '{text}'",
+                "results": [],
+            }
+
+        lines = []
+        for i, r in enumerate(results, 1):
+            title = r.get("title", "Untitled")
+            pmid = r.get("pmid", "?")
+            journal = r.get("journal", "")
+            abstract = r.get("abstract", "")[:200]
+            lines.append(f"{i}. {title}\n   PMID: {pmid}  Journal: {journal}\n   {abstract}…")
+
+        return {
+            "source": "TextKnowledgeSource",
+            "answer": "\n".join(lines),
+            "results": results,
+        }
+
+
 if __name__ == "__main__":
-    # Initialize
-    text_source = TextKnowledgeSource(
-        email="your.email@example.com",
-        api_key=os.getenv("NCBI_API_KEY")
+    import sys
+
+    print("=" * 70)
+    print("  TEXT KNOWLEDGE SOURCE — Standalone Test")
+    print("=" * 70)
+
+    ts = TextKnowledgeSource(
+        email="test@example.com",
+        api_key=os.getenv("NCBI_API_KEY"),
     )
 
-    # Search PubMed
-    print("\n=== PubMed Search ===")
-    results = text_source.search_pubmed("aspirin drug interactions", max_results=5)
-    for i, article in enumerate(results, 1):
-        print(f"\n{i}. {article['title']}")
-        print(f"   PMID: {article['pmid']}")
-        print(f"   Abstract: {article['abstract'][:200]}...")
+    queries = [
+        "Latest research on statin therapy",
+        "aspirin drug interactions",
+        "CRISPR gene editing clinical trials",
+    ]
 
-    # Search DailyMed
-    print("\n\n=== DailyMed Search ===")
-    drug_info = text_source.search_dailymed("aspirin")
-    if drug_info:
-        print(f"Found drug information for aspirin")
+    for q in queries:
+        print(f"\n{'─' * 60}")
+        print(f"🔎 Query: {q}")
+        print(f"{'─' * 60}")
+        out = ts.query(q, max_results=3)
+        print(out["answer"])
 
-    # Build vector store (example with PubMed results)
-    print("\n\n=== Building Vector Store ===")
-    documents = []
-    for article in results:
-        documents.append({
-            'text': f"{article['title']}. {article['abstract']}",
-            'metadata': {
-                'pmid': article['pmid'],
-                'source': 'pubmed'
-            }
-        })
+    print(f"\n{'=' * 70}")
+    print("✅ Done")
+    print(f"{'=' * 70}")
 
-    text_source.build_vector_store(documents)
-
-    # Semantic search
-    print("\n\n=== Semantic Search ===")
-    search_results = text_source.semantic_search("what drugs interact with aspirin", top_k=3)
-    for i, result in enumerate(search_results, 1):
-        print(f"\n{i}. Score: {result['score']:.4f}")
-        print(f"   Text: {result['text'][:200]}...")
