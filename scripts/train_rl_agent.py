@@ -32,11 +32,11 @@ from models.reward_evaluator import RewardEvaluator, classify_query
 from models.rl_environment import ReplayBuffer
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Training Queries — categorised by expected best source
-# ═══════════════════════════════════════════════════════════════════════
+# ===========================================================================
+# Training Queries - categorised by expected best source
+# ===========================================================================
 TRAINING_QUERIES = [
-    # ── Drug interactions → KnowledgeGraph / ToolAPI ──
+    # Drug interactions - KnowledgeGraph / ToolAPI
     {"q": "What drugs interact with aspirin?", "drug": "aspirin"},
     {"q": "Can I take warfarin and ibuprofen together?", "drug": "warfarin"},
     {"q": "Drug interactions of metformin", "drug": "metformin"},
@@ -48,7 +48,7 @@ TRAINING_QUERIES = [
     {"q": "Drug-drug interaction between digoxin and amiodarone", "drug": "digoxin"},
     {"q": "Is it safe to take aspirin with blood thinners?", "drug": "aspirin"},
 
-    # ── Dosage/Calculations → ToolAPI ──
+    # Dosage/Calculations - ToolAPI
     {"q": "Calculate BMI for a patient weighing 70 kg and 1.75 m tall", "drug": None},
     {"q": "What is the pediatric dose for a 20 kg child if adult dose is 500 mg?", "drug": None},
     {"q": "Creatinine clearance calculation for 65 year old male 80 kg creatinine 1.2", "drug": None},
@@ -60,7 +60,7 @@ TRAINING_QUERIES = [
     {"q": "Body mass index for 100 kg 1.65 m patient", "drug": None},
     {"q": "Clark's rule for dose: child weight 28 kg adult dose 800 mg", "drug": None},
 
-    # ── Conceptual questions → LLM ──
+    # Conceptual questions - LLM
     {"q": "How does insulin regulate blood sugar?", "drug": None},
     {"q": "Explain the mechanism of action of beta blockers", "drug": None},
     {"q": "What is the difference between Type 1 and Type 2 diabetes?", "drug": None},
@@ -72,7 +72,7 @@ TRAINING_QUERIES = [
     {"q": "How does chemotherapy target cancer cells?", "drug": None},
     {"q": "What is pharmacokinetics vs pharmacodynamics?", "drug": None},
 
-    # ── Research / Literature → TextKnowledge (PubMed) ──
+    # Research / Literature - TextKnowledge (PubMed)
     {"q": "Latest research on aspirin and cardiovascular prevention", "drug": "aspirin"},
     {"q": "Recent studies on metformin for diabetes treatment", "drug": "metformin"},
     {"q": "Clinical trial results for new SGLT2 inhibitors", "drug": None},
@@ -84,7 +84,7 @@ TRAINING_QUERIES = [
     {"q": "Journal articles on antibiotic resistance mechanisms", "drug": None},
     {"q": "Recent evidence on COVID-19 antivirals efficacy", "drug": None},
 
-    # ── Document / PDF → PDFKnowledgeSource ──
+    # Document / PDF - PDFKnowledgeSource
     {"q": "What do the KRR papers say about ontologies in healthcare?", "drug": None},
     {"q": "Knowledge representation and reasoning in clinical decision support", "drug": None},
     {"q": "How are medical ontologies used in the documents provided?", "drug": None},
@@ -96,7 +96,7 @@ TRAINING_QUERIES = [
     {"q": "What are the challenges of knowledge representation in biomedicine?", "drug": None},
     {"q": "Semantic web technologies for healthcare in the documents", "drug": None},
 
-    # ── Drug Labels → ToolAPI ──
+    # Drug Labels - ToolAPI
     {"q": "What are the FDA label indications for lisinopril?", "drug": "lisinopril"},
     {"q": "Show me the prescribing information for atorvastatin", "drug": "atorvastatin"},
     {"q": "What are the warnings on the drug label for warfarin?", "drug": "warfarin"},
@@ -105,9 +105,9 @@ TRAINING_QUERIES = [
 ]
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Lightweight system that wires up all 5 sources
-# ═══════════════════════════════════════════════════════════════════════
+# ===========================================================================
+# Lightweight system that wires up all 4 sources
+# ===========================================================================
 class TrainingSystem:
     """Wraps all knowledge sources for the RL loop."""
 
@@ -116,57 +116,44 @@ class TrainingSystem:
         print("  INITIALISING KNOWLEDGE SOURCES")
         print("=" * 70)
 
-        # 1. Text (PubMed)
-        print("\n[1/5] Text Knowledge (PubMed) …")
-        try:
-            from knowledge_sources.text_knowledge import TextKnowledgeSource
-            email = "adaptive-selector@research.edu"
-            self.text_source = TextKnowledgeSource(
-                email=email, api_key=os.getenv("NCBI_API_KEY")
-            )
-            print("  ✅ Ready")
-        except Exception as e:
-            print(f"  ⚠️  Failed: {e}")
-            self.text_source = None
-
-        # 2. Knowledge Graph
-        print("\n[2/5] Knowledge Graph (Hetionet) …")
+        # 1. Knowledge Graph
+        print("\n[1/4] Knowledge Graph (Hetionet) …")
         try:
             from knowledge_sources.knowledge_graph import KnowledgeGraphSource
             self.kg_source = KnowledgeGraphSource()
             pkl = "data/hetionet/hetionet_graph.pkl"
             if os.path.exists(pkl):
                 self.kg_source.load_graph(pkl)
-                print(f"  ✅ Loaded ({self.kg_source.graph.number_of_nodes():,} nodes)")
+                print(f"  Loaded ({self.kg_source.graph.number_of_nodes():,} nodes)")
             else:
-                print("  ⚠️  No Hetionet data found")
+                print("  Warning: No Hetionet data found")
                 self.kg_source = None
         except Exception as e:
-            print(f"  ⚠️  Failed: {e}")
+            print(f"  Warning: Failed - {e}")
             self.kg_source = None
 
-        # 3. Tool/API
-        print("\n[3/5] Tool/API (OpenFDA/RxNorm) …")
+        # 2. Tool/API
+        print("\n[2/4] Tool/API (OpenFDA/RxNorm)...")
         try:
             from knowledge_sources.tool_api_source import ToolAPISource
             self.tool_source = ToolAPISource()
-            print("  ✅ Ready")
+            print("  Ready")
         except Exception as e:
-            print(f"  ⚠️  Failed: {e}")
+            print(f"  Warning: Failed - {e}")
             self.tool_source = None
 
-        # 4. LLM
-        print("\n[4/5] LLM (Groq — Llama 3.3 70B) …")
+        # 3. LLM
+        print("\n[3/4] LLM (AWS Bedrock - Claude 3.5 Haiku)...")
         try:
             from knowledge_sources.llm_source import LLMSource
-            self.llm_source = LLMSource(model_type="groq")
-            print("  ✅ Ready")
+            self.llm_source = LLMSource()
+            print("  Ready")
         except Exception as e:
-            print(f"  ⚠️  Failed: {e}")
+            print(f"  Warning: Failed - {e}")
             self.llm_source = None
 
-        # 5. PDF
-        print("\n[5/5] PDF Knowledge …")
+        # 4. PDF
+        print("\n[4/4] PDF Knowledge...")
         try:
             from knowledge_sources.pdf_knowledge import PDFKnowledgeSource
             self.pdf_source = PDFKnowledgeSource()
@@ -180,84 +167,73 @@ class TrainingSystem:
                 if chunks:
                     self.pdf_source.build_vector_store(chunks)
                     self.pdf_source.save_vector_store(store_dir)
-            print(f"  ✅ Ready ({self.pdf_source.index.ntotal if self.pdf_source.index else 0} chunks)")
+            print(f"  Ready ({self.pdf_source.index.ntotal if self.pdf_source.index else 0} chunks)")
         except Exception as e:
-            print(f"  ⚠️  Failed: {e}")
+            print(f"  Warning: Failed - {e}")
             self.pdf_source = None
 
         print("\n" + "=" * 70)
 
-    def query_source(self, source_name: str, query: str, drug: str = None):
-        """Execute a query against the named source. Returns raw results."""
+    def query_source(self, source_name: str, query: str):
+        """
+        Execute a query against the named source using the unified query() interface.
+        Returns the full result dict from each source's query() method.
+        """
         try:
-            if source_name == "TextKnowledgeSource" and self.text_source:
-                results = self.text_source.search_pubmed(query, max_results=5)
-                if not results:
-                    # Try with just the drug name if the full query returned nothing
-                    if drug:
-                        results = self.text_source.search_pubmed(drug, max_results=5)
-                return results
-
-            elif source_name == "KnowledgeGraphSource" and self.kg_source:
-                if drug:
-                    matches = self.kg_source.search_drug_by_name(drug)
-                    if matches:
-                        return self.kg_source.get_neighbors(matches[0])
-                return []
+            if source_name == "KnowledgeGraphSource" and self.kg_source:
+                return self.kg_source.query(query)
 
             elif source_name == "ToolAPISource" and self.tool_source:
-                # Use the smart query() dispatcher — routes to the correct
-                # function (BMI, labels, adverse events, etc.) automatically
                 return self.tool_source.query(query)
 
             elif source_name == "LLMSource" and self.llm_source:
-                return self.llm_source.answer_question(query)
+                return self.llm_source.query(query)
 
             elif source_name == "PDFKnowledgeSource" and self.pdf_source:
-                return self.pdf_source.semantic_search(query, top_k=3)
+                return self.pdf_source.query(query, top_k=3)
 
         except Exception as e:
-            print(f"    ⚠️  {source_name} error: {e}")
+            print(f"    Warning: {source_name} error - {e}")
         return None
 
 
-# ═══════════════════════════════════════════════════════════════════════
+# ===========================================================================
 # Training Loop
-# ═══════════════════════════════════════════════════════════════════════
+# ===========================================================================
 def train(args):
-    # ── Setup ──
+    # Setup
     encoder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-    agent = AdaptiveSelector(input_dim=384, num_sources=5, lr=args.lr)
+    agent = AdaptiveSelector(input_dim=384, num_sources=4, lr=args.lr)
     system = TrainingSystem()
     memory = ReplayBuffer(capacity=2000)
 
     model_path = args.model_path
     if not args.fresh and os.path.exists(model_path):
         if agent.load(model_path):
-            print(f"\n📂 Loaded existing weights from {model_path}")
+            print(f"\nLoaded existing weights from {model_path}")
 
-    # ── Pre-embed all training queries ──
-    print("\n🔢 Encoding training queries …")
+    # Pre-embed all training queries
+    print("\nEncoding training queries...")
     query_texts = [q["q"] for q in TRAINING_QUERIES]
     embeddings = encoder.encode(query_texts, show_progress_bar=True)
 
-    # ── Training hyperparameters ──
+    # Training hyperparameters
     epsilon = args.epsilon_start
     epsilon_min = args.epsilon_end
     epsilon_decay = args.epsilon_decay
     batch_size = 16
 
-    # ── Tracking ──
+    # Tracking
     rewards_log = []
     loss_log = []
     episode_log = []  # Per-episode details for visualization
-    source_picks = {name: 0 for name in agent.sources.values()}
+    source_picks = dict.fromkeys(agent.sources.values(), 0)
     total_reward = 0.0
     total_steps = 0
 
-    print(f"\n{'═' * 70}")
-    print(f"  TRAINING START — {args.episodes} episodes, ε={epsilon:.2f}→{epsilon_min:.2f}")
-    print(f"{'═' * 70}\n")
+    print("\n" + "=" * 70)
+    print(f"  TRAINING START - {args.episodes} episodes, epsilon={epsilon:.2f} to {epsilon_min:.2f}")
+    print("=" * 70 + "\n")
 
     t_start = time.time()
 
@@ -266,7 +242,6 @@ def train(args):
         idx = (ep - 1) % len(TRAINING_QUERIES)
         qdata = TRAINING_QUERIES[idx]
         query = qdata["q"]
-        drug = qdata.get("drug")
         emb = embeddings[idx]
 
         # 1. Select action
@@ -275,7 +250,7 @@ def train(args):
         source_picks[source_name] += 1
 
         # 2. Execute query
-        results = system.query_source(source_name, query, drug)
+        results = system.query_source(source_name, query)
 
         # 3. Compute reward (3-tier)
         reward = RewardEvaluator.compute_reward(query, source_name, results)
@@ -293,13 +268,13 @@ def train(args):
             agent.update_target_network()
             loss_log.append(loss)
 
-        # 6. Decay epsilon
+        # Decay epsilon
         if epsilon > epsilon_min:
             epsilon *= epsilon_decay
 
         rewards_log.append(reward)
 
-        # ── Track per-episode detail for visualization ──
+        # Track per-episode detail for visualization
         qtype = classify_query(query)
         episode_log.append({
             "ep": ep,
@@ -311,14 +286,14 @@ def train(args):
             "epsilon": round(epsilon, 4),
         })
 
-        # ── Logging ──
+        # Logging
         if ep % 5 == 0 or ep <= 3:
             avg_r = np.mean(rewards_log[-20:]) if rewards_log else 0
             print(
-                f"  Ep {ep:>4d}  │  ε={epsilon:.3f}  │  "
-                f"R={reward:.2f}  avg={avg_r:.3f}  │  "
-                f"loss={loss:.4f}  │  "
-                f"{source_name:<24s}  │  [{qtype}] {query[:45]}…"
+                f"  Ep {ep:>4d}  |  eps={epsilon:.3f}  |  "
+                f"R={reward:.2f}  avg={avg_r:.3f}  |  "
+                f"loss={loss:.4f}  |  "
+                f"{source_name:<24s}  |  [{qtype}] {query[:45]}..."
             )
 
         # Periodic save
@@ -327,24 +302,24 @@ def train(args):
 
     elapsed = time.time() - t_start
 
-    # ── Final save ──
+    # Final save
     agent.save(model_path)
 
-    # ── Summary ──
-    print(f"\n{'═' * 70}")
-    print(f"  TRAINING COMPLETE — {total_steps} steps in {elapsed:.1f}s")
-    print(f"{'═' * 70}")
+    # Summary
+    print("\n" + "=" * 70)
+    print(f"  TRAINING COMPLETE - {total_steps} steps in {elapsed:.1f}s")
+    print("=" * 70)
     print(f"\n  Average reward: {total_reward / max(total_steps, 1):.3f}")
     print(f"  Final epsilon:  {epsilon:.4f}")
     print(f"  Model saved to: {model_path}")
 
-    print(f"\n  Source selection distribution:")
+    print("\n  Source selection distribution:")
     for src, count in sorted(source_picks.items(), key=lambda x: x[1], reverse=True):
-        bar = "█" * int(count / max(total_steps, 1) * 40)
+        bar = "#" * int(count / max(total_steps, 1) * 40)
         print(f"    {src:<24s}  {count:>4d}  ({100*count/max(total_steps,1):.1f}%)  {bar}")
 
-    # ── Q-value snapshot for sample queries ──
-    print(f"\n  Q-value snapshot (learned preferences):")
+    # Q-value snapshot for sample queries
+    print("\n  Q-value snapshot (learned preferences):")
     test_queries = [
         ("What drugs interact with aspirin?", "interaction"),
         ("Calculate BMI for 70 kg 1.75 m", "dosage"),
@@ -356,9 +331,9 @@ def train(args):
         emb = encoder.encode([tq])[0]
         qtable = agent.get_q_table(emb)
         best = max(qtable, key=qtable.get)
-        print(f"    [{qtype:>12s}]  {tq[:40]:<42s}  →  {best}")
+        print(f"    [{qtype:>12s}]  {tq[:40]:<42s}  ->  {best}")
         for src, val in sorted(qtable.items(), key=lambda x: x[1], reverse=True):
-            mark = " ◀" if src == best else ""
+            mark = " <--" if src == best else ""
             print(f"                    {src:<24s}  Q={val:+.4f}{mark}")
 
     # Save training log
@@ -373,10 +348,10 @@ def train(args):
             "elapsed_seconds": elapsed,
         }, f, indent=2)
     print(f"\n  Training log saved to: {log_path}")
-    print(f"{'═' * 70}\n")
+    print("=" * 70 + "\n")
 
 
-# ═══════════════════════════════════════════════════════════════════════
+# ===========================================================================
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train the Adaptive Knowledge Selector")
     parser.add_argument("--episodes", type=int, default=150,
