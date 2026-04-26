@@ -67,8 +67,7 @@ credentials.json
 .ipynb_checkpoints/
 *.ipynb
 
-# Model files (if any)
-models/
+# Model weight files (trained models)
 *.pth
 *.pt
 *.h5

@@ -3,9 +3,10 @@ LLM Source - AWS Bedrock Integration
 Uses AWS Bedrock for medical question answering and conceptual explanations.
 
 Supported Bedrock Models:
-- Claude 3.5 Sonnet (anthropic.claude-3-5-sonnet-20240620-v1:0) - Recommended
-- Claude 3 Sonnet (anthropic.claude-3-sonnet-20240229-v1:0)
-- Claude 3 Haiku (anthropic.claude-3-haiku-20240307-v1:0) - Fast & Cheap
+- AWS Nova 2 Lite (us.amazon.nova-lite-v1:0) - Default, Fast & Cost-effective
+- AWS Nova 2 Pro (us.amazon.nova-pro-v1:0)
+- Claude 3.5 Sonnet (anthropic.claude-3-5-sonnet-20240620-v1:0)
+- Claude 3 Haiku (anthropic.claude-3-haiku-20240307-v1:0)
 - Llama 3 70B (meta.llama3-70b-instruct-v1:0)
 - Mistral Large (mistral.mistral-large-2402-v1:0)
 """
@@ -22,14 +23,14 @@ class LLMSource:
 
     def __init__(
         self,
-        model_id: str = "anthropic.claude-3-5-haiku-20241022-v1:0",
+        model_id: str = "us.amazon.nova-lite-v1:0",
         region: str = None
     ):
         """
         Initialize AWS Bedrock LLM source
 
         Args:
-            model_id: Bedrock model ID (default: Claude 3.5 Sonnet)
+            model_id: Bedrock model ID (default: AWS Nova 2 Lite)
             region: AWS region (default: from AWS_REGION env var or us-east-1)
 
         Required Environment Variables:
@@ -102,6 +103,20 @@ class LLMSource:
                         }
                     ]
                 }
+            elif "amazon.nova" in self.model_id:
+                # AWS Nova models
+                request_body = {
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": [{"text": medical_prompt}]
+                        }
+                    ],
+                    "inferenceConfig": {
+                        "max_new_tokens": max_tokens,
+                        "temperature": temperature
+                    }
+                }
             elif "meta.llama" in self.model_id:
                 # Llama models
                 request_body = {
@@ -132,6 +147,8 @@ class LLMSource:
             # Extract text based on model family
             if "anthropic" in self.model_id:
                 return response_body['content'][0]['text']
+            elif "amazon.nova" in self.model_id:
+                return response_body['output']['message']['content'][0]['text']
             elif "meta.llama" in self.model_id:
                 return response_body['generation']
             elif "mistral" in self.model_id:
@@ -239,8 +256,8 @@ if __name__ == "__main__":
         print("   aws configure")
         sys.exit(1)
 
-    # Initialize with Claude 3.5 Haiku (fast & works out of the box)
-    llm = LLMSource(model_id="anthropic.claude-3-5-haiku-20241022-v1:0")
+    # Initialize with AWS Nova 2 Lite (fast & cost-effective)
+    llm = LLMSource(model_id="us.amazon.nova-lite-v1:0")
 
     if not llm.bedrock_client:
         print("\n❌ Failed to initialize Bedrock client")

@@ -1,15 +1,22 @@
 """
 Train the Adaptive Knowledge Selector via Reinforcement Learning.
 
-This script:
-  1. Initialises all 5 knowledge sources
+This script supports two modes:
+  1. Pure RL from scratch (--fresh)
+  2. Phase 2 fine-tuning from Phase 1 pre-trained weights (--pretrained)
+
+The script:
+  1. Initialises all 4 knowledge sources
   2. Runs curated medical queries through the RL loop
-  3. The DQN learns which source to pick for each query type
+  3. The DQN learns which source to pick based on real performance
   4. Saves trained weights to data/rl_selector/adaptive_dqn.pth
 
 Usage:
-    python scripts/train_rl_agent.py
-    python scripts/train_rl_agent.py --episodes 200 --fresh
+    # Phase 2: RL fine-tuning from Phase 1 (recommended)
+    python scripts/train_rl_agent.py --pretrained data/rl_selector/pretrained_dqn.pth --episodes 200
+
+    # Pure RL from scratch
+    python scripts/train_rl_agent.py --episodes 300 --fresh
 """
 
 import os
@@ -208,9 +215,15 @@ def train(args):
     memory = ReplayBuffer(capacity=2000)
 
     model_path = args.model_path
-    if not args.fresh and os.path.exists(model_path):
+
+    # Load pre-trained weights (Phase 1) or existing RL weights
+    if args.pretrained and os.path.exists(args.pretrained):
+        if agent.load(args.pretrained):
+            print(f"\n[PHASE 2] Loaded Phase 1 pre-trained weights from {args.pretrained}")
+            print("Starting RL fine-tuning from supervised baseline...")
+    elif not args.fresh and os.path.exists(model_path):
         if agent.load(model_path):
-            print(f"\nLoaded existing weights from {model_path}")
+            print(f"\nLoaded existing RL weights from {model_path}")
 
     # Pre-embed all training queries
     print("\nEncoding training queries...")
@@ -367,6 +380,9 @@ if __name__ == "__main__":
     parser.add_argument("--model-path", type=str,
                         default="data/rl_selector/adaptive_dqn.pth",
                         help="Path to save/load model weights")
+    parser.add_argument("--pretrained", type=str,
+                        default=None,
+                        help="Path to Phase 1 pre-trained weights for Phase 2 fine-tuning")
     parser.add_argument("--fresh", action="store_true",
                         help="Start training from scratch (ignore existing weights)")
     args = parser.parse_args()

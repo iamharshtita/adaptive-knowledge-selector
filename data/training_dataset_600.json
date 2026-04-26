@@ -1,0 +1,5485 @@
+[
+  {
+    "query": "What drugs interact with aspirin?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Structured drug-drug relationships in knowledge graph provide comprehensive interaction data",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "Can I take warfarin with ibuprofen?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Knowledge graph has documented warfarin-NSAID interactions",
+    "query_type": "interaction",
+    "expected_result_type": "boolean_with_explanation"
+  },
+  {
+    "query": "Drug interactions of metformin",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Graph contains metformin interaction network",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "Does clopidogrel interact with omeprazole?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource",
+      "LLMSource"
+    ],
+    "reasoning": "Well-documented interaction in knowledge graph (CYP2C19 pathway)",
+    "query_type": "interaction",
+    "expected_result_type": "boolean_with_mechanism"
+  },
+  {
+    "query": "What happens if you combine SSRIs with MAOIs?",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Requires explanation of serotonin syndrome mechanism, not just list",
+    "query_type": "interaction",
+    "expected_result_type": "detailed_explanation"
+  },
+  {
+    "query": "Interactions between statins and grapefruit juice",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Food-drug interaction requiring CYP3A4 mechanism explanation",
+    "query_type": "interaction",
+    "expected_result_type": "explanation"
+  },
+  {
+    "query": "Can methotrexate be taken with NSAIDs?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Known dangerous interaction in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "boolean_with_warning"
+  },
+  {
+    "query": "Drug-drug interaction between digoxin and amiodarone",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [],
+    "reasoning": "Specific drug pair interaction in graph",
+    "query_type": "interaction",
+    "expected_result_type": "interaction_details"
+  },
+  {
+    "query": "Is it safe to take aspirin with blood thinners?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Graph has aspirin-anticoagulant interactions",
+    "query_type": "interaction",
+    "expected_result_type": "safety_assessment"
+  },
+  {
+    "query": "ACE inhibitors and potassium supplements interaction",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Hyperkalemia risk documented in graph",
+    "query_type": "interaction",
+    "expected_result_type": "risk_explanation"
+  },
+  {
+    "query": "lisinopril and losartan taken together",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [],
+    "reasoning": "Dual RAAS blockade contraindication in graph",
+    "query_type": "interaction",
+    "expected_result_type": "contraindication"
+  },
+  {
+    "query": "simvastatin interactions with other medications",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Multiple statin interactions in graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What drugs should not be mixed with alcohol?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Broad question requiring categorization and explanation",
+    "query_type": "general",
+    "expected_result_type": "categorized_list"
+  },
+  {
+    "query": "levothyroxine and calcium supplements timing",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Absorption interaction requiring timing guidance",
+    "query_type": "interaction",
+    "expected_result_type": "timing_guidance"
+  },
+  {
+    "query": "insulin and metformin combination safety",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Common diabetes combination in graph",
+    "query_type": "interaction",
+    "expected_result_type": "safety_profile"
+  },
+  {
+    "query": "contraindications of combining beta blockers with calcium channel blockers",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Requires pharmacodynamic explanation",
+    "query_type": "interaction",
+    "expected_result_type": "clinical_guidance"
+  },
+  {
+    "query": "prednisone drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Multiple corticosteroid interactions in graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "antibiotics that interact with birth control",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Requires nuanced explanation of rifampin vs others",
+    "query_type": "interaction",
+    "expected_result_type": "detailed_list"
+  },
+  {
+    "query": "furosemide and digoxin interaction mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Electrolyte-mediated interaction needs explanation",
+    "query_type": "interaction",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "tamoxifen and SSRI interaction",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "CYP2D6 interaction in graph",
+    "query_type": "interaction",
+    "expected_result_type": "pharmacokinetic_interaction"
+  },
+  {
+    "query": "herbal supplements that interact with warfarin",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Requires comprehensive knowledge beyond structured graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_with_warnings"
+  },
+  {
+    "query": "azithromycin and statins interaction",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [],
+    "reasoning": "QT prolongation interaction in graph",
+    "query_type": "interaction",
+    "expected_result_type": "cardiac_warning"
+  },
+  {
+    "query": "amiodarone drug interactions to avoid",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Multiple documented amiodarone interactions",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "lithium and diuretics interaction",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Lithium toxicity risk in graph",
+    "query_type": "interaction",
+    "expected_result_type": "toxicity_warning"
+  },
+  {
+    "query": "metronidazole and alcohol warning",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Disulfiram-like reaction requires explanation",
+    "query_type": "interaction",
+    "expected_result_type": "reaction_explanation"
+  },
+  {
+    "query": "tramadol and SSRI serotonin syndrome risk",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Syndrome mechanism needs detailed explanation",
+    "query_type": "interaction",
+    "expected_result_type": "syndrome_description"
+  },
+  {
+    "query": "rivaroxaban and aspirin bleeding risk",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Anticoagulant combination risks in graph",
+    "query_type": "interaction",
+    "expected_result_type": "risk_quantification"
+  },
+  {
+    "query": "cyclosporine drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Immunosuppressant interactions in graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "allopurinol and azathioprine interaction",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [],
+    "reasoning": "Severe bone marrow suppression interaction",
+    "query_type": "interaction",
+    "expected_result_type": "serious_warning"
+  },
+  {
+    "query": "phenytoin interactions with other medications",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Multiple enzyme induction interactions",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "quinolone antibiotics and theophylline",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Theophylline toxicity interaction in graph",
+    "query_type": "interaction",
+    "expected_result_type": "toxicity_risk"
+  },
+  {
+    "query": "sildenafil and nitrates contraindication",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Life-threatening hypotension mechanism needs explanation",
+    "query_type": "interaction",
+    "expected_result_type": "absolute_contraindication"
+  },
+  {
+    "query": "carbamazepine drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Strong enzyme inducer with multiple interactions",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "spironolactone and ACE inhibitor hyperkalemia",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Electrolyte mechanism needs explanation",
+    "query_type": "interaction",
+    "expected_result_type": "mechanism_and_monitoring"
+  },
+  {
+    "query": "clarithromycin and statins rhabdomyolysis risk",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "CYP3A4 interaction with serious muscle toxicity",
+    "query_type": "interaction",
+    "expected_result_type": "adverse_effect_risk"
+  },
+  {
+    "query": "fentanyl patch and CYP3A4 inhibitors",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Complex pharmacokinetic interaction requiring explanation",
+    "query_type": "interaction",
+    "expected_result_type": "dosing_implications"
+  },
+  {
+    "query": "bupropion and tramadol seizure risk",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Additive seizure risk mechanism",
+    "query_type": "interaction",
+    "expected_result_type": "neurological_risk"
+  },
+  {
+    "query": "methadone and benzodiazepines respiratory depression",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Life-threatening CNS depression needs detailed warning",
+    "query_type": "interaction",
+    "expected_result_type": "serious_warning"
+  },
+  {
+    "query": "rifampin effect on other drug metabolism",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Broad enzyme induction mechanism explanation needed",
+    "query_type": "interaction",
+    "expected_result_type": "enzyme_induction_explanation"
+  },
+  {
+    "query": "ketoconazole interactions with statins",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "CYP3A4 inhibition documented in graph",
+    "query_type": "interaction",
+    "expected_result_type": "enzyme_inhibition"
+  },
+  {
+    "query": "Calculate BMI for a patient weighing 70 kg and 1.75 m tall",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Deterministic calculation best handled by tool",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "What is the pediatric dose for a 20 kg child if adult dose is 500 mg?",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Clark's rule calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Creatinine clearance calculation for 65 year old male 80 kg creatinine 1.2",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Cockcroft-Gault equation calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Ideal body weight for a 175 cm male",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Standard IBW calculation formula",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Calculate BMI for 90 kg and 1.80 m",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Simple BMI calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "What is the adult dosage of amoxicillin?",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Drug label information from FDA database",
+    "query_type": "label",
+    "expected_result_type": "dosage_information"
+  },
+  {
+    "query": "Calculate creatinine clearance age 50 female weight 60 kg Cr 0.9",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Cockcroft-Gault with female correction",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Pediatric dose calculation for 15 kg child adult dose 250 mg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Weight-based dosing calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Body mass index for 100 kg 1.65 m patient",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "BMI calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Clark's rule for dose: child weight 28 kg adult dose 800 mg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Specific pediatric dosing formula",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Body surface area calculation for 180 cm 75 kg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "BSA calculation using Mosteller formula",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Adjusted body weight for obese patient 150 kg height 170 cm",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Adjusted body weight calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Loading dose calculation for digoxin",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Pharmacokinetic calculation with standard formulas",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Vancomycin dosing based on creatinine clearance 45 mL/min",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Renal dosing adjustment calculation",
+    "query_type": "dosage",
+    "expected_result_type": "adjusted_dose"
+  },
+  {
+    "query": "Enoxaparin dose for 95 kg patient",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Weight-based subcutaneous dosing",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Aminophylline infusion rate for 70 kg patient",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Weight-based continuous infusion calculation",
+    "query_type": "dosage",
+    "expected_result_type": "infusion_rate"
+  },
+  {
+    "query": "Gentamicin dosing for patient with creatinine clearance 30 mL/min",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Renal-adjusted aminoglycoside dosing",
+    "query_type": "dosage",
+    "expected_result_type": "adjusted_dose"
+  },
+  {
+    "query": "Insulin sliding scale calculation for blood glucose 280 mg/dL",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Standard sliding scale protocol",
+    "query_type": "dosage",
+    "expected_result_type": "insulin_dose"
+  },
+  {
+    "query": "Heparin infusion rate for 85 kg patient",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Weight-based heparin protocol",
+    "query_type": "dosage",
+    "expected_result_type": "infusion_rate"
+  },
+  {
+    "query": "Levothyroxine dose adjustment based on TSH level",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Requires clinical judgment beyond simple calculation",
+    "query_type": "dosage",
+    "expected_result_type": "clinical_guidance"
+  },
+  {
+    "query": "Young's rule pediatric dose for 4 year old adult dose 500mg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Age-based pediatric dosing formula",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Fried's rule for infant dosing 8 months old adult dose 300mg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Infant dosing formula",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Dopamine infusion calculation 5 mcg/kg/min for 70 kg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Vasopressor infusion rate calculation",
+    "query_type": "dosage",
+    "expected_result_type": "infusion_rate"
+  },
+  {
+    "query": "Carboplatin dose calculation AUC 5 GFR 90",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Calvert formula for chemotherapy dosing",
+    "query_type": "dosage",
+    "expected_result_type": "chemotherapy_dose"
+  },
+  {
+    "query": "Warfarin dose adjustment based on INR 3.5",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Complex clinical decision requiring protocol guidance",
+    "query_type": "dosage",
+    "expected_result_type": "adjustment_guidance"
+  },
+  {
+    "query": "Phenytoin loading dose for 80 kg patient",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Standard loading dose calculation",
+    "query_type": "dosage",
+    "expected_result_type": "loading_dose"
+  },
+  {
+    "query": "Magnesium sulfate infusion rate for eclampsia",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Standard protocol-based dosing",
+    "query_type": "dosage",
+    "expected_result_type": "protocol_dose"
+  },
+  {
+    "query": "Norepinephrine dose titration for MAP target 65",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Requires clinical judgment and hemodynamic understanding",
+    "query_type": "dosage",
+    "expected_result_type": "titration_guidance"
+  },
+  {
+    "query": "Amiodarone loading dose and maintenance",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Complex multi-phase loading protocol",
+    "query_type": "dosage",
+    "expected_result_type": "dosing_protocol"
+  },
+  {
+    "query": "Methotrexate dose for rheumatoid arthritis",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Label information for RA indication",
+    "query_type": "label",
+    "expected_result_type": "indication_dose"
+  },
+  {
+    "query": "What are the FDA label indications for lisinopril?",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Direct FDA label query",
+    "query_type": "label",
+    "expected_result_type": "fda_indications"
+  },
+  {
+    "query": "Show me the prescribing information for atorvastatin",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Complete FDA prescribing information",
+    "query_type": "label",
+    "expected_result_type": "prescribing_info"
+  },
+  {
+    "query": "What are the warnings on the drug label for warfarin?",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Boxed warnings and precautions from label",
+    "query_type": "label",
+    "expected_result_type": "warnings"
+  },
+  {
+    "query": "FDA approved uses of omeprazole",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "FDA-approved indications from label",
+    "query_type": "label",
+    "expected_result_type": "approved_indications"
+  },
+  {
+    "query": "Boxed warning for methotrexate",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Black box warning from FDA label",
+    "query_type": "label",
+    "expected_result_type": "boxed_warning"
+  },
+  {
+    "query": "Contraindications listed on aspirin label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "FDA label contraindications section",
+    "query_type": "label",
+    "expected_result_type": "contraindications"
+  },
+  {
+    "query": "Pregnancy category for ciprofloxacin",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Pregnancy information from FDA label",
+    "query_type": "label",
+    "expected_result_type": "pregnancy_category"
+  },
+  {
+    "query": "Metformin prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Full FDA prescribing details",
+    "query_type": "label",
+    "expected_result_type": "prescribing_info"
+  },
+  {
+    "query": "FDA label for furosemide",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Complete drug label information",
+    "query_type": "label",
+    "expected_result_type": "drug_label"
+  },
+  {
+    "query": "Adverse reactions section for prednisone",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "FDA label adverse reactions",
+    "query_type": "label",
+    "expected_result_type": "adverse_reactions"
+  },
+  {
+    "query": "Dosage and administration for insulin glargine",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "FDA label dosing section",
+    "query_type": "label",
+    "expected_result_type": "dosing_instructions"
+  },
+  {
+    "query": "Black box warning for clozapine",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Serious warnings from FDA label",
+    "query_type": "label",
+    "expected_result_type": "boxed_warning"
+  },
+  {
+    "query": "Indications for use of gabapentin",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "FDA-approved indications",
+    "query_type": "label",
+    "expected_result_type": "indications"
+  },
+  {
+    "query": "Monograph information for levothyroxine",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Complete drug monograph from FDA",
+    "query_type": "label",
+    "expected_result_type": "monograph"
+  },
+  {
+    "query": "How does insulin regulate blood sugar?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Conceptual mechanism requiring detailed explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "Explain the mechanism of action of beta blockers",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacodynamic concept explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "What is the difference between Type 1 and Type 2 diabetes?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Conceptual comparison requiring detailed explanation",
+    "query_type": "concept",
+    "expected_result_type": "comparison"
+  },
+  {
+    "query": "Describe the pathophysiology of hypertension",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Complex pathophysiology explanation",
+    "query_type": "concept",
+    "expected_result_type": "pathophysiology"
+  },
+  {
+    "query": "Why do antibiotics not work against viruses?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Fundamental microbiology concept",
+    "query_type": "concept",
+    "expected_result_type": "explanation"
+  },
+  {
+    "query": "How do ACE inhibitors lower blood pressure?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Mechanism of action explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "What role does the liver play in drug metabolism?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacokinetic concept requiring explanation",
+    "query_type": "concept",
+    "expected_result_type": "organ_function"
+  },
+  {
+    "query": "Explain the concept of drug bioavailability",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacokinetic principle explanation",
+    "query_type": "concept",
+    "expected_result_type": "definition_with_examples"
+  },
+  {
+    "query": "How does chemotherapy target cancer cells?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Oncology mechanism requiring detailed explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "What is pharmacokinetics vs pharmacodynamics?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Core pharmacology concept comparison",
+    "query_type": "concept",
+    "expected_result_type": "comparison"
+  },
+  {
+    "query": "Explain how diuretics work in the kidney",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Renal physiology and drug mechanism",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "What is the mechanism of action of proton pump inhibitors?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Cellular mechanism explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "How does heparin prevent blood clots?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Coagulation cascade mechanism",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "Explain the renin-angiotensin-aldosterone system",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Complex physiologic system explanation",
+    "query_type": "concept",
+    "expected_result_type": "system_description"
+  },
+  {
+    "query": "What is first pass metabolism?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacokinetic concept",
+    "query_type": "concept",
+    "expected_result_type": "definition_with_clinical_significance"
+  },
+  {
+    "query": "How do statins lower cholesterol?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "HMG-CoA reductase inhibition mechanism",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "Explain the mechanism of action of benzodiazepines",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "GABA receptor mechanism",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "What is the blood-brain barrier and how do drugs cross it?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Anatomical and pharmacokinetic concept",
+    "query_type": "concept",
+    "expected_result_type": "anatomical_explanation"
+  },
+  {
+    "query": "How does metformin work in diabetes?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Multifaceted mechanism of action",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "Explain therapeutic drug monitoring",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Clinical pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "clinical_concept"
+  },
+  {
+    "query": "What is volume of distribution in pharmacokinetics?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacokinetic parameter explanation",
+    "query_type": "concept",
+    "expected_result_type": "parameter_definition"
+  },
+  {
+    "query": "How do calcium channel blockers work?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Cardiovascular mechanism of action",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "Explain the concept of drug half-life",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Core pharmacokinetic concept",
+    "query_type": "concept",
+    "expected_result_type": "definition_with_clinical_implications"
+  },
+  {
+    "query": "What is the mechanism of antibiotic resistance?",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Microbiological concept requiring detailed explanation",
+    "query_type": "concept",
+    "expected_result_type": "resistance_mechanisms"
+  },
+  {
+    "query": "How do corticosteroids reduce inflammation?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Anti-inflammatory mechanism",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "Explain cytochrome P450 enzymes and drug metabolism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Complex enzyme system explanation",
+    "query_type": "concept",
+    "expected_result_type": "enzyme_system_description"
+  },
+  {
+    "query": "What is the mechanism of action of opioids?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Opioid receptor mechanism",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "How does warfarin work as an anticoagulant?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Vitamin K antagonist mechanism",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "Explain the concept of drug tolerance",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacodynamic adaptation concept",
+    "query_type": "concept",
+    "expected_result_type": "physiological_concept"
+  },
+  {
+    "query": "What is steady state in pharmacokinetics?",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacokinetic equilibrium concept",
+    "query_type": "concept",
+    "expected_result_type": "pk_concept"
+  },
+  {
+    "query": "What drugs treat hypertension?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Disease-treatment relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "Medications for type 2 diabetes",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Treatment options from knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What is aspirin used to treat?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Drug-disease relationships in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_conditions"
+  },
+  {
+    "query": "Drugs for treating heart failure",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Heart failure treatment relationships",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What medications are used for asthma?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Asthma treatment options in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "Anticoagulants for atrial fibrillation",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "AF treatment relationships in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What does metformin treat?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Drug indications from knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_diseases"
+  },
+  {
+    "query": "Medications for rheumatoid arthritis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "RA treatment options in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What drugs are used to treat depression?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Depression treatment relationships",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "Antiepileptic drugs for seizure prevention",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Epilepsy treatment options",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "Medications for COPD management",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "COPD treatment relationships in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What diseases does simvastatin treat?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Statin indications in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_conditions"
+  },
+  {
+    "query": "Antibiotics for pneumonia treatment",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Requires clinical context and severity stratification",
+    "query_type": "treatment",
+    "expected_result_type": "treatment_algorithm"
+  },
+  {
+    "query": "First-line drugs for migraine prophylaxis",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "Requires treatment guideline knowledge",
+    "query_type": "treatment",
+    "expected_result_type": "treatment_options"
+  },
+  {
+    "query": "Medications for osteoporosis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Osteoporosis treatment options in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What does lisinopril treat?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "ACE inhibitor indications in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_conditions"
+  },
+  {
+    "query": "Drugs for Parkinson's disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Parkinson's treatment relationships",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "Medications for gout management",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Gout treatment options in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What conditions does prednisone treat?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Corticosteroid indications in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_conditions"
+  },
+  {
+    "query": "Drugs for anxiety disorders",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Anxiety treatment options in graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "What protein does aspirin target?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Drug-target relationships in knowledge graph (COX enzymes)",
+    "query_type": "target",
+    "expected_result_type": "protein_targets"
+  },
+  {
+    "query": "Molecular targets of metformin",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Drug-protein interactions in graph (AMPK)",
+    "query_type": "target",
+    "expected_result_type": "protein_targets"
+  },
+  {
+    "query": "What genes does tamoxifen bind to?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Drug-gene target relationships (estrogen receptor)",
+    "query_type": "target",
+    "expected_result_type": "gene_targets"
+  },
+  {
+    "query": "Statins target which enzyme?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "HMG-CoA reductase target in graph",
+    "query_type": "target",
+    "expected_result_type": "enzyme_target"
+  },
+  {
+    "query": "Protein targets of warfarin",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "VKORC1 and coagulation factors in graph",
+    "query_type": "target",
+    "expected_result_type": "protein_targets"
+  },
+  {
+    "query": "What receptor does albuterol act on?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Beta-2 adrenergic receptor target in graph",
+    "query_type": "target",
+    "expected_result_type": "receptor_target"
+  },
+  {
+    "query": "Molecular target of imatinib",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "BCR-ABL tyrosine kinase target",
+    "query_type": "target",
+    "expected_result_type": "protein_target"
+  },
+  {
+    "query": "What does digoxin bind to?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Na-K-ATPase pump target in graph",
+    "query_type": "target",
+    "expected_result_type": "protein_target"
+  },
+  {
+    "query": "Enzyme targeted by aspirin",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Cyclooxygenase enzymes in graph",
+    "query_type": "target",
+    "expected_result_type": "enzyme_target"
+  },
+  {
+    "query": "Benzodiazepine receptor binding",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "KnowledgeGraphSource"
+    ],
+    "reasoning": "GABA-A receptor complex requires detailed explanation",
+    "query_type": "target",
+    "expected_result_type": "receptor_mechanism"
+  },
+  {
+    "query": "Side effects of metformin",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Drug-side effect relationships in knowledge graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "What are the adverse effects of prednisone?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Corticosteroid side effects documented in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "Common side effects of statins",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Statin adverse effects in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "Adverse reactions to amoxicillin",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Antibiotic side effects in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "What are the side effects of lisinopril?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "ACE inhibitor adverse effects in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "Levothyroxine adverse effects",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Thyroid hormone side effects in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "Side effects of warfarin therapy",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Anticoagulant risks documented in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "Common adverse effects of metoprolol",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Beta blocker side effects in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "What are the side effects of omeprazole?",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "PPI adverse effects in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "Gabapentin side effects",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Anticonvulsant adverse effects in graph",
+    "query_type": "side_effects",
+    "expected_result_type": "list_of_effects"
+  },
+  {
+    "query": "Latest research on aspirin and cardiovascular prevention",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Research findings likely in medical literature PDFs",
+    "query_type": "research",
+    "expected_result_type": "research_summary"
+  },
+  {
+    "query": "Recent studies on metformin for diabetes treatment",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Clinical trial results in research papers",
+    "query_type": "research",
+    "expected_result_type": "research_findings"
+  },
+  {
+    "query": "Clinical trial results for new SGLT2 inhibitors",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Recent trial data in medical literature",
+    "query_type": "research",
+    "expected_result_type": "trial_results"
+  },
+  {
+    "query": "Systematic review of statin therapy benefits",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Meta-analysis likely in PDF documents",
+    "query_type": "research",
+    "expected_result_type": "review_summary"
+  },
+  {
+    "query": "Evidence for aspirin use in cancer prevention",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Research evidence in medical literature",
+    "query_type": "research",
+    "expected_result_type": "evidence_summary"
+  },
+  {
+    "query": "Research findings on GLP-1 receptor agonists for obesity",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Recent research in PDF papers",
+    "query_type": "research",
+    "expected_result_type": "research_summary"
+  },
+  {
+    "query": "Journal articles on antibiotic resistance mechanisms",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Scientific literature in PDF format",
+    "query_type": "research",
+    "expected_result_type": "literature_review"
+  },
+  {
+    "query": "Recent evidence on COVID-19 antivirals efficacy",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Clinical evidence in research papers",
+    "query_type": "research",
+    "expected_result_type": "efficacy_data"
+  },
+  {
+    "query": "Meta-analysis of ACE inhibitors vs ARBs",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Comparative effectiveness research in PDFs",
+    "query_type": "research",
+    "expected_result_type": "meta_analysis"
+  },
+  {
+    "query": "Clinical studies on direct oral anticoagulants",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "DOAC trial data in medical literature",
+    "query_type": "research",
+    "expected_result_type": "study_results"
+  },
+  {
+    "query": "What do the KRR papers say about ontologies in healthcare?",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Specific content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "Knowledge representation and reasoning in clinical decision support",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Technical KRR concepts likely in PDF papers",
+    "query_type": "document",
+    "expected_result_type": "technical_content"
+  },
+  {
+    "query": "How are medical ontologies used in the documents provided?",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Specific PDF content query",
+    "query_type": "document",
+    "expected_result_type": "document_explanation"
+  },
+  {
+    "query": "Clinical reasoning approaches described in the PDF papers",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Content extraction from provided documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "What representation formalisms are discussed in the KRR documents?",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Technical content from PDF papers",
+    "query_type": "document",
+    "expected_result_type": "formalism_list"
+  },
+  {
+    "query": "OWL and description logic in medical knowledge representation",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Technical KRR topic likely in PDFs",
+    "query_type": "document",
+    "expected_result_type": "technical_explanation"
+  },
+  {
+    "query": "Decision support systems mentioned in the papers",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Document-specific content",
+    "query_type": "document",
+    "expected_result_type": "system_descriptions"
+  },
+  {
+    "query": "How does the paper discuss SNOMED CT and medical terminologies?",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Specific PDF content about terminologies",
+    "query_type": "document",
+    "expected_result_type": "document_discussion"
+  },
+  {
+    "query": "What are the challenges of knowledge representation in biomedicine?",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Technical challenges discussed in research papers",
+    "query_type": "document",
+    "expected_result_type": "challenge_list"
+  },
+  {
+    "query": "Semantic web technologies for healthcare in the documents",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Technical content from PDF papers",
+    "query_type": "document",
+    "expected_result_type": "technology_discussion"
+  },
+  {
+    "query": "What is mentioned about drug safety in the WHO essential drugs document?",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Content from specific WHO PDF",
+    "query_type": "document",
+    "expected_result_type": "safety_guidelines"
+  },
+  {
+    "query": "BHMEDS-R3 medication categories described in the document",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Specific categorization from BHMEDS PDF",
+    "query_type": "document",
+    "expected_result_type": "category_list"
+  },
+  {
+    "query": "Principles of drug addiction treatment from NIDA document",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Specific principles listed in NIDA PDF",
+    "query_type": "document",
+    "expected_result_type": "principle_list"
+  },
+  {
+    "query": "ClinCalc drug classification system in the document",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Classification scheme from ClinCalc PDF",
+    "query_type": "document",
+    "expected_result_type": "classification_system"
+  },
+  {
+    "query": "What does the essential drugs guide say about quality assurance?",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [],
+    "reasoning": "Quality assurance section from MSF PDF",
+    "query_type": "document",
+    "expected_result_type": "guidelines"
+  },
+  {
+    "query": "amlodipine and simvastatin interaction",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Common combination query - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "losartan drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "ARB interactions - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "enalapril interactions with other drugs",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "ACE inhibitor interactions - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "what interacts with hydrochlorothiazide",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Diuretic interactions - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "atenolol drug-drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Beta blocker interactions - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "interactions of diltiazem",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Calcium channel blocker - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "verapamil interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "CCB with many interactions - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "carvedilol drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Alpha-beta blocker - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "ramipril interaction profile",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "ACE inhibitor - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "bisoprolol interactions with other medications",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Selective beta blocker - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "spironolactone drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Potassium-sparing diuretic - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "amlodipine interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Common CCB - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "hydrochlorothiazide and lisinopril interaction",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Common combination - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "atorvastatin drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Most prescribed statin - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "rosuvastatin interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Potent statin - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "pravastatin drug-drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Renal-cleared statin - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "clopidogrel interactions with PPIs",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Documented interaction - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "prasugrel drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "P2Y12 inhibitor - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "ticagrelor interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Another P2Y12 inhibitor - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "dabigatran drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Direct thrombin inhibitor - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "apixaban interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Factor Xa inhibitor - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "rivaroxaban drug-drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Common DOAC - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "edoxaban interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "DOAC - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "sertraline drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "SSRI - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "fluoxetine interactions with other drugs",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Long half-life SSRI - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "escitalopram drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Common SSRI - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "venlafaxine interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "SNRI - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "duloxetine drug-drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "SNRI for pain - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "bupropion interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "NDRI antidepressant - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "mirtazapine drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Atypical antidepressant - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "aripiprazole interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Atypical antipsychotic - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "quetiapine drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Common antipsychotic - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "risperidone interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Antipsychotic - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "olanzapine drug-drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Metabolic effects - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "alprazolam interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Benzodiazepine - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "lorazepam drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Short-acting benzo - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "diazepam interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Long-acting benzo - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "zolpidem drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Sleep medication - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "eszopiclone interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Non-benzo sleep aid - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "trazodone drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Sleep/depression - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "levothyroxine interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Thyroid medication interactions - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "metoprolol drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Selective beta-1 blocker - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "propranolol interactions with other drugs",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Non-selective beta blocker - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "candesartan drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "ARB interactions - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "valsartan interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Common ARB - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "telmisartan drug-drug interactions",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "ToolAPISource"
+    ],
+    "reasoning": "Long-acting ARB - structured relationships in knowledge graph",
+    "query_type": "interaction",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for chronic kidney disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "CKD treatment options - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for diabetic neuropathy",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Neuropathy treatments - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for acute coronary syndrome",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "ACS medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for peripheral artery disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "PAD treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for venous thromboembolism",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "VTE treatment options - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for pulmonary embolism",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "PE medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for stroke prevention",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Stroke prophylaxis - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for coronary artery disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "CAD treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for angina pectoris",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Angina medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for chronic pain",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Pain management drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for fibromyalgia",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Fibromyalgia treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for neuropathic pain",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Neuropathic pain drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for inflammatory bowel disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "IBD treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for Crohn's disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Crohn's medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for ulcerative colitis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "UC drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for multiple sclerosis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "MS treatment options - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for schizophrenia",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Antipsychotic options - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for bipolar disorder",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Mood stabilizers - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for ADHD",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "ADHD treatment drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for generalized anxiety disorder",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "GAD medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for panic disorder",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Panic disorder drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for obsessive compulsive disorder",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "OCD treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for post-traumatic stress disorder",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "PTSD medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for insomnia",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Sleep disorder drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for hypothyroidism",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Thyroid replacement - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for hyperthyroidism",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Hyperthyroid treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for Graves disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Graves disease drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for Cushing syndrome",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Cushing's treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for Addison disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Addison's medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for pheochromocytoma",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Pheochromocytoma drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for benign prostatic hyperplasia",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "BPH treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for erectile dysfunction",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "ED medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for overactive bladder",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "OAB drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for urinary incontinence",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Incontinence treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for glaucoma",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Glaucoma medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for macular degeneration",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "AMD treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for seasonal allergies",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Allergy drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for allergic rhinitis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Rhinitis treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for chronic urticaria",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Hives medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for psoriasis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Psoriasis treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for rheumatoid arthritis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "RA medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for osteoarthritis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "OA drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for gout",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Gout treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for osteoporosis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Bone health medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for Parkinson's disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "PD drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for Alzheimer's disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Dementia treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for epilepsy",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Anticonvulsant options - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for migraine prophylaxis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Migraine prevention - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for cluster headaches",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Cluster headache drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for tension headaches",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Tension headache treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for trigeminal neuralgia",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Nerve pain medication - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for restless leg syndrome",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "RLS treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for narcolepsy",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Narcolepsy medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for myasthenia gravis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "MG drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for polymyalgia rheumatica",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "PMR treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for temporal arteritis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Giant cell arteritis - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for systemic lupus erythematosus",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "SLE medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for scleroderma",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Scleroderma treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for dermatomyositis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Dermatomyositis treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for Sjogren's syndrome",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Sjogren's drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for ankylosing spondylitis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "AS treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for reactive arthritis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Reactive arthritis meds - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for septic arthritis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Septic arthritis antibiotics - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for celiac disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Celiac treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for gastroesophageal reflux disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "GERD medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for peptic ulcer disease",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "PUD drugs - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for irritable bowel syndrome",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "IBS treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for diverticulitis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Diverticulitis antibiotics - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for hepatitis B",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "HBV antivirals - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for hepatitis C",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "HCV direct antivirals - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for cirrhosis complications",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Cirrhosis management - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "treatments for ascites",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Ascites medications - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "medications for hepatic encephalopathy",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "HE treatment - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "drugs for variceal bleeding prophylaxis",
+    "best_source": "KnowledgeGraphSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Variceal bleed prevention - disease-drug relationships in knowledge graph",
+    "query_type": "treatment",
+    "expected_result_type": "list_of_drugs"
+  },
+  {
+    "query": "BMI calculation for 55 kg and 1.60 m",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "BMI formula - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "ideal body weight for 160 cm female",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "IBW for females - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "creatinine clearance for 70 year old male 75 kg Cr 1.5",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "CrCl calculation - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "body surface area for 165 cm 60 kg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "BSA calculation - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "adjusted body weight for 120 kg 165 cm",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "AdjBW for obesity - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "pediatric dose for 12 kg child adult dose 400 mg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Clark's rule - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "BMI for 68 kg 1.70 m",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Standard BMI - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "creatinine clearance 55 year old female 65 kg Cr 1.0",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Female CrCl - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "ideal body weight 180 cm male",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "IBW calculation - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "body mass index 95 kg 1.75 m",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "BMI - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "Young's rule dose for 3 year old adult 600 mg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Pediatric dosing - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "BSA calculation for 170 cm 70 kg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Mosteller formula - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "adjusted body weight 140 kg 170 cm",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Obesity adjustment - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "pediatric dosing 18 kg child adult 500 mg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Weight-based pediatric - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "CrCl for 60 yo male 80 kg creatinine 1.3",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Cockcroft-Gault - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "BMI for 105 kg 1.82 m",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Overweight BMI - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "IBW for 175 cm male patient",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Male IBW - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "body surface area 155 cm 50 kg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Small patient BSA - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "creatinine clearance 45 yo female 55 kg Cr 0.8",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Normal renal function - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "pediatric dose 25 kg child adult dose 750 mg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Clark's rule pediatric - deterministic calculation",
+    "query_type": "dosage",
+    "expected_result_type": "calculation"
+  },
+  {
+    "query": "FDA label for metoprolol",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Beta blocker label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "prescribing information for amlodipine",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "CCB prescribing info - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "losartan drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "ARB label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "FDA indications for sertraline",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "SSRI indications - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "atorvastatin prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Statin label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "metformin drug label details",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Diabetes drug label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "lisinopril FDA label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "ACE inhibitor label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "omeprazole prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "PPI label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "levothyroxine drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Thyroid hormone label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "albuterol FDA indications",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Beta agonist label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "gabapentin prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Anticonvulsant label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "hydrochlorothiazide drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Diuretic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "pantoprazole FDA label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "PPI label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "clopidogrel prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Antiplatelet label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "simvastatin drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Statin label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "escitalopram FDA indications",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "SSRI label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "valsartan prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "ARB label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "atenolol drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Beta blocker label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "duloxetine FDA label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "SNRI label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "rosuvastatin prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Statin label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "fluoxetine drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "SSRI label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "losartan FDA indications",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "ARB indications - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "pravastatin prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Statin label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "venlafaxine drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "SNRI label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "carvedilol FDA label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Alpha-beta blocker label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "bupropion prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "NDRI label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "ramipril drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "ACE inhibitor label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "aripiprazole FDA indications",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Antipsychotic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "quetiapine prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Antipsychotic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "risperidone drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Antipsychotic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "olanzapine FDA label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Antipsychotic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "lamotrigine prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Anticonvulsant label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "topiramate drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Anticonvulsant label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "levetiracetam FDA indications",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Anticonvulsant label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "phenytoin prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Anticonvulsant label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "valproic acid drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Mood stabilizer label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "lithium carbonate FDA label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Mood stabilizer label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "buspirone prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Anxiolytic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "hydroxyzine drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Anxiolytic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "trazodone FDA indications",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Antidepressant/sleep label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "methotrexate FDA label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "DMARD label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "adalimumab prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Biologic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "etanercept drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "TNF inhibitor label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "infliximab FDA indications",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Biologic label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "rituximab prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Monoclonal antibody label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "insulin glargine drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Long-acting insulin label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "insulin lispro FDA indications",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "Rapid-acting insulin label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "semaglutide prescribing information",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "GLP-1 agonist label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "empagliflozin drug label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "SGLT2 inhibitor label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "canagliflozin FDA label",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [],
+    "reasoning": "SGLT2 inhibitor label - OpenFDA database",
+    "query_type": "label",
+    "expected_result_type": "fda_label"
+  },
+  {
+    "query": "enoxaparin dose for DVT prophylaxis 80 kg",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "VTE prophylaxis dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "heparin infusion for PE 90 kg patient",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Anticoagulation protocol - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "vancomycin trough goal for MRSA bacteremia",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Vancomycin TDM - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "gentamicin dose for UTI CrCl 50",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Aminoglycoside renal dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "levothyroxine starting dose for hypothyroidism",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Thyroid replacement start - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "warfarin INR goal for atrial fibrillation",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Anticoagulation target - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "metformin maximum daily dose",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Maximum safe dose - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "insulin sliding scale for type 2 diabetes",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Insulin dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "prednisone taper schedule",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Steroid taper - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "amiodarone loading regimen",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Antiarrhythmic loading - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "digoxin loading dose for heart failure",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Cardiac glycoside loading - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "phenytoin loading dose status epilepticus",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Seizure emergency dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "magnesium sulfate for eclampsia protocol",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Eclampsia treatment - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "norepinephrine starting dose for shock",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Vasopressor initiation - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "dopamine infusion for hypotension",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Vasopressor dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "insulin drip protocol for DKA",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "DKA management - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "nitroglycerin infusion for acute MI",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "ACS protocol - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "alteplase dose for stroke",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Thrombolytic dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "epinephrine dose for anaphylaxis",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Emergency dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "naloxone dose for opioid overdose",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Overdose reversal - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "adenosine dose for SVT",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Arrhythmia conversion - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "amiodarone dose for ventricular tachycardia",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "VT treatment - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "atropine dose for bradycardia",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Bradycardia treatment - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "calcium gluconate for hyperkalemia",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Electrolyte emergency - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "sodium bicarbonate for metabolic acidosis",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Acidosis correction - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "dextrose 50% for hypoglycemia",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Glucose replacement - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "flumazenil dose for benzodiazepine overdose",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Benzo reversal - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "glucagon for beta blocker overdose",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "BB overdose treatment - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "fomepizole for methanol poisoning",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Toxin antidote - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "N-acetylcysteine for acetaminophen overdose",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Tylenol overdose protocol - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "labetalol drip for hypertensive emergency",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "HTN emergency - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "nicardipine infusion for blood pressure control",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "IV CCB - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "esmolol infusion for tachycardia",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Short-acting beta blocker - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "propofol sedation dose ICU",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "ICU sedation - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "fentanyl PCA settings postoperative",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Pain pump settings - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "morphine IV push for acute pain",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "IV opioid - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "hydromorphone IV dose severe pain",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Dilaudid dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "ketamine dose for procedural sedation",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Dissociative sedation - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "etomidate dose for rapid sequence intubation",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "RSI induction - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "succinylcholine dose for intubation",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Paralytic dosing - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "rocuronium dose for intubation",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Non-depolarizing paralytic - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "vecuronium maintenance dose",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Paralytic maintenance - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "cisatracurium infusion in ICU",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Long-term paralysis - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "dexmedetomidine infusion for sedation",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Alpha-2 agonist sedation - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "midazolam IV sedation dose",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Benzo sedation - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "lorazepam IV for status epilepticus",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Seizure termination - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "diazepam IV for active seizure",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Acute seizure - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "levetiracetam IV loading dose",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "IV anticonvulsant - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "valproic acid IV for seizure",
+    "best_source": "ToolAPISource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "IV valproate - specific protocol or calculation",
+    "query_type": "dosage",
+    "expected_result_type": "specific_dose"
+  },
+  {
+    "query": "mechanism of action of loop diuretics",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Diuretic mechanism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "how do thiazide diuretics work",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Thiazide mechanism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "ARB mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Angiotensin receptor blocker - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "how do direct renin inhibitors work",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Aliskiren mechanism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "aldosterone antagonist mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Spironolactone action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "alpha blocker mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Alpha-1 blocker - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "how do nitrates work for angina",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Nitrate mechanism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "mechanism of antiplatelet drugs",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Antiplatelet action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "how do direct thrombin inhibitors work",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Dabigatran mechanism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "factor Xa inhibitor mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Apixaban/rivaroxaban - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "SSRI mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Serotonin reuptake inhibition - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "SNRI mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Dual reuptake inhibition - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "tricyclic antidepressant mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "TCA action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "MAOI mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Monoamine oxidase inhibition - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "atypical antipsychotic mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "D2/5HT2A antagonism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "typical antipsychotic mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "D2 antagonism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "benzodiazepine mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "GABA-A modulation - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "how do Z-drugs work for sleep",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Zolpidem mechanism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "melatonin receptor agonist mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Ramelteon action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "orexin antagonist mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Suvorexant action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "stimulant mechanism for ADHD",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Amphetamine mechanism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "non-stimulant ADHD drug mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Atomoxetine action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "mood stabilizer mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Lithium/valproate - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "anticonvulsant mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Multiple mechanisms - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "GABA analogue mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Gabapentin/pregabalin - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "sodium channel blocker mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Phenytoin action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "carbonic anhydrase inhibitor mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Acetazolamide - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "anticholinergic mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Muscarinic antagonism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "antimuscarinic for overactive bladder",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Oxybutynin mechanism - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "alpha-1 blocker for BPH mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Tamsulosin action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "5-alpha reductase inhibitor mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Finasteride action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "PDE5 inhibitor mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Sildenafil action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "H2 receptor antagonist mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Ranitidine action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "prokinetic agent mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Metoclopramide action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "5-HT3 antagonist mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Ondansetron action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "laxative mechanisms",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Different types - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "antidiarrheal mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Loperamide action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "bile acid sequestrant mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Cholestyramine - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "PCSK9 inhibitor mechanism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Evolocumab action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "fibrate mechanism of action",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Gemfibrozil action - requires detailed mechanistic explanation",
+    "query_type": "concept",
+    "expected_result_type": "mechanism_explanation"
+  },
+  {
+    "query": "difference between heart failure with reduced vs preserved ejection fraction",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "HFrEF vs HFpEF - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "STEMI vs NSTEMI differences",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "ACS types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "stable vs unstable angina",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Angina classification - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "systolic vs diastolic heart failure",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "HF types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "primary vs secondary hypertension",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "HTN classification - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "type 1 vs type 2 myocardial infarction",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "MI types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "acute vs chronic kidney disease",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Kidney disease types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "prerenal vs intrinsic vs postrenal AKI",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "AKI classification - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "nephrotic vs nephritic syndrome",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Glomerular diseases - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "upper vs lower motor neuron lesions",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Neurological distinction - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "ischemic vs hemorrhagic stroke",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Stroke types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "Alzheimer's vs vascular dementia",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Dementia types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "Parkinson's disease vs parkinsonism",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Movement disorder distinction - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "generalized vs focal seizures",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Seizure classification - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "obstructive vs restrictive lung disease",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Pulmonary disease types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "asthma vs COPD differences",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Obstructive lung diseases - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "community acquired vs hospital acquired pneumonia",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Pneumonia types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "exudative vs transudative pleural effusion",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Pleural fluid classification - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "Crohn's disease vs ulcerative colitis",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "IBD types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "upper vs lower GI bleeding",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "GI bleed location - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "acute vs chronic pancreatitis",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Pancreatitis types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "viral vs bacterial meningitis",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Meningitis types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "type 1 vs type 2 diabetes pathophysiology",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Diabetes mechanisms - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "DKA vs HHS differences",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Hyperglycemic emergencies - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "hypothyroidism vs hyperthyroidism",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Thyroid disorders - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "Graves disease vs toxic multinodular goiter",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Hyperthyroid causes - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "primary vs secondary vs tertiary hypothyroidism",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Hypothyroid classification - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "osteoarthritis vs rheumatoid arthritis",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Arthritis types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "gout vs pseudogout",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Crystal arthropathies - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "SLE vs drug-induced lupus",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Lupus types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "Hodgkin vs non-Hodgkin lymphoma",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Lymphoma classification - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "acute vs chronic leukemia",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Leukemia types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "AML vs ALL differences",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Acute leukemia - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "CML vs CLL differences",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Chronic leukemia - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "iron deficiency vs anemia of chronic disease",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Anemia types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "megaloblastic vs non-megaloblastic anemia",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Anemia classification - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "hemolytic vs non-hemolytic anemia",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Anemia mechanisms - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "thrombocytopenia causes",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Low platelet mechanisms - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "primary vs secondary immunodeficiency",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Immune deficiency types - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "cellulitis vs erysipelas",
+    "best_source": "LLMSource",
+    "alternative_sources": [
+      "PDFKnowledgeSource"
+    ],
+    "reasoning": "Skin infections - requires clinical comparison and explanation",
+    "query_type": "concept",
+    "expected_result_type": "clinical_comparison"
+  },
+  {
+    "query": "explain drug clearance",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Clearance concept - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "what is area under the curve in pharmacokinetics",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "AUC explanation - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "loading dose vs maintenance dose",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Dosing concepts - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain zero order vs first order kinetics",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Elimination kinetics - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "what is minimum effective concentration",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "MEC concept - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "therapeutic index explanation",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Safety margin - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain prodrug concept",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Prodrug activation - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "what is drug accumulation",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Accumulation mechanism - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "dose-response relationship",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacodynamic concept - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain potency vs efficacy",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Drug comparison - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "what is an agonist vs antagonist",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Receptor activity - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "partial agonist concept",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Partial activity - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "inverse agonist explanation",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Negative activity - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "competitive vs non-competitive antagonism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Antagonist types - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain allosteric modulation",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Indirect binding - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "what is desensitization and downregulation",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Receptor adaptation - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain tachyphylaxis",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Rapid tolerance - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "drug-receptor binding",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Molecular interaction - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain affinity and selectivity",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Binding properties - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "what is a therapeutic window",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Safe dose range - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "narrow vs wide therapeutic index",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Safety comparison - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain peak and trough levels",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "TDM concepts - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "what is time to steady state",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Steady state concept - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "five half-lives to steady state rule",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pharmacokinetic principle - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain context-sensitive half-time",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Anesthetic concept - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "enterohepatic recirculation",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Drug recycling - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain active metabolites",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Metabolite activity - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "what is phase 1 vs phase 2 metabolism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Metabolism phases - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "explain conjugation reactions",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Phase 2 metabolism - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "oxidation reduction hydrolysis in drug metabolism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Phase 1 reactions - fundamental pharmacology concept",
+    "query_type": "concept",
+    "expected_result_type": "pharmacology_explanation"
+  },
+  {
+    "query": "when should antibiotics be used",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Antibiotic stewardship - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "how to prevent medication errors",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Patient safety - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "what is polypharmacy",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Multiple medication use - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "drug allergies vs side effects",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Adverse reaction types - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "how to assess medication adherence",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Compliance evaluation - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "what is deprescribing",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Medication reduction - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "generic vs brand name drugs",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Drug naming - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "biosimilar drugs explanation",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Biologic equivalents - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "how to counsel patients on medications",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Patient education - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "medication reconciliation importance",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Med rec process - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "over-the-counter vs prescription drugs",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "OTC vs Rx - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "controlled substance scheduling",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "DEA schedules - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "drug approval process",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "FDA approval - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "clinical trial phases",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Drug development - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "orphan drugs explanation",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Rare disease drugs - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "medication storage requirements",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Storage conditions - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "drug stability concerns",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Stability factors - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "medication disposal guidelines",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Safe disposal - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "pregnancy drug categories",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pregnancy classification - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "breastfeeding and medications",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Lactation considerations - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "pediatric drug dosing principles",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Pediatric pharmacology - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "geriatric prescribing considerations",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Elderly pharmacology - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "renal dose adjustment principles",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Renal dosing - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "hepatic dose adjustment principles",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Hepatic dosing - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "Drug-food interactions",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Food effects - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "alcohol and medication interactions",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Ethanol interactions - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "smoking effects on drug metabolism",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Tobacco interactions - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "herbal supplements and drug interactions",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Supplement interactions - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "medication adherence barriers",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Non-compliance causes - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "cost as barrier to medication adherence",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Affordability issues - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "antibiotic resistance mechanisms",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Resistance - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "vaccination principles",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Immunization - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "biologic drugs vs small molecules",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Drug types - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "personalized medicine",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Precision medicine - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "pharmacogenomics application",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Genetic testing - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "drug repurposing",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "New indications - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "right to try laws",
+    "best_source": "LLMSource",
+    "alternative_sources": [],
+    "reasoning": "Experimental drugs - requires broad medical knowledge",
+    "query_type": "general",
+    "expected_result_type": "general_explanation"
+  },
+  {
+    "query": "WHO essential drugs selection criteria explained",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "WHO criteria - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "essential medicines concept",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Essential drug concept - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "Model List of Essential Drugs purpose",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "List purpose - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "rational drug use principles",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Rational use - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "drug procurement guidelines",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Procurement - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "pharmaceutical supply management",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Supply chain - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "quality assurance of pharmaceuticals",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Quality standards - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "drug information resources",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Information sources - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "pharmacovigilance principles",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Safety monitoring - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "adverse drug reaction reporting",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "ADR reporting - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "medication safety systems",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Safety systems - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "behavioral health medication guidelines",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Mental health meds - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "substance use disorder pharmacotherapy",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Addiction treatment - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "opioid use disorder medications",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "OUD treatment - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "alcohol use disorder pharmacotherapy",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "AUD treatment - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "stimulant use disorder treatment",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Stimulant addiction - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "tobacco cessation medications",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Smoking cessation - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "harm reduction strategies",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Harm reduction - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "medication-assisted treatment principles",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "MAT principles - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "psychiatric medication management",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Psych med management - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "commonly abused drug categories",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Abuse potential - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "signs of substance intoxication",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Intoxication signs - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "withdrawal syndrome management",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Withdrawal treatment - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "overdose prevention strategies",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Overdose prevention - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "naloxone distribution programs",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Overdose reversal programs - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "drug scheduling rationale",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "DEA scheduling - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "prescription drug monitoring programs",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "PDMP systems - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "cardiovascular drug classification",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "CV drug categories - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "antihypertensive drug classes",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "HTN drug classes - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "antianginal medication options",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Angina treatment - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "heart failure medication classes",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "HF drug classes - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "antiarrhythmic drug classification",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Vaughan Williams - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "anticoagulant drug categories",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Anticoagulant types - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "antiplatelet therapy options",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Antiplatelet drugs - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  },
+  {
+    "query": "lipid-lowering medication classes",
+    "best_source": "PDFKnowledgeSource",
+    "alternative_sources": [
+      "LLMSource"
+    ],
+    "reasoning": "Dyslipidemia treatment - content from provided PDF documents",
+    "query_type": "document",
+    "expected_result_type": "document_content"
+  }
+]
