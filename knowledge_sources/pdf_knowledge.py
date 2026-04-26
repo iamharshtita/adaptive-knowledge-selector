@@ -523,6 +523,57 @@ class PDFKnowledgeSource:
             "sources": sources,
         }
 
+    def query(self, text: str, top_k: int = 3) -> Dict[str, Any]:
+        """
+        Unified query interface — takes any text query, searches the
+        PDF vector store, and returns a standardised result dict.
+
+        Automatically loads the vector store from disk if not already loaded.
+
+        Args:
+            text: Free-text query
+
+        Returns:
+            Dict with 'answer' (str summary) and 'results' (raw list)
+        """
+        # Auto-load vector store if not already initialised
+        if self.index is None:
+            store_dir = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                "data", "pdf_store",
+            )
+            if os.path.exists(os.path.join(store_dir, "pdf_index.faiss")):
+                self.load_vector_store(store_dir)
+            else:
+                return {
+                    "source": "PDFKnowledgeSource",
+                    "answer": "No PDF vector store found. Ingest PDFs first.",
+                    "results": [],
+                }
+
+        results = self.semantic_search(text, top_k=top_k)
+
+        if not results:
+            return {
+                "source": "PDFKnowledgeSource",
+                "answer": f"No relevant PDF chunks found for: '{text}'",
+                "results": [],
+            }
+
+        lines = []
+        for i, r in enumerate(results, 1):
+            src = r.get("metadata", {}).get("source", "?")
+            page = r.get("metadata", {}).get("page", "?")
+            score = r.get("score", 0)
+            snippet = r.get("text", "")[:180]
+            lines.append(f"{i}. [score={score:.3f}] {src} p.{page}\n   {snippet}…")
+
+        return {
+            "source": "PDFKnowledgeSource",
+            "answer": "\n".join(lines),
+            "results": results,
+        }
+
 
 # ---------------------------------------------------------------------------
 # CLI demo
@@ -530,54 +581,45 @@ class PDFKnowledgeSource:
 if __name__ == "__main__":
     import sys
 
-    pdf_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "pdfs")
+    print("=" * 70)
+    print("  PDF KNOWLEDGE SOURCE — Standalone Test")
+    print("=" * 70)
+
+    pdf = PDFKnowledgeSource()
+
+    # Load store
     store_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "pdf_store")
+    pdf_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "pdfs")
 
-    print("=" * 80)
-    print("PDF KNOWLEDGE SOURCE — DEMO")
-    print("=" * 80)
-
-    src = PDFKnowledgeSource(chunk_size=800, overlap=150)
-
-    # Load existing store or build fresh
     if os.path.exists(os.path.join(store_dir, "pdf_index.faiss")):
-        print("\n📂 Loading existing vector store …")
-        src.load_vector_store(store_dir)
+        pdf.load_vector_store(store_dir)
     elif os.path.isdir(pdf_dir):
-        print(f"\n📄 Ingesting PDFs from {pdf_dir} …")
-        chunks = src.ingest_directory(pdf_dir)
+        print("Building vector store from PDFs …")
+        chunks = pdf.ingest_directory(pdf_dir)
         if chunks:
-            src.build_vector_store(chunks)
-            src.save_vector_store(store_dir)
+            pdf.build_vector_store(chunks)
+            pdf.save_vector_store(store_dir)
         else:
-            print("No chunks extracted — exiting.")
-            sys.exit(1)
+            print("❌ No chunks extracted"); sys.exit(1)
     else:
-        print(f"No PDFs found at {pdf_dir}")
-        sys.exit(1)
+        print(f"❌ No PDFs found at {pdf_dir}"); sys.exit(1)
 
-    # Statistics
-    stats = src.get_statistics()
-    print("\n📊 Index statistics:")
-    for k, v in stats.items():
-        print(f"   {k}: {v}")
+    print(f"Index: {pdf.index.ntotal} chunks\n")
 
-    # Interactive queries
-    demo_queries = [
-        "What is knowledge representation and reasoning in medicine?",
-        "How are ontologies used in clinical decision support?",
-        "drug interaction detection methods",
+    queries = [
+        "What do KRR papers say about ontologies?",
+        "Drug interaction detection methods",
+        "Knowledge representation in healthcare",
     ]
 
-    for q in demo_queries:
-        print(f"\n{'─' * 70}")
+    for q in queries:
+        print(f"\n{'─' * 60}")
         print(f"🔎 Query: {q}")
-        results = src.hybrid_search(q, top_k=3)
-        for i, r in enumerate(results, 1):
-            print(f"\n  {i}. [score {r['score']:.3f}]  source={r['metadata'].get('source')}  "
-                  f"page={r['metadata'].get('page')}")
-            print(f"     {r['text'][:200]}…")
+        print(f"{'─' * 60}")
+        out = pdf.query(q, top_k=3)
+        print(out["answer"])
 
-    print("\n" + "=" * 80)
-    print("✅  Demo complete!")
-    print("=" * 80)
+    print(f"\n{'=' * 70}")
+    print("✅ Done")
+    print(f"{'=' * 70}")
+
