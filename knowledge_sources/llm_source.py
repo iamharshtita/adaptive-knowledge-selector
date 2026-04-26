@@ -225,9 +225,26 @@ Summary:"""
             Dict with 'answer' (str) and 'source' name
         """
         answer = self.answer_question(text)
+
+        # Simple confidence heuristic: check for uncertainty signals
+        confidence = 0.7  # default moderate confidence for LLM
+        if answer and len(answer) > 50:
+            confidence = 0.8  # longer answer = more confident
+
+        # Lower confidence if uncertainty words detected
+        uncertainty_words = ['not sure', 'unclear', 'cannot determine',
+                            'insufficient', 'unknown', 'may or may not']
+        if any(word in answer.lower() for word in uncertainty_words):
+            confidence = 0.3
+
+        # Check for error messages
+        if answer.startswith('Error'):
+            confidence = 0.0
+
         return {
             "source": "LLMSource (AWS Bedrock)",
             "answer": answer,
+            "confidence": confidence,
             "model": self.model_id,
             "region": self.region
         }
