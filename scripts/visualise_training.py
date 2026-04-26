@@ -32,7 +32,6 @@ from matplotlib.colors import LinearSegmentedColormap
 
 # ── Affinity ground-truth (mirrors reward_evaluator._SOURCE_AFFINITY) ──
 _AFFINITY = {
-    "TextKnowledgeSource":   ["research", "general"],
     "KnowledgeGraphSource":  ["interaction"],
     "ToolAPISource":         ["dosage", "label", "interaction"],
     "LLMSource":             ["concept", "general"],
@@ -40,14 +39,12 @@ _AFFINITY = {
 }
 
 SOURCE_ORDER = [
-    "TextKnowledgeSource",
     "KnowledgeGraphSource",
     "ToolAPISource",
     "LLMSource",
     "PDFKnowledgeSource",
 ]
 SOURCE_SHORT = {
-    "TextKnowledgeSource":   "Text (PubMed)",
     "KnowledgeGraphSource":  "KG (Hetionet)",
     "ToolAPISource":         "ToolAPI",
     "LLMSource":             "LLM (Groq)",
@@ -209,7 +206,7 @@ def build_dashboard(log_path: str, out_path: str):
                 val = mat[qi, si]
                 # Highlight correct cells
                 is_corr = is_correct(QTYPE_ORDER[qi], SOURCE_ORDER[si])
-                border = "★" if is_corr and val > 0.3 else ""
+                border = "*" if is_corr and val > 0.3 else ""
                 color = "#3fb950" if is_corr and val > 0.3 else text_c
                 ax.text(si, qi, f"{val:.0%}{border}", ha="center", va="center",
                         fontsize=8, color=color, fontweight="bold" if border else "normal")
@@ -261,9 +258,9 @@ def build_dashboard(log_path: str, out_path: str):
             is_corr = is_correct(QTYPE_ORDER[qi], SOURCE_ORDER[si])
             txt = f"{val:.0%}"
             if is_corr and val > 0.3:
-                txt += " ✓"
+                txt += " OK"
             elif not is_corr and val > 0.3:
-                txt += " ✗"
+                txt += " X"
             color = "white" if val > 0.5 else text_c
             ax7.text(si, qi, txt, ha="center", va="center",
                      fontsize=8, color=color, fontweight="bold")
@@ -283,7 +280,7 @@ def build_dashboard(log_path: str, out_path: str):
     os.makedirs(os.path.dirname(out_path) if os.path.dirname(out_path) else ".", exist_ok=True)
     fig.savefig(out_path, dpi=180, facecolor=dark_bg)
     plt.close(fig)
-    print(f"\n✅ Dashboard saved to: {out_path}\n")
+    print(f"\nDashboard saved to: {out_path}\n")
 
 
 if __name__ == "__main__":

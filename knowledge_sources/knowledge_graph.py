@@ -355,32 +355,65 @@ class KnowledgeGraphSource:
 
     def query(self, text: str) -> Dict[str, Any]:
         """
-        Unified query interface — takes free-text, extracts a drug name,
-        finds it in the graph, and returns its relationships.
+        Intelligent unified query interface — detects intent from the query text
+        and routes to the appropriate method for relevant results.
 
         Args:
-            text: Free-text query (should mention a drug)
+            text: Free-text query
 
         Returns:
-            Dict with 'answer' (str summary) and 'results' (raw neighbor list)
+            Dict with 'answer' (str summary) and 'results' (raw data)
         """
         import re
 
-        # Try to extract drug name from text
-        drug_name = None
-        # Pattern: look for known drug-like words
+        text_lower = text.lower()
+
+        # 1. Detect query intent
+        intent = "general"
+        if any(keyword in text_lower for keyword in ["interact", "interaction", "combine", "together with"]):
+            intent = "interaction"
+        elif any(keyword in text_lower for keyword in ["treat", "cure", "therapy", "medication for", "drug for"]):
+            intent = "treatment"
+        elif any(keyword in text_lower for keyword in ["target", "bind", "mechanism", "acts on"]):
+            intent = "target"
+        elif any(keyword in text_lower for keyword in ["side effect", "adverse", "reaction", "causes"]):
+            intent = "side_effects"
+
+        # 2. Extract drug or disease name from text
+        entity_name = None
         for word in re.findall(r'\b[A-Za-z]{3,}\b', text):
             if word.lower() in self._DRUG_ALIASES or self.search_drug_by_name(word):
-                drug_name = word
+                entity_name = word
                 break
 
-        if not drug_name:
+        if not entity_name:
             return {
                 "source": "KnowledgeGraphSource",
                 "answer": f"Could not identify a drug name in: '{text}'",
                 "results": [],
             }
 
+        # 3. Route to appropriate method based on intent
+        try:
+            if intent == "interaction":
+                return self._query_interactions(entity_name)
+            elif intent == "treatment":
+                return self._query_treatments(entity_name)
+            elif intent == "target":
+                return self._query_targets(entity_name)
+            elif intent == "side_effects":
+                return self._query_side_effects(entity_name)
+            else:
+                return self._query_general(entity_name)
+        except Exception as e:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"Error processing query: {e}",
+                "results": [],
+            }
+
+    def _query_interactions(self, drug_name: str) -> Dict[str, Any]:
+        """Query for drug-drug interactions."""
         matches = self.search_drug_by_name(drug_name)
         if not matches:
             return {
@@ -390,22 +423,244 @@ class KnowledgeGraphSource:
             }
 
         node_id = matches[0]
-        neighbors = self.get_neighbors(node_id)
 
-        # Format neighbors into readable lines
-        lines = [f"Drug: {drug_name} (node: {node_id})", f"Connected entities: {len(neighbors)}", ""]
-        for i, n in enumerate(neighbors[:15], 1):
-            data = self.graph.nodes.get(n, {})
-            name = data.get("name", n)
-            ntype = data.get("type", "Unknown")
-            lines.append(f"  {i}. [{ntype}] {name}")
-        if len(neighbors) > 15:
-            lines.append(f"  ... and {len(neighbors) - 15} more")
+        # Get only drug-drug interactions
+        interactions = []
+        for source, target, key, data in self.graph.out_edges(node_id, data=True, keys=True):
+            relation = data.get('relation', '')
+            target_type = self.graph.nodes.get(target, {}).get('type', '')
+            if target_type == 'Compound':
+                interactions.append({
+                    'drug': target,
+                    'name': self.graph.nodes.get(target, {}).get('name', target),
+                    'relation': relation
+                })
+
+        for source, target, key, data in self.graph.in_edges(node_id, data=True, keys=True):
+            relation = data.get('relation', '')
+            source_type = self.graph.nodes.get(source, {}).get('type', '')
+            if source_type == 'Compound':
+                interactions.append({
+                    'drug': source,
+                    'name': self.graph.nodes.get(source, {}).get('name', source),
+                    'relation': relation
+                })
+
+        if not interactions:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"No drug interactions found for '{drug_name}' in the knowledge graph.",
+                "results": [],
+            }
+
+        # Format results
+        lines = [
+            f"Drug Interactions for: {drug_name}",
+            f"Found {len(interactions)} interacting drugs:",
+            ""
+        ]
+        for i, inter in enumerate(interactions[:20], 1):
+            lines.append(f"  {i}. {inter['name']}")
+
+        if len(interactions) > 20:
+            lines.append(f"  ... and {len(interactions) - 20} more")
 
         return {
             "source": "KnowledgeGraphSource",
             "answer": "\n".join(lines),
-            "results": neighbors,
+            "results": interactions,
+        }
+
+    def _query_treatments(self, drug_name: str) -> Dict[str, Any]:
+        """Query for diseases that a drug treats."""
+        matches = self.search_drug_by_name(drug_name)
+        if not matches:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "results": [],
+            }
+
+        node_id = matches[0]
+
+        # Get diseases this drug treats
+        treatments = []
+        for _, target, _, data in self.graph.out_edges(node_id, data=True, keys=True):
+            relation = data.get('relation', '')
+            if relation in ['treats', 'palliates']:
+                target_type = self.graph.nodes.get(target, {}).get('type', '')
+                if target_type == 'Disease':
+                    treatments.append({
+                        'disease': target,
+                        'name': self.graph.nodes.get(target, {}).get('name', target),
+                        'relation': relation
+                    })
+
+        if not treatments:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"No disease treatments found for '{drug_name}' in the knowledge graph.",
+                "results": [],
+            }
+
+        # Format results
+        lines = [
+            f"Diseases treated by: {drug_name}",
+            f"Found {len(treatments)} diseases:",
+            ""
+        ]
+        for i, treat in enumerate(treatments[:15], 1):
+            lines.append(f"  {i}. {treat['name']} ({treat['relation']})")
+
+        if len(treatments) > 15:
+            lines.append(f"  ... and {len(treatments) - 15} more")
+
+        return {
+            "source": "KnowledgeGraphSource",
+            "answer": "\n".join(lines),
+            "results": treatments,
+        }
+
+    def _query_targets(self, drug_name: str) -> Dict[str, Any]:
+        """Query for drug targets (genes/proteins)."""
+        matches = self.search_drug_by_name(drug_name)
+        if not matches:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "results": [],
+            }
+
+        node_id = matches[0]
+
+        # Get genes/proteins this drug targets
+        targets = []
+        for _, target, _, data in self.graph.out_edges(node_id, data=True, keys=True):
+            relation = data.get('relation', '')
+            if relation in ['binds', 'downregulates', 'upregulates']:
+                target_type = self.graph.nodes.get(target, {}).get('type', '')
+                if target_type == 'Gene':
+                    targets.append({
+                        'target': target,
+                        'name': self.graph.nodes.get(target, {}).get('name', target),
+                        'relation': relation
+                    })
+
+        if not targets:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"No gene/protein targets found for '{drug_name}' in the knowledge graph.",
+                "results": [],
+            }
+
+        # Format results
+        lines = [
+            f"Gene/Protein targets for: {drug_name}",
+            f"Found {len(targets)} targets:",
+            ""
+        ]
+        for i, tgt in enumerate(targets[:15], 1):
+            lines.append(f"  {i}. {tgt['name']} ({tgt['relation']})")
+
+        if len(targets) > 15:
+            lines.append(f"  ... and {len(targets) - 15} more")
+
+        return {
+            "source": "KnowledgeGraphSource",
+            "answer": "\n".join(lines),
+            "results": targets,
+        }
+
+    def _query_side_effects(self, drug_name: str) -> Dict[str, Any]:
+        """Query for side effects of a drug."""
+        matches = self.search_drug_by_name(drug_name)
+        if not matches:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "results": [],
+            }
+
+        node_id = matches[0]
+
+        # Get side effects
+        side_effects = []
+        for _, target, _, data in self.graph.out_edges(node_id, data=True, keys=True):
+            relation = data.get('relation', '')
+            if relation == 'causes':
+                target_type = self.graph.nodes.get(target, {}).get('type', '')
+                if target_type == 'Side Effect':
+                    side_effects.append({
+                        'effect': target,
+                        'name': self.graph.nodes.get(target, {}).get('name', target)
+                    })
+
+        if not side_effects:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"No side effects found for '{drug_name}' in the knowledge graph.",
+                "results": [],
+            }
+
+        # Format results
+        lines = [
+            f"Side effects for: {drug_name}",
+            f"Found {len(side_effects)} side effects:",
+            ""
+        ]
+        for i, eff in enumerate(side_effects[:20], 1):
+            lines.append(f"  {i}. {eff['name']}")
+
+        if len(side_effects) > 20:
+            lines.append(f"  ... and {len(side_effects) - 20} more")
+
+        return {
+            "source": "KnowledgeGraphSource",
+            "answer": "\n".join(lines),
+            "results": side_effects,
+        }
+
+    def _query_general(self, drug_name: str) -> Dict[str, Any]:
+        """General query - return summary of all relationships."""
+        matches = self.search_drug_by_name(drug_name)
+        if not matches:
+            return {
+                "source": "KnowledgeGraphSource",
+                "answer": f"Drug '{drug_name}' not found in Hetionet graph.",
+                "results": [],
+            }
+
+        node_id = matches[0]
+
+        # Categorize neighbors by type
+        by_type = {}
+        for neighbor in self.get_neighbors(node_id):
+            ntype = self.graph.nodes.get(neighbor, {}).get('type', 'Unknown')
+            if ntype not in by_type:
+                by_type[ntype] = []
+            by_type[ntype].append({
+                'id': neighbor,
+                'name': self.graph.nodes.get(neighbor, {}).get('name', neighbor)
+            })
+
+        # Format results
+        lines = [
+            f"Overview for: {drug_name}",
+            f"Total connected entities: {sum(len(v) for v in by_type.values())}",
+            ""
+        ]
+
+        for entity_type, entities in sorted(by_type.items()):
+            lines.append(f"  {entity_type}: {len(entities)}")
+            for entity in entities[:3]:
+                lines.append(f"    - {entity['name']}")
+            if len(entities) > 3:
+                lines.append(f"    ... and {len(entities) - 3} more")
+
+        return {
+            "source": "KnowledgeGraphSource",
+            "answer": "\n".join(lines),
+            "results": by_type,
         }
 
 
@@ -414,7 +669,7 @@ if __name__ == "__main__":
     import sys
 
     print("=" * 70)
-    print("  KNOWLEDGE GRAPH SOURCE — Standalone Test")
+    print("  KNOWLEDGE GRAPH SOURCE - Standalone Test")
     print("=" * 70)
 
     kg = KnowledgeGraphSource()
@@ -428,7 +683,7 @@ if __name__ == "__main__":
     elif os.path.exists(json_path):
         kg.load_hetionet(json_path)
     else:
-        print("❌ Hetionet data not found. Run: python scripts/setup_hetionet.py")
+        print("Error: Hetionet data not found. Run: python scripts/setup_hetionet.py")
         sys.exit(1)
 
     print(f"Graph: {kg.graph.number_of_nodes():,} nodes, {kg.graph.number_of_edges():,} edges\n")
@@ -440,13 +695,13 @@ if __name__ == "__main__":
     ]
 
     for q in queries:
-        print(f"\n{'─' * 60}")
-        print(f"🔎 Query: {q}")
-        print(f"{'─' * 60}")
+        print(f"\n{'-' * 60}")
+        print(f"Query: {q}")
+        print(f"{'-' * 60}")
         out = kg.query(q)
         print(out["answer"])
 
     print(f"\n{'=' * 70}")
-    print("✅ Done")
+    print("Done")
     print(f"{'=' * 70}")
 

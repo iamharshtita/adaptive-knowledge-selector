@@ -57,21 +57,12 @@ def format_results(source_name, results, kg_source=None):
             page = r.get("metadata", {}).get("page", "?")
             lines.append(f"  {i}. [score={score:.3f}] {src} p.{page}")
             lines.append(f"     {truncate(r['text'], 200)}")
-    elif source_name == "TextKnowledgeSource" and isinstance(results, list):
-        if not results:
-            lines.append("  (no PubMed articles found)")
-        for i, r in enumerate(results, 1):
-            lines.append(f"  {i}. {r.get('title', 'No title')}")
-            lines.append(f"     PMID: {r.get('pmid', '?')}  Journal: {r.get('journal', '?')}")
-            abstract = r.get("abstract", "")
-            if abstract:
-                lines.append(f"     {truncate(abstract, 250)}")
     elif source_name == "LLMSource" and isinstance(results, str):
         lines.append(f"  {truncate(results, 400)}")
     elif source_name == "ToolAPISource" and isinstance(results, dict):
         fn = results.get("function", "?")
         answer = results.get("answer", "")
-        lines.append(f"  🔧 Function: {fn}")
+        lines.append(f"  Function: {fn}")
         lines.append(f"  {answer}")
     elif source_name == "KnowledgeGraphSource" and isinstance(results, list):
         if not results:
@@ -117,16 +108,16 @@ def main():
 
     online_learning = not args.no_learn
 
-    # ── Load encoder + agent ──
-    print("\n🔧 Loading encoder …")
+    # Load encoder and agent
+    print("\nLoading encoder...")
     encoder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-    agent = AdaptiveSelector(input_dim=384, num_sources=5, lr=0.0005)
+    agent = AdaptiveSelector(input_dim=384, num_sources=4, lr=0.0005)
     if os.path.exists(MODEL_PATH):
         agent.load(MODEL_PATH)
-        print(f"📂 Loaded trained model from {MODEL_PATH}")
+        print(f"Loaded trained model from {MODEL_PATH}")
     else:
-        print("⚠️  No trained model found — using random weights")
+        print("Warning: No trained model found - using random weights")
         print("   Run `python scripts/train_rl_agent.py` first for better results")
 
     # ── Load knowledge sources ──
@@ -138,20 +129,20 @@ def main():
     epsilon = 0.05  # Low exploration during inference
     queries_processed = 0
 
-    # ── Interactive loop ──
-    print(f"\n{'═' * 70}")
-    print(f"  ADAPTIVE KNOWLEDGE SELECTOR — Interactive Mode")
-    print(f"  Online learning: {'ON ✅' if online_learning else 'OFF'}")
-    print(f"{'═' * 70}")
+    # Interactive loop
+    print(f"\n{'=' * 70}")
+    print(f"  ADAPTIVE KNOWLEDGE SELECTOR - Interactive Mode")
+    print(f"  Online learning: {'ON' if online_learning else 'OFF'}")
+    print(f"{'=' * 70}")
     print("  Type your medical question below. Type 'quit' to exit.")
     print("  Type 'qtable' to see learned Q-values for the last query.")
-    print(f"{'═' * 70}\n")
+    print(f"{'=' * 70}\n")
 
     last_embedding = None
 
     while True:
         try:
-            query = input("🔎 Query: ").strip()
+            query = input("Query: ").strip()
         except (KeyboardInterrupt, EOFError):
             break
 
@@ -185,23 +176,20 @@ def main():
         print(f"  Selected:   {source_name}  (Q={qtable[source_name]:+.4f})")
 
         # 4. Execute query
-        # Use regex-based drug extraction instead of hardcoded list
-        drug = fetch_drug_name(query)
-
         print(f"  Querying …")
-        results = system.query_source(source_name, query, drug)
+        results = system.query_source(source_name, query)
 
         # 5. Compute reward
         reward = RewardEvaluator.compute_reward(query, source_name, results)
 
-        # 6. Display results
-        print(f"\n  {'─' * 60}")
-        print(f"  📋 Results from {source_name}  (reward: {reward:.2f})")
-        print(f"  {'─' * 60}")
+        # Display results
+        print(f"\n  {'-' * 60}")
+        print(f"  Results from {source_name}  (reward: {reward:.2f})")
+        print(f"  {'-' * 60}")
         print(format_results(source_name, results, kg_source=getattr(system, 'kg_source', None)))
-        print(f"  {'─' * 60}\n")
+        print(f"  {'-' * 60}\n")
 
-        # 7. Online learning
+        # Online learning
         if online_learning:
             memory.push(emb, action_idx, reward)
             queries_processed += 1
@@ -210,21 +198,21 @@ def main():
                 states, actions, rewards = memory.sample(8)
                 loss = agent.train_step(states, actions, rewards)
                 agent.update_target_network()
-                print(f"  🧠 Online learning: loss={loss:.4f} (buffer={len(memory)})")
+                print(f"  Online learning: loss={loss:.4f} (buffer={len(memory)})")
 
             # Save periodically
             if queries_processed % 5 == 0:
                 agent.save(MODEL_PATH)
-                print(f"  💾 Weights saved ({queries_processed} queries processed)")
+                print(f"  Weights saved ({queries_processed} queries processed)")
 
         print()
 
-    # ── Save on exit ──
+    # Save on exit
     if online_learning and queries_processed > 0:
         agent.save(MODEL_PATH)
-        print(f"\n💾 Final weights saved after {queries_processed} queries.")
+        print(f"\nFinal weights saved after {queries_processed} queries.")
 
-    print("\n👋 Goodbye!\n")
+    print("\nGoodbye!\n")
 
 
 if __name__ == "__main__":

@@ -532,9 +532,10 @@ class PDFKnowledgeSource:
 
         Args:
             text: Free-text query
+            top_k: Number of results to retrieve (default: 3)
 
         Returns:
-            Dict with 'answer' (str summary) and 'results' (raw list)
+            Dict with consolidated 'answer', best match details, and score
         """
         # Auto-load vector store if not already initialised
         if self.index is None:
@@ -548,6 +549,9 @@ class PDFKnowledgeSource:
                 return {
                     "source": "PDFKnowledgeSource",
                     "answer": "No PDF vector store found. Ingest PDFs first.",
+                    "score": 0.0,
+                    "pdf_source": None,
+                    "page": None,
                     "results": [],
                 }
 
@@ -557,21 +561,41 @@ class PDFKnowledgeSource:
             return {
                 "source": "PDFKnowledgeSource",
                 "answer": f"No relevant PDF chunks found for: '{text}'",
+                "score": 0.0,
+                "pdf_source": None,
+                "page": None,
                 "results": [],
             }
 
-        lines = []
-        for i, r in enumerate(results, 1):
-            src = r.get("metadata", {}).get("source", "?")
-            page = r.get("metadata", {}).get("page", "?")
-            score = r.get("score", 0)
-            snippet = r.get("text", "")[:180]
-            lines.append(f"{i}. [score={score:.3f}] {src} p.{page}\n   {snippet}…")
+        # Get the best match (highest score)
+        best_match = results[0]
+        pdf_source = best_match.get("metadata", {}).get("source", "Unknown")
+        page_num = best_match.get("metadata", {}).get("page", "Unknown")
+        score = best_match.get("score", 0.0)
+        content = best_match.get("text", "")
+
+        # Calculate approximate line numbers (assuming ~80 chars per line)
+        lines_in_chunk = len(content.split('\n'))
+        approx_start_line = (page_num - 1) * 50 if isinstance(page_num, int) else 0
+        approx_end_line = approx_start_line + lines_in_chunk
+
+        # Create consolidated answer
+        consolidated_answer = (
+            f"[Best Match - Score: {score:.4f}]\n"
+            f"Source: {pdf_source}\n"
+            f"Page: {page_num}\n"
+            f"Approx. Lines: {approx_start_line}-{approx_end_line}\n\n"
+            f"Content:\n{content[:500]}{'...' if len(content) > 500 else ''}"
+        )
 
         return {
             "source": "PDFKnowledgeSource",
-            "answer": "\n".join(lines),
-            "results": results,
+            "answer": consolidated_answer,
+            "score": score,
+            "pdf_source": pdf_source,
+            "page": page_num,
+            "line_range": f"{approx_start_line}-{approx_end_line}",
+            "results": results,  # Keep all results for advanced users
         }
 
 
@@ -607,9 +631,12 @@ if __name__ == "__main__":
     print(f"Index: {pdf.index.ntotal} chunks\n")
 
     queries = [
-        "What do KRR papers say about ontologies?",
-        "Drug interaction detection methods",
-        "Knowledge representation in healthcare",
+        "What criteria does the WHO use for selecting essential drugs?",
+        "What is the seventh list of essential drugs according to WHO Technical Report Series 825?",
+        "What are the guidelines for establishing a national programme for essential drugs?",
+        "What medication types are covered in BHMEDS-R3 for behavioral health?",
+        "What categories of drugs does Médecins Sans Frontières classify in their essential drugs guide?",
+        "What are the acute health risks associated with marijuana according to NIDA?"
     ]
 
     for q in queries:
