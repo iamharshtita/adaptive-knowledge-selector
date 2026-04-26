@@ -33,12 +33,17 @@ _DRUG_STOPWORDS = {
 }
 
 def fetch_drug_name(text: str) -> Optional[str]:
-    pattern = r'\b(?:for|of|about|on|with|regarding|check|lookup|search|is)\b\s+([A-Za-z][A-Za-z0-9\-]{1,30}(?:\s+[A-Za-z][A-Za-z0-9\-]{1,30}){0,2})'
-    for m in re.finditer(pattern, text, re.IGNORECASE):
-        match = m.group(1).strip()
-        if match.split()[0].lower() not in _DRUG_STOPWORDS:
-            return match
-    # fallback
+    # explicit preposition anchors
+    for pat in [
+        r'\b(?:for|of|about|on|with|regarding|check|lookup|search|is|called|named|drug|medication|medicine)\b\s+([A-Za-z][A-Za-z0-9\-]{1,30}(?:\s+[A-Za-z][A-Za-z0-9\-]{1,30}){0,2})',
+        r'([A-Za-z][A-Za-z0-9\-]{1,30}(?:\s+[A-Za-z][A-Za-z0-9\-]{1,30}){0,2})\s+(?:drug|medication|medicine|label|indications?|side\s*effects?|adverse)',
+        r'(?:tell\s+me\s+about|show\s+me|look\s+up|what\s+is)\s+([A-Za-z][A-Za-z0-9\-]{1,30}(?:\s+[A-Za-z][A-Za-z0-9\-]{1,30}){0,2})',
+    ]:
+        for m in re.finditer(pat, text, re.IGNORECASE):
+            match = m.group(1).strip()
+            if match.split()[0].lower() not in _DRUG_STOPWORDS:
+                return match
+    # fallback: last meaningful word
     for word in reversed(re.findall(r'\b[A-Za-z]{3,}\b', text)):
         if word.lower() not in _DRUG_STOPWORDS:
             return word
@@ -52,76 +57,133 @@ def fetch_weight_kg(text: str) -> Optional[float]:
         text, re.IGNORECASE
     )
     child_val = float(child_match.group(1) or child_match.group(2)) if child_match else None
-    for m in re.findall(r'(\d+(?:\.\d+)?)\s*kg', text, re.IGNORECASE):
+
+    # explicit kg
+    for m in re.findall(r'(\d+(?:\.\d+)?)\s*(?:kg|kilograms?|kgs?)\b', text, re.IGNORECASE):
         val = float(m)
         if child_val is None or val != child_val:
             return val
+
+    # pounds / lbs → convert to kg
+    for m in re.findall(r'(\d+(?:\.\d+)?)\s*(?:lbs?|pounds?)\b', text, re.IGNORECASE):
+        val = round(float(m) * 0.453592, 2)
+        if child_val is None or val != child_val:
+            return val
+
+    # "weighs/weight X" with no unit — assume kg if plausible
+    m = re.search(r'(?:weigh[st]?|body\s*weight)[^\d]*(\d+(?:\.\d+)?)', text, re.IGNORECASE)
+    if m:
+        val = float(m.group(1))
+        if 20 <= val <= 300 and (child_val is None or val != child_val):
+            return val
+
     return None
 
 def fetch_height(text: str) -> Optional[float]:
-    # returns height in metres regardless of input unit
-    for m in re.findall(r'(\d+(?:\.\d+)?)\s*m(?!g|l|m)', text, re.IGNORECASE):
-        val = float(m)
-        if 1.0 <= val <= 3.0:
-            return val
-    for m in re.findall(r'(\d+(?:\.\d+)?)\s*cm', text, re.IGNORECASE):
+    # explicit metres / meters / metre
+    for pat in [
+        r'(\d+(?:\.\d+)?)\s*(?:meters?|metres?)\b',
+        r'(\d+(?:\.\d+)?)\s*m(?!g|l|m)\b',
+    ]:
+        for m in re.findall(pat, text, re.IGNORECASE):
+            val = float(m)
+            if 1.0 <= val <= 3.0:
+                return val
+
+    # centimetres
+    for m in re.findall(r'(\d+(?:\.\d+)?)\s*(?:cm|centimeters?|centimetres?)\b', text, re.IGNORECASE):
         val = float(m)
         if 100.0 <= val <= 250.0:
             return round(val / 100, 4)
+
+    # feet and inches  e.g. "5'10"", "5 ft 10 in", "5 feet 10 inches"
+    m = re.search(
+        r"""(\d+)\s*(?:ft|feet|foot|')\s*(\d+)\s*(?:in(?:ches?)?|")?""",
+        text, re.IGNORECASE
+    )
+    if m:
+        total_inches = int(m.group(1)) * 12 + int(m.group(2))
+        return round(total_inches * 0.0254, 4)
+
+    # feet only  e.g. "6 ft", "6 feet"
+    m = re.search(r'(\d+(?:\.\d+)?)\s*(?:ft|feet|foot)\b', text, re.IGNORECASE)
+    if m:
+        val = float(m.group(1))
+        if 3.0 <= val <= 8.0:
+            return round(val * 0.3048, 4)
+
+    # "height is/of X" with bare number in plausible cm range
+    m = re.search(r'height\s+(?:is\s+|of\s+)?(\d+(?:\.\d+)?)', text, re.IGNORECASE)
+    if m:
+        val = float(m.group(1))
+        if 100 <= val <= 250:
+            return round(val / 100, 4)
+        if 1.0 <= val <= 3.0:
+            return val
+
     return None
 
 def fetch_age(text: str) -> Optional[int]:
     for pat in [
-        r'(\d+)\s*(?:years?[\s\-]old|yo\b|yrs?\b|y/o)',
-        r'age[d]?\s+(\d+)',
+        r'(\d+)\s*[-\s]?(?:years?[\s\-]old|yo\b|yrs?\b|y/o)',
+        r'age[d]?\s*(?:is\s*|of\s*|:?\s*)(\d+)',
+        r"i(?:'?m| am)\s+(\d+)",
+        r'(?:she|he)\s+is\s+(\d+)',
         r'(\d+)\s*years?\b',
     ]:
         m = re.search(pat, text, re.IGNORECASE)
         if m:
-            return int(m.group(1))
+            val = int(m.group(1))
+            if 0 < val < 130:
+                return val
     return None
 
 def fetch_serum_creatinine(text: str) -> Optional[float]:
-    m = re.search(
-        r'(?:creatinine\s*(?:of\s*|level[s]?\s*|=\s*)?(\d+(?:\.\d+)?)'
-        r'|(\d+(?:\.\d+)?)\s*(?:mg/dl\s*)?(?:serum\s*)?creatinine)',
-        text, re.IGNORECASE
-    )
-    if m:
-        return float(m.group(1) or m.group(2))
-    m2 = re.search(r'\bCr\s+(\d+(?:\.\d+)?)', text)
-    if m2:
-        return float(m2.group(1))
+    for pat in [
+        r'(?:serum\s+)?creatinine\s*(?:level[s]?\s*)?(?:is\s*|of\s*|=\s*|:?\s*)(\d+(?:\.\d+)?)',
+        r'(\d+(?:\.\d+)?)\s*mg/d[lL]\s*(?:serum\s*)?creatinine',
+        r'(\d+(?:\.\d+)?)\s*(?:serum\s*)?creatinine',
+        r'\bS?Cr\s*(?:is\s*|=\s*|:?\s*)(\d+(?:\.\d+)?)',
+        r'\bCr\s+(\d+(?:\.\d+)?)',
+    ]:
+        m = re.search(pat, text, re.IGNORECASE)
+        if m:
+            return float(m.group(1))
     return None
 
 def fetch_is_female(text: str) -> Optional[bool]:
-    if re.search(r'\b(?:female|woman|women|girl|she|her)\b', text, re.IGNORECASE):
+    if re.search(r'\b(?:female|woman|women|girl|she|her|f\b)\b', text, re.IGNORECASE):
         return True
-    if re.search(r'\b(?:male|man|men|boy|he|his)\b', text, re.IGNORECASE):
+    if re.search(r'\b(?:male|man|men|boy|he|his|m\b)\b', text, re.IGNORECASE):
         return False
     return None
 
 def fetch_adult_dose_mg(text: str) -> Optional[float]:
-    m = re.search(r'adult\s+dose\s+(?:is\s+|of\s+)?(\d+(?:\.\d+)?)\s*mg', text, re.IGNORECASE)
-    if m:
-        return float(m.group(1))
+    for pat in [
+        r'adult\s+dose\s+(?:is\s+|of\s+)?(\d+(?:\.\d+)?)\s*mg',
+        r'(?:standard|usual|normal|prescribed)\s+dose\s+(?:is\s+|of\s+)?(\d+(?:\.\d+)?)\s*mg',
+        r'dose\s+(?:is\s+|of\s+)?(\d+(?:\.\d+)?)\s*mg',
+    ]:
+        m = re.search(pat, text, re.IGNORECASE)
+        if m:
+            return float(m.group(1))
     all_mg = re.findall(r'(\d+(?:\.\d+)?)\s*mg', text, re.IGNORECASE)
     return float(all_mg[0]) if all_mg else None
 
 def fetch_child_weight_kg(text: str) -> Optional[float]:
-    m = re.search(
-        r'(?:child|pediatric|infant|baby|kid)\s+(?:weighing\s+|weight\s+)?(\d+(?:\.\d+)?)\s*kg',
-        text, re.IGNORECASE
-    )
-    if m:
-        return float(m.group(1))
-    m2 = re.search(r'(\d+(?:\.\d+)?)\s*kg\s+(?:child|pediatric|infant|baby|kid)', text, re.IGNORECASE)
-    if m2:
-        return float(m2.group(1))
+    for pat in [
+        r'(?:child|pediatric|infant|baby|kid)\s+(?:weighing\s+|weigh[st]\s+|weight\s+(?:is\s+|of\s+)?)?(\d+(?:\.\d+)?)\s*(?:kg|kilograms?)',
+        r'(\d+(?:\.\d+)?)\s*(?:kg|kilograms?)\s+(?:child|pediatric|infant|baby|kid)',
+        r'(\d+(?:\.\d+)?)\s*(?:kg|kilograms?).{0,30}(?:child|pediatric|infant|baby|kid)',
+    ]:
+        m = re.search(pat, text, re.IGNORECASE)
+        if m:
+            return float(m.group(1))
+    # fallback: any kg when child keyword present
     if re.search(r'\b(?:child|pediatric|infant|baby|kid)\b', text, re.IGNORECASE):
-        m3 = re.search(r'(\d+(?:\.\d+)?)\s*kg', text, re.IGNORECASE)
-        if m3:
-            return float(m3.group(1))
+        m = re.search(r'(\d+(?:\.\d+)?)\s*(?:kg|kilograms?)', text, re.IGNORECASE)
+        if m:
+            return float(m.group(1))
     return None
 
 class ToolAPISource:
