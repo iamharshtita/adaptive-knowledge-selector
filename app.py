@@ -74,7 +74,7 @@ font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !imp
 }
 
 .stApp {
-background: #09090b !important;
+background: #006A67 !important;
 background-attachment: fixed !important;
 min-height: 100vh;
 }
@@ -83,7 +83,7 @@ min-height: 100vh;
 content: '';
 position: fixed;
 inset: 0;
-background-image: radial-gradient(rgba(39,39,42,0.6) 1px, transparent 1px);
+background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
 background-size: 32px 32px;
 pointer-events: none;
 z-index: 0;
@@ -134,7 +134,7 @@ font-weight: 500 !important;
 font-size: 0.84rem !important;
 letter-spacing: 0.01em !important;
 padding: 12px 28px !important;
-color: #71717a !important;
+color: #a8b8cc !important;
 transition: all 0.15s ease !important;
 background: transparent !important;
 border: none !important;
@@ -171,7 +171,7 @@ transition: all 0.15s ease !important;
 
 .stButton > button[kind="primary"] {
 background: #f59e0b !important;
-color: #09090b !important;
+color: #003161 !important;
 border: none !important;
 font-weight: 700 !important;
 box-shadow: 0 1px 0 rgba(0,0,0,0.4), 0 2px 8px rgba(245,158,11,0.2) !important;
@@ -216,8 +216,8 @@ opacity: 1 !important;
 div[data-baseweb="input"] input::placeholder,
 .stTextInput input::placeholder,
 [data-testid="stTextInput"] input::placeholder {
-color: #52525b !important;
--webkit-text-fill-color: #52525b !important;
+color: #94a3b8 !important;
+-webkit-text-fill-color: #94a3b8 !important;
 }
 
 div[data-baseweb="input"] input:focus,
@@ -254,7 +254,7 @@ font-family: 'Space Mono', monospace !important;
 }
 
 [data-testid="stMetricLabel"] {
-color: #71717a !important;
+color: #a8b8cc !important;
 font-size: 0.68rem !important;
 font-weight: 600 !important;
 text-transform: uppercase !important;
@@ -262,7 +262,7 @@ letter-spacing: 0.1em !important;
 }
 
 [data-testid="stMetricDelta"] {
-color: #52525b !important;
+color: #94a3b8 !important;
 font-size: 0.74rem !important;
 }
 
@@ -357,7 +357,7 @@ border-color: #27272a !important;
 [data-testid="stAlert"] { border-radius: 14px !important; backdrop-filter: blur(20px) !important; }
 
 /* ─── CAPTION ─────────────────────────────────────────────────────────────── */
-[data-testid="stCaptionContainer"] { color: rgba(255,255,255,0.32) !important; font-size: 0.77rem !important; }
+[data-testid="stCaptionContainer"] { color: rgba(255,255,255,0.65) !important; font-size: 0.77rem !important; }
 
 /* ─── HERO HEADER ─────────────────────────────────────────────────────────── */
 .aks-hero {
@@ -394,7 +394,7 @@ display: block;
 }
 
 .aks-sub {
-color: #52525b;
+color: #94a3b8;
 font-size: 0.76rem;
 font-weight: 400;
 letter-spacing: 0.02em;
@@ -476,7 +476,7 @@ font-size: 0.67rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.14em;
-color: #71717a;
+color: #a8b8cc;
 margin: 24px 0 12px;
 display: flex;
 align-items: center;
@@ -501,7 +501,7 @@ font-size: 0.67rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.12em;
-color: rgba(255,255,255,0.38);
+color: rgba(255,255,255,0.72);
 margin-bottom: 5px;
 }
 
@@ -554,7 +554,7 @@ font-size: 0.68rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.1em;
-color: rgba(255,255,255,0.38);
+color: rgba(255,255,255,0.72);
 margin-bottom: 8px;
 display: block;
 }
@@ -615,7 +615,7 @@ font-size: 0.7rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.1em;
-color: rgba(255,255,255,0.4);
+color: rgba(255,255,255,0.75);
 margin-top: 4px;
 display: block;
 }
@@ -842,7 +842,7 @@ def chart_qvalues(qtable, selected):
             tickfont=dict(size=10, color="rgba(255,255,255,0.35)"),
             title=dict(
                 text="← worse    Q-Score    better →",
-                font=dict(size=9, color="rgba(255,255,255,0.25)"),
+                font=dict(size=9, color="rgba(255,255,255,0.55)"),
                 standoff=4,
             ),
         ),
@@ -859,20 +859,42 @@ def chart_kg_graph(query: str, answer: str):
     """Network graph visualization for Knowledge Graph query results."""
     import re, math
 
+    # Patterns that flag section headers / query echoes — not real drug entities
+    _SKIP_RE = re.compile(
+        r'for\s*:|interactions?\s+(for|of)|results?\s+for|found\s+\d+|'
+        r'no\s+results|source\s*:|answer\s*:|query\s*:',
+        re.IGNORECASE,
+    )
+    query_norm = re.sub(r'[^a-z0-9 ]', '', query.lower()).strip()
+
     lines = [l.strip() for l in answer.split('\n') if l.strip()]
     entities = []
     for line in lines:
         clean = re.sub(r'^[-\u2022*\d.]+\s*', '', line).strip()
-        if 3 < len(clean) < 55 and not clean.endswith(':') and \
-           sum(1 for w in ['the ', 'this ', 'has ', 'have ', 'is a ', 'are '] if w in clean.lower()) == 0:
-            entity = clean.split('(')[0].split(' - ')[0].strip()[:40]
-            if entity:
-                entities.append(entity)
+        if not (3 < len(clean) < 55):
+            continue
+        if clean.endswith(':'):
+            continue
+        if _SKIP_RE.search(clean):
+            continue
+        # Skip lines that substantially repeat the query
+        clean_norm = re.sub(r'[^a-z0-9 ]', '', clean.lower()).strip()
+        if clean_norm in query_norm or query_norm in clean_norm:
+            continue
+        if sum(1 for w in ['the ', 'this ', 'has ', 'have ', 'is a ', 'are '] if w in clean.lower()) > 0:
+            continue
+        entity = clean.split('(')[0].split(' - ')[0].strip()[:40]
+        if entity:
+            entities.append(entity)
+
     entities = list(dict.fromkeys(entities))[:14]
     if not entities:
         return None
 
-    center_label = query  # full query text, no truncation
+    n_nodes = len(entities) + 1   # entities + center hub
+    n_edges = len(entities)        # one spoke per entity
+
+    center_label = query
     positions = {}
     for i, e in enumerate(entities):
         angle = 2 * math.pi * i / len(entities) - math.pi / 2
@@ -905,9 +927,11 @@ def chart_kg_graph(query: str, answer: str):
         hovertext=[center_label], hoverinfo='text', showlegend=False,
     ))
     return _lay(fig,
-        title=dict(text='Knowledge Graph — Entity Relationship Map',
-                   font=dict(size=12, color='rgba(255,255,255,0.45)', family='Space Grotesk'),
-                   x=0),
+        title=dict(
+            text=f'Knowledge Graph — Entity Map  <span style="font-size:11px;color:#FDFAF6;font-weight:500;">{n_nodes} nodes · {n_edges} edges</span>',
+            font=dict(size=12, color='rgba(255,255,255,0.75)', family='Space Grotesk'),
+            x=0,
+        ),
         height=500, showlegend=False,
         margin=dict(l=40, r=40, t=52, b=60),
         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8],
@@ -918,7 +942,7 @@ def chart_kg_graph(query: str, answer: str):
             text="Query → extracted entities from the Knowledge Graph answer",
             xref="paper", yref="paper", x=0.5, y=-0.05,
             showarrow=False,
-            font=dict(size=9, color="rgba(255,255,255,0.25)", family="Space Grotesk"),
+            font=dict(size=9, color="rgba(255,255,255,0.55)", family="Space Grotesk"),
         )],
     )
 
@@ -965,7 +989,7 @@ def chart_per_source_metrics(sm):
         barmode="group",
         bargap=0.25,
         bargroupgap=0.08,
-        title={"text": "Per-Source Classification Metrics", "font": {"size": 12, "color": "rgba(255,255,255,0.45)"}},
+        title={"text": "Per-Source Classification Metrics", "font": {"size": 12, "color": "rgba(255,255,255,0.75)"}},
         yaxis={**_AXIS, "title": "Score", "range": [0, 1.18], "tickformat": ".1f",
                "dtick": 0.2},
         xaxis={**_AXIS, "tickfont": {"color": "rgba(255,255,255,0.65)", "size": 11}},
@@ -1001,7 +1025,7 @@ def chart_loss(losses):
         return _lay(fig, title="Training Loss", height=270,
                     annotations=[{"text": "No loss data", "showarrow": False,
                                   "xref": "paper", "yref": "paper", "x": 0.5, "y": 0.5,
-                                  "font": {"color": "rgba(255,255,255,0.3)"}}])
+                                  "font": {"color": "rgba(255,255,255,0.6)"}}])
     fig = go.Figure(go.Scatter(
         x=list(range(1, len(losses) + 1)), y=losses, mode="lines",
         line={"color": "#4ade80", "width": 2.2},
@@ -1162,7 +1186,7 @@ with tab_query:
             'color:#f59e0b;margin-bottom:10px;">⏳ Processing query…</div>'
             + "".join([
                 f'<div style="display:flex;align-items:center;gap:10px;padding:5px 0;'
-                f'font-size:0.78rem;color:#52525b;">'
+                f'font-size:0.78rem;color:#94a3b8;">'
                 f'<span style="width:7px;height:7px;border-radius:50%;background:#27272a;flex-shrink:0;"></span>'
                 f'{step}</div>'
                 for step in [
@@ -1222,7 +1246,7 @@ with tab_query:
             f'<span style="padding:4px 12px;border-radius:5px;font-size:0.78rem;font-weight:700;'
             f'text-transform:uppercase;letter-spacing:0.08em;background:#27272a;color:#e4e4e7;">'
             f'{res["qtype"]}</span>'
-            f'<span style="font-size:0.8rem;color:#52525b;line-height:1.6;">'
+            f'<span style="font-size:0.8rem;color:#94a3b8;line-height:1.6;">'
             f'Classified as <strong style="color:#a1a1aa;">{res["qtype"]}</strong> — '
             f'guides which knowledge sources are likely most relevant.</span>'
             f'</div>',
@@ -1233,8 +1257,8 @@ with tab_query:
         section_head("2 · Routing Pipeline")
         pipeline = [
             ("💬", "Query",       res["query"],                                           "#a1a1aa"),
-            ("📐", "Embedding",   "Encoded to 384-dim vector via sentence-transformer",   "#71717a"),
-            ("🧠", "DQN Scoring", f"Q-values computed for {len(res['qtable'])} sources","#71717a"),
+            ("📐", "Embedding",   "Encoded to 384-dim vector via sentence-transformer",   "#a8b8cc"),
+            ("🧠", "DQN Scoring", f"Q-values computed for {len(res['qtable'])} sources","#a8b8cc"),
             ("✅",      "Selected",    f"{icon} {short}  —  Q = {best_q:+.3f}", clr),
         ]
         rows = "".join(
@@ -1242,7 +1266,7 @@ with tab_query:
             f'{"" if i==len(pipeline)-1 else "border-bottom:1px solid #27272a;"}">'
             f'<span style="font-size:1rem;margin-top:1px;flex-shrink:0;">{ico}</span>'
             f'<div><div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;'
-            f'letter-spacing:0.1em;color:#52525b;margin-bottom:2px;">{lbl}</div>'
+            f'letter-spacing:0.1em;color:#94a3b8;margin-bottom:2px;">{lbl}</div>'
             f'<div style="font-size:0.82rem;color:{dc};">{dtl}</div></div></div>'
             for i, (ico, lbl, dtl, dc) in enumerate(pipeline)
         )
@@ -1268,10 +1292,10 @@ with tab_query:
             f'<div style="background:#18181b;border:1px solid #27272a;border-left:3px solid #f59e0b;'
             f'border-radius:8px;padding:14px 18px;font-size:0.82rem;color:#a1a1aa;line-height:1.8;">'
             f'<div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;'
-            f'color:#52525b;margin-bottom:8px;">How the DQN Decided</div>'
+            f'color:#94a3b8;margin-bottom:8px;">How the DQN Decided</div>'
             f'The query embedding was fed through the DQN policy network, which outputs a Q-value '
             f'representing expected reward per source.<br>'
-            f'<span style="color:#71717a;">All scores: {scores_html}</span><br>'
+            f'<span style="color:#a8b8cc;">All scores: {scores_html}</span><br>'
             f'<strong style="color:{clr};">{icon} {short}</strong> had the highest Q-score '
             f'(<code style="color:#22c55e;background:#0f2318;padding:1px 6px;border-radius:3px;">'
             f'Q = {best_q:+.3f}</code>) — selected as optimal source.'
@@ -1294,9 +1318,9 @@ with tab_query:
             if kg_fig:
                 section_head("6 · Knowledge Graph — Entity Map")
                 st.markdown(
-                    f'<div style="font-size:0.78rem;color:#52525b;margin-bottom:8px;line-height:1.6;">'
+                    f'<div style="font-size:0.78rem;color:#cbd5e1;margin-bottom:8px;line-height:1.6;">'
                     f'Entities extracted from the KG answer for query: '
-                    f'<em style="color:#a1a1aa;">"{res["query"]}"</em></div>',
+                    f'<em style="color:#e2e8f0;">"{res["query"]}"</em></div>',
                     unsafe_allow_html=True,
                 )
                 st.plotly_chart(kg_fig, use_container_width=True,
