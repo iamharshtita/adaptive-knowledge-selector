@@ -380,8 +380,18 @@ class KnowledgeGraphSource:
             intent = "side_effects"
 
         # 2. Extract drug or disease name from text
+        # Common stop words to skip
+        STOP_WORDS = {'what', 'are', 'is', 'the', 'of', 'for', 'with', 'does', 'can', 'how',
+                      'when', 'where', 'why', 'which', 'who', 'will', 'would', 'could',
+                      'should', 'have', 'has', 'had', 'do', 'did', 'been', 'being', 'am'}
+
         entity_name = None
-        for word in re.findall(r'\b[A-Za-z]{3,}\b', text):
+        words = re.findall(r'\b[A-Za-z]{4,}\b', text)  # 4+ chars only
+
+        # Search from end (drug names usually appear at end of query)
+        for word in reversed(words):
+            if word.lower() in STOP_WORDS:
+                continue
             if word.lower() in self._DRUG_ALIASES or self.search_drug_by_name(word):
                 entity_name = word
                 break
