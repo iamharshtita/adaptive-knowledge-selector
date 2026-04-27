@@ -580,13 +580,9 @@ class PDFKnowledgeSource:
         approx_start_line = (page_num - 1) * 50 if isinstance(page_num, int) else 0
         approx_end_line = approx_start_line + lines_in_chunk
 
-        # Create consolidated answer
+        # Create consolidated answer from best match only
         consolidated_answer = (
-            f"[Best Match - Score: {score:.4f}]\n"
-            f"Source: {pdf_source}\n"
-            f"Page: {page_num}\n"
-            f"Approx. Lines: {approx_start_line}-{approx_end_line}\n\n"
-            f"Content:\n{content[:500]}{'...' if len(content) > 500 else ''}"
+            f"[Score: {score:.4f} | {pdf_source}, p.{page_num}]\n\n{content}"
         )
 
         return {

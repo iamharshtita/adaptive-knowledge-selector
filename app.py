@@ -24,16 +24,16 @@ sys.path.insert(0, ROOT)
 
 # ── Source metadata ───────────────────────────────────────────────────────────
 SOURCE_COLORS = {
-    "KnowledgeGraphSource": "#38bdf8",
-    "ToolAPISource":        "#4ade80",
-    "LLMSource":            "#c084fc",
-    "PDFKnowledgeSource":   "#fbbf24",
+    "KnowledgeGraphSource": "#0369a1",
+    "ToolAPISource":        "#047857",
+    "LLMSource":            "#6d28d9",
+    "PDFKnowledgeSource":   "#b45309",
 }
 SOURCE_RGB = {
-    "KnowledgeGraphSource": "56,189,248",
-    "ToolAPISource":        "74,222,128",
-    "LLMSource":            "192,132,252",
-    "PDFKnowledgeSource":   "251,191,36",
+    "KnowledgeGraphSource": "3,105,161",
+    "ToolAPISource":        "4,120,87",
+    "LLMSource":            "109,40,217",
+    "PDFKnowledgeSource":   "180,83,9",
 }
 SOURCE_ICONS = {
     "KnowledgeGraphSource": "🕸️",
@@ -67,14 +67,15 @@ st.set_page_config(
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
+/* ── BASE ──────────────────────────────────────────────────────────────────── */
 html, body, .stApp {
-font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 .stApp {
-background: #006A67 !important;
+background: linear-gradient(145deg, #f0f4ff 0%, #fafbff 40%, #f5f0ff 100%) !important;
 background-attachment: fixed !important;
 min-height: 100vh;
 }
@@ -83,8 +84,10 @@ min-height: 100vh;
 content: '';
 position: fixed;
 inset: 0;
-background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
-background-size: 32px 32px;
+background-image:
+  linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+background-size: 40px 40px;
 pointer-events: none;
 z-index: 0;
 }
@@ -96,32 +99,32 @@ padding-top: 1.5rem !important;
 max-width: 1300px;
 }
 
-/* ─── HIDE CHROME ─────────────────────────────────────────────────────────── */
+/* ── HIDE CHROME ───────────────────────────────────────────────────────────── */
 header[data-testid="stHeader"],
-footer,
-#MainMenu,
+footer, #MainMenu,
 [data-testid="stToolbar"],
 [data-testid="stDecoration"] { display: none !important; }
 
-/* ─── SCROLLBAR ───────────────────────────────────────────────────────────── */
+/* ── SCROLLBAR ─────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(99,179,237,0.3); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(99,179,237,0.6); }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #818cf8; }
 
-/* ─── TYPOGRAPHY ──────────────────────────────────────────────────────────── */
-h1,h2,h3,h4,h5,h6 { color: rgba(255,255,255,0.93) !important; font-weight: 700 !important; letter-spacing: -0.02em; }
-p, li { color: rgba(255,255,255,0.72); }
-code { background: rgba(255,255,255,0.07) !important; color: #a78bfa !important; border-radius: 4px !important; padding: 1px 6px !important; }
-pre code { color: rgba(255,255,255,0.8) !important; }
+/* ── TYPOGRAPHY ────────────────────────────────────────────────────────────── */
+h1,h2,h3,h4,h5,h6 { color: #0f172a !important; font-weight: 700 !important; letter-spacing: -0.02em; }
+p, li { color: #334155; }
+code { background: #ede9fe !important; color: #6d28d9 !important; border-radius: 4px !important; padding: 1px 7px !important; font-family: 'JetBrains Mono', monospace !important; }
+pre code { color: #1e293b !important; background: #f8fafc !important; }
+strong { color: #0f172a; }
 
-/* ─── TABS ────────────────────────────────────────────────────────────────── */
+/* ── TABS ──────────────────────────────────────────────────────────────────── */
 .stTabs [data-baseweb="tab-list"] {
 background: transparent !important;
 border-radius: 0 !important;
 padding: 0 !important;
 border: none !important;
-border-bottom: 1px solid #27272a !important;
+border-bottom: 2px solid #e2e8f0 !important;
 gap: 0 !important;
 justify-content: center !important;
 align-items: flex-end !important;
@@ -131,11 +134,11 @@ overflow: hidden !important;
 .stTabs [data-baseweb="tab"] {
 border-radius: 0 !important;
 font-weight: 500 !important;
-font-size: 0.84rem !important;
-letter-spacing: 0.01em !important;
+font-size: 0.875rem !important;
+letter-spacing: 0.005em !important;
 padding: 12px 28px !important;
-color: #a8b8cc !important;
-transition: all 0.15s ease !important;
+color: #64748b !important;
+transition: all 0.18s ease !important;
 background: transparent !important;
 border: none !important;
 border-bottom: 2px solid transparent !important;
@@ -144,14 +147,14 @@ flex-shrink: 0 !important;
 }
 
 .stTabs [data-baseweb="tab"]:hover {
-color: #a1a1aa !important;
-background: rgba(39,39,42,0.4) !important;
+color: #4f46e5 !important;
+background: rgba(99,102,241,0.04) !important;
 }
 
 .stTabs [aria-selected="true"] {
 background: transparent !important;
-color: #f59e0b !important;
-border-bottom: 2px solid #f59e0b !important;
+color: #4f46e5 !important;
+border-bottom: 2px solid #4f46e5 !important;
 font-weight: 700 !important;
 }
 
@@ -159,38 +162,38 @@ font-weight: 700 !important;
 .stTabs [data-baseweb="tab-border"] { display: none !important; }
 .stTabs [data-baseweb="tab-list"]::-webkit-scrollbar { display: none !important; }
 
-/* ─── BUTTON ──────────────────────────────────────────────────────────────── */
+/* ── BUTTON ────────────────────────────────────────────────────────────────── */
 .stButton > button {
-border-radius: 8px !important;
+border-radius: 10px !important;
 font-weight: 600 !important;
-font-size: 0.88rem !important;
-letter-spacing: 0.03em !important;
-padding: 0.6rem 1.5rem !important;
-transition: all 0.15s ease !important;
+font-size: 0.9rem !important;
+letter-spacing: 0.01em !important;
+padding: 0.65rem 1.6rem !important;
+transition: all 0.18s ease !important;
 }
 
 .stButton > button[kind="primary"] {
-background: #f59e0b !important;
-color: #003161 !important;
+background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+color: #ffffff !important;
 border: none !important;
 font-weight: 700 !important;
-box-shadow: 0 1px 0 rgba(0,0,0,0.4), 0 2px 8px rgba(245,158,11,0.2) !important;
+box-shadow: 0 2px 8px rgba(99,102,241,0.35), 0 1px 0 rgba(255,255,255,0.2) inset !important;
 }
 
 .stButton > button[kind="primary"]:hover {
-background: #d97706 !important;
-transform: none !important;
-box-shadow: 0 2px 12px rgba(245,158,11,0.35) !important;
+background: linear-gradient(135deg, #4338ca, #4f46e5) !important;
+transform: translateY(-1px) !important;
+box-shadow: 0 6px 20px rgba(99,102,241,0.45) !important;
 }
 
-/* ─── TEXT INPUT ──────────────────────────────────────────────────────────── */
-/* ─── TEXT INPUT ─────────────────────────────────────────────────────── */
+/* ── TEXT INPUT ────────────────────────────────────────────────────────────── */
 div[data-baseweb="input"],
 div[data-baseweb="base-input"],
 [data-testid="stTextInput"] div[data-baseweb="input"] {
-background: #18181b !important;
-border: 1px solid #3f3f46 !important;
-border-radius: 8px !important;
+background: #ffffff !important;
+border: 1.5px solid #e2e8f0 !important;
+border-radius: 12px !important;
+box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
 }
 
 div[data-baseweb="input"] input,
@@ -199,17 +202,17 @@ div[data-baseweb="base-input"] input,
 [data-testid="stTextInput"] input,
 .stTextInput > div > div > input,
 input[aria-label] {
-background: #18181b !important;
-color: #fafafa !important;
-caret-color: #fafafa !important;
-border-radius: 8px !important;
+background: #ffffff !important;
+color: #0f172a !important;
+caret-color: #4f46e5 !important;
+border-radius: 12px !important;
 font-size: 1rem !important;
 font-weight: 400 !important;
-padding: 12px 16px !important;
-border: 1px solid #3f3f46 !important;
+padding: 13px 18px !important;
+border: none !important;
 box-shadow: none !important;
-transition: border-color 0.15s ease !important;
--webkit-text-fill-color: #fafafa !important;
+transition: all 0.18s ease !important;
+-webkit-text-fill-color: #0f172a !important;
 opacity: 1 !important;
 }
 
@@ -223,179 +226,186 @@ color: #94a3b8 !important;
 div[data-baseweb="input"] input:focus,
 .stTextInput input:focus,
 [data-testid="stTextInput"] input:focus {
-border-color: #f59e0b !important;
-box-shadow: 0 0 0 2px rgba(245,158,11,0.15) !important;
-background: #1c1c1f !important;
--webkit-text-fill-color: #fafafa !important;
-color: #fafafa !important;
+-webkit-text-fill-color: #0f172a !important;
+color: #0f172a !important;
 outline: none !important;
 }
 
-/* ─── METRIC CARDS ────────────────────────────────────────────────────────── */
+div[data-baseweb="input"]:focus-within,
+[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
+border-color: #4f46e5 !important;
+box-shadow: 0 0 0 3px rgba(99,102,241,0.12), 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+
+/* ── METRIC CARDS ──────────────────────────────────────────────────────────── */
 [data-testid="stMetric"] {
-background: #18181b !important;
-border: 1px solid #27272a !important;
-border-radius: 10px !important;
-padding: 18px 20px !important;
-transition: border-color 0.15s ease !important;
+background: #ffffff !important;
+border: 1px solid #e2e8f0 !important;
+border-top: 3px solid #4f46e5 !important;
+border-radius: 14px !important;
+padding: 20px 22px !important;
+transition: all 0.18s ease !important;
+box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
 }
 
 [data-testid="stMetric"]:hover {
-border-color: #3f3f46 !important;
+box-shadow: 0 8px 24px rgba(99,102,241,0.12) !important;
+transform: translateY(-2px) !important;
+border-color: #c7d2fe !important;
 }
 
 [data-testid="stMetricValue"] {
-color: #fafafa !important;
-font-size: 1.65rem !important;
-font-weight: 700 !important;
-letter-spacing: -0.03em;
+color: #0f172a !important;
+font-size: 1.7rem !important;
+font-weight: 800 !important;
+letter-spacing: -0.04em;
 line-height: 1.2 !important;
-font-family: 'Space Mono', monospace !important;
+font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 [data-testid="stMetricLabel"] {
-color: #a8b8cc !important;
+color: #64748b !important;
 font-size: 0.68rem !important;
-font-weight: 600 !important;
+font-weight: 700 !important;
 text-transform: uppercase !important;
 letter-spacing: 0.1em !important;
 }
 
 [data-testid="stMetricDelta"] {
-color: #94a3b8 !important;
+color: #64748b !important;
 font-size: 0.74rem !important;
 }
 
-/* ─── DIVIDER ─────────────────────────────────────────────────────────────── */
+/* ── DIVIDER ───────────────────────────────────────────────────────────────── */
 hr {
 border: none !important;
 height: 1px !important;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent) !important;
+background: linear-gradient(90deg, transparent, #e2e8f0, transparent) !important;
 margin: 28px 0 !important;
 }
 
-/* ─── EXPANDER ────────────────────────────────────────────────────────────── */
+/* ── EXPANDER ──────────────────────────────────────────────────────────────── */
 [data-testid="stExpander"] {
-background: #18181b !important;
-border: 1px solid #27272a !important;
-border-radius: 10px !important;
+background: #ffffff !important;
+border: 1px solid #e2e8f0 !important;
+border-radius: 12px !important;
 overflow: hidden;
+box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
 }
 
-[data-testid="stExpander"] details {
-background: #18181b !important;
-}
-
+[data-testid="stExpander"] details,
 [data-testid="stExpander"] summary {
-color: #a1a1aa !important;
+background: #ffffff !important;
+color: #475569 !important;
 font-weight: 600 !important;
 padding: 14px 18px !important;
-background: #18181b !important;
 }
 
 [data-testid="stExpander"] summary:hover {
-color: #fafafa !important;
-background: #1c1c1f !important;
+color: #0f172a !important;
+background: #f8fafc !important;
 }
 
 [data-testid="stExpander"] [data-testid="stExpanderDetails"],
 [data-testid="stExpander"] .streamlit-expanderContent {
-background: #18181b !important;
-color: #d4d4d8 !important;
+background: #ffffff !important;
+color: #334155 !important;
 }
 
-/* ─── TOOLTIPS (help ? icon) ──────────────────────────────────────────────── */
+/* ── TOOLTIPS ──────────────────────────────────────────────────────────────── */
 [data-testid="stTooltipContent"],
-div[data-baseweb="tooltip"] div,
-div[data-baseweb="popover"] div[data-baseweb="typo-paragraphsmall"] {
-background: #27272a !important;
-color: #d4d4d8 !important;
-border: 1px solid #3f3f46 !important;
-border-radius: 6px !important;
-}
-
-div[data-baseweb="tooltip"],
-div[data-baseweb="popover"] {
-background: transparent !important;
-}
-
 div[data-baseweb="tooltip"] > div:first-child,
 div[data-baseweb="popover"] > div:first-child {
-background: #27272a !important;
-color: #d4d4d8 !important;
-border: 1px solid #3f3f46 !important;
-border-radius: 6px !important;
-box-shadow: 0 4px 16px rgba(0,0,0,0.5) !important;
+background: #1e293b !important;
+color: #f1f5f9 !important;
+border: 1px solid #334155 !important;
+border-radius: 8px !important;
+box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
 }
 
-/* ─── DATAFRAME / TABLE ──────────────────────────────────────────────────── */
+/* ── DATAFRAME ─────────────────────────────────────────────────────────────── */
 [data-testid="stDataFrame"] {
-border-radius: 10px !important;
+border-radius: 12px !important;
 overflow: hidden !important;
-border: 1px solid #27272a !important;
-box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03) !important;
+border: 1px solid #e2e8f0 !important;
+box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
 }
 
-/* Force dark bg on all table/dataframe elements */
-[data-testid="stDataFrame"] iframe,
-[data-testid="stDataFrame"] > div {
-border-radius: 10px !important;
-}
+/* ── CHECKBOX ──────────────────────────────────────────────────────────────── */
+[data-testid="stCheckbox"] label { color: #475569 !important; font-size: 0.87rem !important; }
 
-.stDataFrame [data-testid="glideDataEditor"],
-.stDataFrame th,
-.stDataFrame td {
-background: #18181b !important;
-color: #d4d4d8 !important;
-border-color: #27272a !important;
-}
+/* ── ALERTS ────────────────────────────────────────────────────────────────── */
+[data-testid="stAlert"] { border-radius: 12px !important; }
 
-/* ─── CHECKBOX ────────────────────────────────────────────────────────────── */
-[data-testid="stCheckbox"] label { color: rgba(255,255,255,0.62) !important; font-size: 0.87rem !important; }
+/* ── CAPTION ───────────────────────────────────────────────────────────────── */
+[data-testid="stCaptionContainer"] { color: #64748b !important; font-size: 0.77rem !important; }
 
-/* ─── ALERTS ──────────────────────────────────────────────────────────────── */
-[data-testid="stAlert"] { border-radius: 14px !important; backdrop-filter: blur(20px) !important; }
+/* ── SELECT / SPINNER ──────────────────────────────────────────────────────── */
+[data-testid="stSpinner"] { color: #4f46e5 !important; }
 
-/* ─── CAPTION ─────────────────────────────────────────────────────────────── */
-[data-testid="stCaptionContainer"] { color: rgba(255,255,255,0.65) !important; font-size: 0.77rem !important; }
-
-/* ─── HERO HEADER ─────────────────────────────────────────────────────────── */
+/* ── HERO HEADER ───────────────────────────────────────────────────────────── */
 .aks-hero {
 display: flex;
 align-items: center;
 justify-content: space-between;
 flex-wrap: wrap;
 gap: 20px;
-padding: 28px 36px;
-background: #18181b;
-border-radius: 10px;
-border: 1px solid #27272a;
-border-left: 3px solid #f59e0b;
-margin-bottom: 20px;
+padding: 32px 40px;
+background: linear-gradient(135deg, #4f46e5 0%, #6366f1 40%, #8b5cf6 80%, #a78bfa 100%);
+border-radius: 20px;
+margin-bottom: 24px;
+position: relative;
+overflow: hidden;
+box-shadow: 0 8px 32px rgba(99,102,241,0.35), 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.aks-hero-left { display: flex; align-items: center; gap: 16px; }
+.aks-hero::before {
+content: '';
+position: absolute;
+inset: 0;
+background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 60%),
+  radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 50%);
+pointer-events: none;
+}
+
+.aks-hero::after {
+content: '';
+position: absolute;
+top: -60px; right: -60px;
+width: 280px; height: 280px;
+border-radius: 50%;
+background: rgba(255,255,255,0.06);
+pointer-events: none;
+}
+
+.aks-hero-left { display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; }
 
 .aks-icon {
-font-size: 2.4rem;
+font-size: 2.8rem;
 display: inline-block;
-filter: none;
-animation: none;
+filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+animation: aks-float 4s ease-in-out infinite alternate;
+}
+
+@keyframes aks-float {
+from { transform: translateY(0px) rotate(-2deg); }
+to   { transform: translateY(-6px) rotate(2deg); }
 }
 
 .aks-title {
-font-size: 1.55rem;
-font-weight: 700;
+font-size: 1.7rem;
+font-weight: 800;
 letter-spacing: -0.03em;
-color: #fafafa;
+color: #ffffff;
 margin: 0 0 4px;
 line-height: 1.2;
 display: block;
+text-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 
 .aks-sub {
-color: #94a3b8;
-font-size: 0.76rem;
+color: rgba(255,255,255,0.75);
+font-size: 0.78rem;
 font-weight: 400;
 letter-spacing: 0.02em;
 margin: 0;
@@ -405,79 +415,73 @@ display: block;
 .aks-badges {
 display: flex;
 align-items: center;
-gap: 6px;
+gap: 8px;
 flex-wrap: wrap;
+position: relative;
+z-index: 1;
 }
 
 .aks-badge {
-padding: 4px 10px;
-border-radius: 5px;
-font-size: 0.68rem;
-font-weight: 600;
-letter-spacing: 0.06em;
+padding: 5px 12px;
+border-radius: 100px;
+font-size: 0.7rem;
+font-weight: 700;
+letter-spacing: 0.04em;
 text-transform: uppercase;
-border: 1px solid;
+background: rgba(255,255,255,0.15);
+color: rgba(255,255,255,0.92);
+border: 1px solid rgba(255,255,255,0.2);
+backdrop-filter: blur(8px);
 display: inline-block;
 }
 
-/* ─── RESULT CARD ─────────────────────────────────────────────────────────── */
+/* ── RESULT / SOURCE CARD ──────────────────────────────────────────────────── */
 .aks-src-card {
-border-radius: 20px;
-padding: 22px 26px;
-backdrop-filter: blur(30px);
+border-radius: 16px;
+padding: 22px 24px;
+background: #ffffff;
 position: relative;
 overflow: hidden;
-box-shadow: 0 8px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.12);
-transition: all 0.28s ease;
+box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+border: 1px solid #e2e8f0;
+transition: all 0.22s ease;
 }
 
-.aks-src-card::before {
-content: '';
-position: absolute;
-top: 0; left: 0; right: 0;
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
-pointer-events: none;
+.aks-src-card:hover {
+box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+transform: translateY(-2px);
 }
 
-/* ─── ANSWER CARD ─────────────────────────────────────────────────────────── */
+/* ── ANSWER CARD ───────────────────────────────────────────────────────────── */
 .aks-answer-outer {
-border-radius: 18px;
-padding: 2px;
-margin-top: 16px;
+border-radius: 14px;
+padding: 0;
+margin-top: 12px;
+border: 1px solid #e2e8f0;
+overflow: hidden;
+box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .aks-answer-inner {
-border-radius: 16px;
+border-radius: 0;
 padding: 22px 26px;
-background: rgba(8,14,28,0.85);
-backdrop-filter: blur(24px);
-font-family: 'Cascadia Code','Fira Code','JetBrains Mono',monospace;
-font-size: 0.865rem;
-line-height: 1.78;
-color: rgba(255,255,255,0.84);
+background: #f8fafc;
+font-family: 'JetBrains Mono', 'Fira Code', monospace;
+font-size: 0.875rem;
+line-height: 1.8;
+color: #1e293b;
 white-space: pre-wrap;
 word-break: break-word;
-position: relative;
 }
 
-.aks-answer-inner::before {
-content: '';
-position: absolute;
-top: 0; left: 0; right: 0;
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-pointer-events: none;
-}
-
-/* ─── MISC COMPONENTS ─────────────────────────────────────────────────────── */
+/* ── SECTION HEADING ───────────────────────────────────────────────────────── */
 .aks-section-head {
 font-size: 0.67rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.14em;
-color: #a8b8cc;
-margin: 24px 0 12px;
+color: #64748b;
+margin: 28px 0 12px;
 display: flex;
 align-items: center;
 gap: 8px;
@@ -485,7 +489,7 @@ gap: 8px;
 
 .aks-section-head::before {
 content: '▸';
-color: #f59e0b;
+color: #4f46e5;
 font-size: 0.75rem;
 }
 
@@ -493,29 +497,30 @@ font-size: 0.75rem;
 content: '';
 flex: 1;
 height: 1px;
-background: #27272a;
+background: #e2e8f0;
 }
 
+/* ── MISC ──────────────────────────────────────────────────────────────────── */
 .aks-card-label {
 font-size: 0.67rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.12em;
-color: rgba(255,255,255,0.72);
+color: #64748b;
 margin-bottom: 5px;
 }
 
 .aks-qtype {
 display: inline-block;
 padding: 3px 11px;
-border-radius: 7px;
+border-radius: 6px;
 font-size: 0.68rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.09em;
-background: rgba(255,255,255,0.06);
-color: rgba(255,255,255,0.5);
-border: 1px solid rgba(255,255,255,0.09);
+background: #ede9fe;
+color: #5b21b6;
+border: 1px solid #ddd6fe;
 }
 
 .aks-pill {
@@ -527,7 +532,8 @@ border-radius: 100px;
 font-size: 0.82rem;
 font-weight: 700;
 letter-spacing: 0.02em;
-border: 1px solid;
+border: 1.5px solid;
+background: #f8fafc;
 }
 
 .aks-stat {
@@ -535,16 +541,16 @@ display: inline-flex;
 align-items: baseline;
 gap: 4px;
 padding: 4px 12px;
-border-radius: 10px;
-background: rgba(255,255,255,0.05);
-border: 1px solid rgba(255,255,255,0.08);
+border-radius: 8px;
+background: #f1f5f9;
+border: 1px solid #e2e8f0;
 font-size: 0.82rem;
-color: rgba(255,255,255,0.65);
+color: #475569;
 font-weight: 600;
 }
 
 .aks-stat strong {
-color: rgba(255,255,255,0.92);
+color: #0f172a;
 font-size: 0.9rem;
 font-weight: 800;
 }
@@ -554,7 +560,7 @@ font-size: 0.68rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.1em;
-color: rgba(255,255,255,0.72);
+color: #64748b;
 margin-bottom: 8px;
 display: block;
 }
@@ -562,47 +568,38 @@ display: block;
 .aks-ex-q {
 padding: 7px 13px;
 margin: 4px 0;
-border-radius: 10px;
+border-radius: 8px;
 font-size: 0.8rem;
-color: rgba(255,255,255,0.55);
-border: 1px solid rgba(255,255,255,0.06);
-background: rgba(255,255,255,0.02);
+color: #475569;
+border: 1px solid #e2e8f0;
+background: #f8fafc;
+transition: all 0.15s ease;
 }
 
+.aks-ex-q:hover { background: #f1f5f9; border-color: #c7d2fe; color: #0f172a; }
+
 @keyframes aks-glow {
-0%,100% { box-shadow: 0 0 14px var(--gc, rgba(99,179,237,0.4)); }
-50%      { box-shadow: 0 0 32px var(--gc, rgba(99,179,237,0.7)); }
+0%,100% { box-shadow: 0 0 0 2px var(--gc, rgba(99,102,241,0.2)); }
+50%      { box-shadow: 0 0 0 4px var(--gc, rgba(99,102,241,0.35)); }
 }
 
 .aks-glow { animation: aks-glow 2.8s ease-in-out infinite; }
 
-/* ─── ABOUT PAGE CARDS ────────────────────────────────────────────────────── */
+/* ── ABOUT CARDS ───────────────────────────────────────────────────────────── */
 .aks-about-card {
-background: rgba(255,255,255,0.033);
-border: 1px solid rgba(255,255,255,0.07);
-border-radius: 18px;
+background: #ffffff;
+border: 1px solid #e2e8f0;
+border-radius: 16px;
 padding: 24px 28px;
-backdrop-filter: blur(24px);
-box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 margin-bottom: 16px;
-position: relative;
-overflow: hidden;
-}
-
-.aks-about-card::before {
-content: '';
-position: absolute;
-top: 0; left: 0; right: 0;
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent);
-pointer-events: none;
 }
 
 .aks-big-stat {
-font-size: 2.4rem;
+font-size: 2.6rem;
 font-weight: 900;
-letter-spacing: -0.04em;
-background: linear-gradient(135deg, #60a5fa, #a78bfa);
+letter-spacing: -0.05em;
+background: linear-gradient(135deg, #4f46e5, #8b5cf6);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 background-clip: text;
@@ -615,7 +612,7 @@ font-size: 0.7rem;
 font-weight: 700;
 text-transform: uppercase;
 letter-spacing: 0.1em;
-color: rgba(255,255,255,0.75);
+color: #64748b;
 margin-top: 4px;
 display: block;
 }
@@ -625,30 +622,25 @@ display: flex;
 align-items: flex-start;
 gap: 16px;
 padding: 16px 20px;
-border-radius: 14px;
-border: 1px solid rgba(255,255,255,0.06);
-background: rgba(255,255,255,0.02);
+border-radius: 12px;
+border: 1px solid #e2e8f0;
+background: #f8fafc;
 margin-bottom: 10px;
+transition: all 0.15s ease;
 }
 
-.aks-source-icon-big {
-font-size: 2rem;
-flex-shrink: 0;
-margin-top: 2px;
-}
+.aks-source-row:hover { background: #f1f5f9; border-color: #c7d2fe; }
+
+.aks-source-icon-big { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
 
 .aks-source-name {
 font-size: 0.95rem;
 font-weight: 700;
-color: rgba(255,255,255,0.9);
+color: #0f172a;
 margin-bottom: 4px;
 }
 
-.aks-source-desc {
-font-size: 0.82rem;
-color: rgba(255,255,255,0.5);
-line-height: 1.5;
-}
+.aks-source-desc { font-size: 0.82rem; color: #475569; line-height: 1.5; }
 
 .aks-milestone {
 display: flex;
@@ -656,29 +648,31 @@ align-items: center;
 gap: 12px;
 padding: 10px 16px;
 border-radius: 10px;
-background: rgba(255,255,255,0.02);
-border: 1px solid rgba(255,255,255,0.05);
+background: #f8fafc;
+border: 1px solid #e2e8f0;
 margin-bottom: 6px;
 font-size: 0.84rem;
-color: rgba(255,255,255,0.65);
+color: #334155;
+transition: all 0.15s ease;
 }
 
-/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+.aks-milestone:hover { background: #f1f5f9; border-color: #c7d2fe; }
+
+/* ── RESPONSIVE ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-.aks-hero { flex-direction: column; padding: 20px 16px; gap: 14px; }
-.aks-badges { flex-wrap: wrap; gap: 5px; }
+.aks-hero { flex-direction: column; padding: 22px 20px; gap: 16px; }
+.aks-badges { flex-wrap: wrap; gap: 6px; }
 .stTabs [data-baseweb="tab"] { padding: 10px 14px !important; font-size: 0.78rem !important; }
-[data-testid="stMetric"] { padding: 12px 14px !important; }
-.aks-answer-inner { padding: 14px 16px; font-size: 0.8rem; }
+[data-testid="stMetric"] { padding: 14px 16px !important; }
+.aks-answer-inner { padding: 14px 16px; font-size: 0.82rem; }
 }
 
 @media (max-width: 480px) {
-.aks-hero { padding: 16px 12px; }
-.aks-title { font-size: 1.15rem !important; }
+.aks-hero { padding: 18px 14px; }
+.aks-title { font-size: 1.2rem !important; }
 .stTabs [data-baseweb="tab"] { padding: 8px 10px !important; font-size: 0.72rem !important; }
 }
 
-/* Ensure main content doesn't overflow on small screens */
 .stApp > .main > .block-container {
 max-width: 100% !important;
 padding-left: clamp(12px, 3vw, 40px) !important;
@@ -694,8 +688,8 @@ st.markdown("""
 (function() {
   function fixInputs() {
     document.querySelectorAll('input').forEach(function(el) {
-      el.style.setProperty('color', '#e8f0ff', 'important');
-      el.style.setProperty('-webkit-text-fill-color', '#e8f0ff', 'important');
+      el.style.setProperty('color', '#0f172a', 'important');
+      el.style.setProperty('-webkit-text-fill-color', '#0f172a', 'important');
       el.style.setProperty('opacity', '1', 'important');
     });
   }
@@ -771,9 +765,9 @@ def load_judge():
 
 # ── Chart builders ────────────────────────────────────────────────────────────
 _BASE = dict(
-    plot_bgcolor="rgba(0,0,0,0)",
-    paper_bgcolor="rgba(0,0,0,0)",
-    font={"color": "rgba(255,255,255,0.65)", "family": "Inter, sans-serif", "size": 12},
+    plot_bgcolor="#ffffff",
+    paper_bgcolor="#f8fafc",
+    font={"color": "#475569", "family": "Plus Jakarta Sans, sans-serif", "size": 12},
     margin={"l": 0, "r": 0, "t": 46, "b": 0},
 )
 
@@ -781,7 +775,7 @@ def _lay(fig, **kw):
     fig.update_layout(**{**_BASE, **kw})
     return fig
 
-_AXIS = {"gridcolor": "rgba(255,255,255,0.06)", "zerolinecolor": "rgba(255,255,255,0.08)"}
+_AXIS = {"gridcolor": "#f1f5f9", "zerolinecolor": "#e2e8f0", "color": "#64748b"}
 
 
 def chart_qvalues(qtable, selected):
@@ -830,7 +824,7 @@ def chart_qvalues(qtable, selected):
     ))
 
     # Zero reference line
-    fig.add_vline(x=0, line_color="rgba(255,255,255,0.15)", line_width=1)
+    fig.add_vline(x=0, line_color="#e2e8f0", line_width=1)
 
     return _lay(fig,
         title=dict(
@@ -851,7 +845,7 @@ def chart_qvalues(qtable, selected):
             tickfont=dict(size=10, color="rgba(255,255,255,0.35)"),
             title=dict(
                 text="← worse    Q-Score    better →",
-                font=dict(size=9, color="rgba(255,255,255,0.55)"),
+                font=dict(size=9, color="#64748b"),
                 standoff=4,
             ),
         ),
@@ -914,31 +908,31 @@ def chart_kg_graph(query: str, answer: str):
         x1, y1 = positions[e]
         fig.add_trace(go.Scatter(
             x=[0, x1, None], y=[0, y1, None], mode='lines',
-            line=dict(color='rgba(129,140,248,0.18)', width=1.2),
+            line=dict(color='rgba(99,102,241,0.2)', width=1.2),
             hoverinfo='none', showlegend=False,
         ))
     fig.add_trace(go.Scatter(
         x=[positions[e][0] for e in entities],
         y=[positions[e][1] for e in entities],
         mode='markers+text',
-        marker=dict(color='rgba(52,211,153,0.85)', size=13,
-                    line=dict(width=1.5, color='rgba(255,255,255,0.15)')),
+        marker=dict(color='#059669', size=13,
+                    line=dict(width=1.5, color='#e2e8f0')),
         text=[f'<b>{e}</b>' for e in entities], textposition='top center',
-        textfont=dict(color='rgba(255,255,255,0.85)', size=10, family='Space Grotesk'),
+        textfont=dict(color='#0f172a', size=10, family='Plus Jakarta Sans'),
         hovertext=entities, hoverinfo='text', showlegend=False,
     ))
     fig.add_trace(go.Scatter(
         x=[0], y=[0], mode='markers+text',
-        marker=dict(color='#818cf8', size=30,
-                    line=dict(width=2, color='rgba(165,180,252,0.5)')),
+        marker=dict(color='#4f46e5', size=30,
+                    line=dict(width=2, color='#c7d2fe')),
         text=[f'<b>{center_label}</b>'], textposition='bottom center',
-        textfont=dict(color='#a5b4fc', size=10, family='Space Grotesk'),
+        textfont=dict(color='#4f46e5', size=10, family='Plus Jakarta Sans'),
         hovertext=[center_label], hoverinfo='text', showlegend=False,
     ))
     return _lay(fig,
         title=dict(
             text=f'Knowledge Graph — Entity Map  <span style="font-size:11px;color:#FDFAF6;font-weight:500;">{n_nodes} nodes · {n_edges} edges</span>',
-            font=dict(size=12, color='rgba(255,255,255,0.75)', family='Space Grotesk'),
+            font=dict(size=12, color='#334155', family='Plus Jakarta Sans'),
             x=0,
         ),
         height=500, showlegend=False,
@@ -951,7 +945,7 @@ def chart_kg_graph(query: str, answer: str):
             text="Query → extracted entities from the Knowledge Graph answer",
             xref="paper", yref="paper", x=0.5, y=-0.05,
             showarrow=False,
-            font=dict(size=9, color="rgba(255,255,255,0.55)", family="Space Grotesk"),
+            font=dict(size=9, color="#64748b", family="Space Grotesk"),
         )],
     )
 
@@ -964,17 +958,17 @@ def chart_confusion_matrix(cm):
     text    = [[str(int(matrix[i][j])) for j in range(len(sources))] for i in range(len(sources))]
     fig = go.Figure(go.Heatmap(
         z=z_norm, x=short, y=short, text=text, texttemplate="%{text}",
-        textfont={"size": 15, "color": "white"},
-        colorscale=[[0.0, "rgba(29,78,216,0.1)"], [0.5, "rgba(124,58,237,0.55)"], [1.0, "rgba(192,132,252,0.95)"]],
+        textfont={"size": 15, "color": "#0f172a"},
+        colorscale=[[0.0, "#f5f3ff"], [0.5, "#a78bfa"], [1.0, "#4f46e5"]],
         showscale=True, zmin=0, zmax=1,
-        colorbar={"title": {"text": "Row %", "font": {"color": "rgba(255,255,255,0.5)", "size": 11}},
-                  "tickformat": ".0%", "tickfont": {"color": "rgba(255,255,255,0.5)"}, "thickness": 10, "len": 0.85},
+        colorbar={"title": {"text": "Row %", "font": {"color": "#64748b", "size": 11}},
+                  "tickformat": ".0%", "tickfont": {"color": "#64748b"}, "thickness": 10, "len": 0.85},
         hovertemplate="True: %{y}<br>Predicted: %{x}<br>Count: %{text}<extra></extra>",
     ))
     return _lay(fig,
         title={"text": "Confusion Matrix  (row=true, col=predicted)", "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
-        xaxis={**_AXIS, "title": "Predicted", "side": "bottom", "tickfont": {"color": "rgba(255,255,255,0.65)"}},
-        yaxis={**_AXIS, "title": "True", "autorange": "reversed", "tickfont": {"color": "rgba(255,255,255,0.65)"}},
+        xaxis={**_AXIS, "title": "Predicted", "side": "bottom", "tickfont": {"color": "#475569"}},
+        yaxis={**_AXIS, "title": "True", "autorange": "reversed", "tickfont": {"color": "#475569"}},
         height=360,
     )
 
@@ -983,7 +977,7 @@ def chart_per_source_metrics(sm):
     sources = list(sm.keys())
     short   = [SHORT_NAMES.get(s, s) for s in sources]
     fig = go.Figure()
-    for metric, color in [("precision", "#38bdf8"), ("recall", "#4ade80"), ("f1", "#fbbf24")]:
+    for metric, color in [("precision", "#0369a1"), ("recall", "#047857"), ("f1", "#b45309")]:
         fig.add_trace(go.Bar(
             name=metric.capitalize(), x=short,
             y=[sm[s][metric] for s in sources],
@@ -992,16 +986,16 @@ def chart_per_source_metrics(sm):
             text=[f"{sm[s][metric]:.2f}" for s in sources],
             textposition="outside",
             cliponaxis=False,
-            textfont={"size": 10, "color": "rgba(255,255,255,0.7)"},
+            textfont={"size": 10, "color": "#475569"},
         ))
     return _lay(fig,
         barmode="group",
         bargap=0.25,
         bargroupgap=0.08,
-        title={"text": "Per-Source Classification Metrics", "font": {"size": 12, "color": "rgba(255,255,255,0.75)"}},
+        title={"text": "Per-Source Classification Metrics", "font": {"size": 12, "color": "#334155"}},
         yaxis={**_AXIS, "title": "Score", "range": [0, 1.18], "tickformat": ".1f",
                "dtick": 0.2},
-        xaxis={**_AXIS, "tickfont": {"color": "rgba(255,255,255,0.65)", "size": 11}},
+        xaxis={**_AXIS, "tickfont": {"color": "#475569", "size": 11}},
         height=380,
         margin=dict(t=60, b=40),
         legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1,
@@ -1019,12 +1013,12 @@ def chart_reward_history(rewards):
     fig.add_trace(go.Scatter(x=eps, y=rolling, mode="lines", name=f"{window}-ep Rolling Avg",
                              line={"color": "#c084fc", "width": 2.5},
                              fill="tozeroy", fillcolor="rgba(192,132,252,0.07)"))
-    fig.add_hline(y=0, line_dash="dot", line_color="rgba(255,255,255,0.12)", line_width=1)
+    fig.add_hline(y=0, line_dash="dot", line_color="#e2e8f0", line_width=1)
     return _lay(fig,
         title={"text": "Training Reward per Episode", "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
         xaxis={**_AXIS, "title": "Episode"}, yaxis={**_AXIS, "title": "Reward"}, height=270,
         legend={"orientation": "h", "yanchor": "bottom", "y": 1.02,
-                "font": {"color": "rgba(255,255,255,0.55)", "size": 11}, "bgcolor": "rgba(0,0,0,0)"},
+                "font": {"color": "#64748b", "size": 11}, "bgcolor": "rgba(0,0,0,0)"},
     )
 
 
@@ -1037,7 +1031,7 @@ def chart_loss(losses):
                                   "font": {"color": "rgba(255,255,255,0.6)"}}])
     fig = go.Figure(go.Scatter(
         x=list(range(1, len(losses) + 1)), y=losses, mode="lines",
-        line={"color": "#4ade80", "width": 2.2},
+        line={"color": "#047857", "width": 2.2},
         fill="tozeroy", fillcolor="rgba(74,222,128,0.08)",
     ))
     return _lay(fig,
@@ -1051,9 +1045,9 @@ def chart_source_distribution(picks):
     colors = [SOURCE_COLORS.get(k, "#aaa") for k in picks]
     fig = go.Figure(go.Pie(
         labels=labels, values=list(picks.values()), hole=0.52,
-        marker={"colors": colors, "line": {"color": "rgba(8,14,28,0.8)", "width": 2}},
+        marker={"colors": colors, "line": {"color": "#f8fafc", "width": 2}},
         textinfo="label+percent",
-        textfont={"color": "rgba(255,255,255,0.75)", "size": 11},
+        textfont={"color": "#334155", "size": 11},
         hovertemplate="%{label}: %{value} episodes<extra></extra>",
     ))
     return _lay(fig,
@@ -1066,7 +1060,7 @@ def chart_epsilon(episodes):
     eps_vals = [e["epsilon"] for e in episodes]
     fig = go.Figure(go.Scatter(
         x=list(range(1, len(eps_vals) + 1)), y=eps_vals, mode="lines",
-        line={"color": "#fbbf24", "width": 2.2},
+        line={"color": "#b45309", "width": 2.2},
         fill="tozeroy", fillcolor="rgba(251,191,36,0.08)",
     ))
     return _lay(fig,
@@ -1078,19 +1072,19 @@ def chart_epsilon(episodes):
 def chart_judge_scores(scores):
     dims   = ["Correctness", "Relevance", "Completeness"]
     vals   = [scores["correctness"], scores["relevance"], scores["completeness"]]
-    colors = ["#38bdf8", "#4ade80", "#c084fc"]
+    colors = ["#0369a1", "#047857", "#c084fc"]
     fig = go.Figure(go.Bar(
         x=dims, y=vals,
         marker={"color": colors, "opacity": 0.85, "line": {"width": 0}},
         text=[f"{v:.2f}" for v in vals], textposition="outside",
-        textfont={"color": "rgba(255,255,255,0.7)", "size": 12},
+        textfont={"color": "#475569", "size": 12},
         cliponaxis=False,
     ))
     return _lay(fig,
         title={"text": f"LLM Judge Scores — Overall Quality: {scores['quality']:.2f}",
                "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
         yaxis={**_AXIS, "range": [0, 1.28], "title": "Score", "tickformat": ".2f"},
-        xaxis={**_AXIS, "tickfont": {"color": "rgba(255,255,255,0.65)", "size": 12}},
+        xaxis={**_AXIS, "tickfont": {"color": "#475569", "size": 12}},
         height=240, showlegend=False,
     )
 
@@ -1111,8 +1105,8 @@ st.markdown(
 '<span class="aks-sub">Reinforcement Learning · Medical Query Routing · ASU KRR 2026</span></div>'
 '</div>'
 '<div class="aks-badges">'
-'<span class="aks-badge" style="color:#38bdf8;border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.06);">🕸️ Knowledge Graph</span>'
-'<span class="aks-badge" style="color:#4ade80;border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06);">🔧 Tool / API</span>'
+'<span class="aks-badge" style="color:#0369a1;border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.06);">🕸️ Knowledge Graph</span>'
+'<span class="aks-badge" style="color:#047857;border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06);">🔧 Tool / API</span>'
 '<span class="aks-badge" style="color:#c084fc;border-color:rgba(192,132,252,0.3);background:rgba(192,132,252,0.06);">🤖 LLM</span>'
 '<span class="aks-badge" style="color:#fbbf24;border-color:rgba(251,191,36,0.3);background:rgba(251,191,36,0.06);">📚 PDF Search</span>'
 '</div>'
@@ -1189,14 +1183,14 @@ with tab_query:
 
         prog = st.empty()
         prog.markdown(
-            '<div style="background:#18181b;border:1px solid #27272a;border-radius:8px;'
+            '<div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;'
             'padding:16px 20px;margin-bottom:12px;">'
             '<div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;'
             'color:#f59e0b;margin-bottom:10px;">⏳ Processing query…</div>'
             + "".join([
                 f'<div style="display:flex;align-items:center;gap:10px;padding:5px 0;'
-                f'font-size:0.78rem;color:#94a3b8;">'
-                f'<span style="width:7px;height:7px;border-radius:50%;background:#27272a;flex-shrink:0;"></span>'
+                f'font-size:0.78rem;color:#64748b;">'
+                f'<span style="width:7px;height:7px;border-radius:50%;background:#e2e8f0;flex-shrink:0;"></span>'
                 f'{step}</div>'
                 for step in [
                     "Classifying query type…",
@@ -1251,12 +1245,12 @@ with tab_query:
         section_head("1 · Query Classification")
         st.markdown(
             f'<div style="display:flex;align-items:center;gap:16px;padding:14px 18px;'
-            f'background:#18181b;border:1px solid #27272a;border-radius:8px;margin-bottom:4px;">'
+            f'background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:4px;">'
             f'<span style="padding:4px 12px;border-radius:5px;font-size:0.78rem;font-weight:700;'
-            f'text-transform:uppercase;letter-spacing:0.08em;background:#27272a;color:#e4e4e7;">'
+            f'text-transform:uppercase;letter-spacing:0.08em;background:#ede9fe;color:#4f46e5;">'
             f'{res["qtype"]}</span>'
             f'<span style="font-size:0.8rem;color:#94a3b8;line-height:1.6;">'
-            f'Classified as <strong style="color:#a1a1aa;">{res["qtype"]}</strong> — '
+            f'Classified as <strong style="color:#475569;">{res["qtype"]}</strong> — '
             f'guides which knowledge sources are likely most relevant.</span>'
             f'</div>',
             unsafe_allow_html=True,
@@ -1272,7 +1266,7 @@ with tab_query:
         ]
         rows = "".join(
             f'<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;'
-            f'{"" if i==len(pipeline)-1 else "border-bottom:1px solid #27272a;"}">'
+            f'{"" if i==len(pipeline)-1 else "border-bottom:1px solid #f1f5f9;"}">'
             f'<span style="font-size:1rem;margin-top:1px;flex-shrink:0;">{ico}</span>'
             f'<div><div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;'
             f'letter-spacing:0.1em;color:#94a3b8;margin-bottom:2px;">{lbl}</div>'
@@ -1280,7 +1274,7 @@ with tab_query:
             for i, (ico, lbl, dtl, dc) in enumerate(pipeline)
         )
         st.markdown(
-            f'<div style="padding:0 18px;background:#18181b;border:1px solid #27272a;'
+            f'<div style="padding:0 18px;background:#ffffff;border:1px solid #e2e8f0;'
             f'border-radius:8px;margin-bottom:4px;">{rows}</div>',
             unsafe_allow_html=True,
         )
@@ -1298,13 +1292,13 @@ with tab_query:
             for k, v in sorted(res["qtable"].items(), key=lambda x: x[1], reverse=True)
         )
         st.markdown(
-            f'<div style="background:#18181b;border:1px solid #27272a;border-left:3px solid #f59e0b;'
-            f'border-radius:8px;padding:14px 18px;font-size:0.82rem;color:#a1a1aa;line-height:1.8;">'
+            f'<div style="background:#ffffff;border:1px solid #e2e8f0;border-left:3px solid #f59e0b;'
+            f'border-radius:8px;padding:14px 18px;font-size:0.82rem;color:#475569;line-height:1.8;">'
             f'<div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;'
-            f'color:#94a3b8;margin-bottom:8px;">How the DQN Decided</div>'
+            f'color:#475569;margin-bottom:8px;">How the DQN Decided</div>'
             f'The query embedding was fed through the DQN policy network, which outputs a Q-value '
             f'representing expected reward per source.<br>'
-            f'<span style="color:#a8b8cc;">All scores: {scores_html}</span><br>'
+            f'<span style="color:#64748b;">All scores: {scores_html}</span><br>'
             f'<strong style="color:{clr};">{icon} {short}</strong> had the highest Q-score '
             f'(<code style="color:#22c55e;background:#0f2318;padding:1px 6px;border-radius:3px;">'
             f'Q = {best_q:+.3f}</code>) — selected as optimal source.'
@@ -1315,7 +1309,7 @@ with tab_query:
         # ── 5 · Answer ───────────────────────────────────────────────────────
         section_head("5 · Answer")
         st.markdown(
-            f'<div class="aks-answer-outer">'
+            f'<div class="aks-answer-outer" style="border-color:rgba({rgb},0.3);">'
             f'<div class="aks-answer-inner">{res["answer"]}</div>'
             f'</div>',
             unsafe_allow_html=True,
@@ -1396,10 +1390,10 @@ with tab_metrics:
 
         total_support = sum(sm["support"] for sm in source_metrics.values())
         st.markdown(
-            f'<div class="aks-about-card" style="text-align:center;background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(29,78,216,0.08));border-color:rgba(124,58,237,0.2);">'
+            f'<div class="aks-about-card" style="text-align:center;background:linear-gradient(135deg,#f5f3ff,#eff6ff);border-color:#ddd6fe;">'
             f'<div class="aks-card-label">Overall Model Accuracy</div>'
             f'<span class="aks-big-stat">{accuracy:.1%}</span>'
-            f'<span style="color:rgba(255,255,255,0.35);font-size:0.8rem;">evaluated on {total_support} holdout queries</span>'
+            f'<span style="color:#64748b;font-size:0.8rem;">evaluated on {total_support} holdout queries</span>'
             f'</div>',
             unsafe_allow_html=True,
         )
@@ -1520,10 +1514,10 @@ with tab_about:
 
     # Project overview card
     st.markdown(
-        '<div class="aks-about-card" style="background:linear-gradient(135deg,rgba(29,78,216,0.12),rgba(124,58,237,0.1));border-color:rgba(124,58,237,0.2);">'
+        '<div class="aks-about-card" style="background:linear-gradient(135deg,#eff6ff,#f5f3ff);border-color:#ddd6fe;">'
         '<span class="aks-title" style="font-size:1.8rem;margin-bottom:10px;display:block;">Adaptive Knowledge Selector for Medical Queries</span>'
-        '<p style="color:rgba(255,255,255,0.62);font-size:0.92rem;line-height:1.7;margin:0 0 12px;">An intelligent reinforcement learning system that dynamically selects the best knowledge source — Knowledge Graph, Tools/APIs, LLM, or Documents — for medical and pharmaceutical queries. Built with Deep Q-Networks (DQN) and evaluated with LLM-as-Judge quality metrics.</p>'
-        '<p style="color:rgba(255,255,255,0.5);font-size:0.84rem;line-height:1.6;margin:0;">The system intelligently routes medical queries to the most appropriate knowledge source using a trained RL agent. It integrates four distinct biomedical knowledge sources and learns optimal routing decisions through reinforcement learning with automatic reward signals.</p>'
+        '<p style="color:#475569;font-size:0.92rem;line-height:1.7;margin:0 0 12px;">An intelligent reinforcement learning system that dynamically selects the best knowledge source — Knowledge Graph, Tools/APIs, LLM, or Documents — for medical and pharmaceutical queries. Built with Deep Q-Networks (DQN) and evaluated with LLM-as-Judge quality metrics.</p>'
+        '<p style="color:#64748b;font-size:0.84rem;line-height:1.6;margin:0;">The system intelligently routes medical queries to the most appropriate knowledge source using a trained RL agent. It integrates four distinct biomedical knowledge sources and learns optimal routing decisions through reinforcement learning with automatic reward signals.</p>'
         '</div>',
         unsafe_allow_html=True,
     )
@@ -1579,7 +1573,7 @@ with tab_about:
         section_head("System Architecture")
         st.markdown(
             '<div class="aks-about-card">'
-            '<p style="color:rgba(255,255,255,0.65);font-size:0.88rem;line-height:1.7;margin:0 0 12px;">'
+            '<p style="color:#334155;font-size:0.88rem;line-height:1.7;margin:0 0 12px;">'
             'Queries are embedded into 384-dimensional vectors using Sentence Transformers, '
             'then passed through a <strong style="color:#a78bfa;">Deep Q-Network</strong> (384→256→128→64→4) '
             'that predicts Q-values for each knowledge source. The source with the highest Q-value is selected '
@@ -1594,14 +1588,14 @@ with tab_about:
         section_head("Reward Function")
         st.markdown(
             '<div class="aks-about-card">'
-            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.65);font-family:monospace;line-height:1.8;">'
-            'Correct source + results  →  <span style="color:#4ade80;">+1.00</span><br>'
+            '<div style="font-size:0.82rem;color:#334155;font-family:monospace;line-height:1.8;">'
+            'Correct source + results  →  <span style="color:#047857;">+1.00</span><br>'
             'Correct source, no results  →  <span style="color:#fbbf24;">-0.20</span><br>'
             'Wrong source + results  →  <span style="color:#fbbf24;">0.00</span><br>'
-            'Wrong source, no results  →  <span style="color:#f87171;">-0.50</span><br>'
-            'Confidence bonus  →  <span style="color:#38bdf8;">+0.2 × conf</span><br>'
-            'Perfect routing bonus  →  <span style="color:#4ade80;">+0.15</span><br>'
-            'Misrouting penalty  →  <span style="color:#f87171;">-0.2 to -0.5</span>'
+            'Wrong source, no results  →  <span style="color:#dc2626;">-0.50</span><br>'
+            'Confidence bonus  →  <span style="color:#0369a1;">+0.2 × conf</span><br>'
+            'Perfect routing bonus  →  <span style="color:#047857;">+0.15</span><br>'
+            'Misrouting penalty  →  <span style="color:#dc2626;">-0.2 to -0.5</span>'
             '</div>'
             '</div>',
             unsafe_allow_html=True,
@@ -1610,7 +1604,7 @@ with tab_about:
         section_head("Evaluation & Metrics")
         st.markdown(
             '<div class="aks-about-card">'
-            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.8;">'
+            '<div style="font-size:0.82rem;color:#334155;line-height:1.8;">'
             '<strong style="color:#60a5fa;">ML Metrics (250-query test set)</strong><br>'
             '• Overall Accuracy, Per-Source Precision, Recall, F1<br>'
             '• Confusion Matrix for source routing patterns<br>'
@@ -1630,18 +1624,18 @@ with tab_about:
         st.markdown(
             '<div class="aks-about-card">'
             '<div style="margin-bottom:14px;">'
-            '<div style="font-size:0.82rem;font-weight:700;color:#a78bfa;margin-bottom:4px;">Phase 1 — Supervised Pre-training</div>'
-            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.6);line-height:1.6;">'
+            '<div style="font-size:0.82rem;font-weight:700;color:#6d28d9;margin-bottom:4px;">Phase 1 — Supervised Pre-training</div>'
+            '<div style="font-size:0.82rem;color:#475569;line-height:1.6;">'
             '600 labeled queries · 80/20 train/val split · 50 epochs with early stopping · Cross-entropy loss · 95.2% train / 88.9% val accuracy'
             '</div></div>'
             '<div style="margin-bottom:14px;">'
-            '<div style="font-size:0.82rem;font-weight:700;color:#38bdf8;margin-bottom:4px;">Phase 2 — RL Fine-tuning</div>'
-            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.6);line-height:1.6;">'
+            '<div style="font-size:0.82rem;font-weight:700;color:#0369a1;margin-bottom:4px;">Phase 2 — RL Fine-tuning</div>'
+            '<div style="font-size:0.82rem;color:#475569;line-height:1.6;">'
             'Epsilon-greedy exploration (ε: 1.0→0.05) · Experience replay buffer (2000 capacity, batch 32) · 50 training episodes · Avg reward: 0.520'
             '</div></div>'
             '<div>'
-            '<div style="font-size:0.82rem;font-weight:700;color:#4ade80;margin-bottom:4px;">Phase 3 — Online Learning</div>'
-            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.6);line-height:1.6;">'
+            '<div style="font-size:0.82rem;font-weight:700;color:#047857;margin-bottom:4px;">Phase 3 — Online Learning</div>'
+            '<div style="font-size:0.82rem;color:#475569;line-height:1.6;">'
             'Continuous improvement during real usage · Auto-retraining every 16 queries · Incremental model updates · S3 model versioning'
             '</div></div>'
             '</div>',
@@ -1653,8 +1647,8 @@ with tab_about:
             '<div class="aks-about-card">'
             '<div style="font-size:0.8rem;color:rgba(255,255,255,0.6);font-family:monospace;line-height:1.7;">'
             '<span style="color:#a78bfa;">models/</span> — DQN agent, reward evaluator, replay buffer<br>'
-            '<span style="color:#38bdf8;">knowledge_sources/</span> — KG, Tool/API, LLM, PDF<br>'
-            '<span style="color:#4ade80;">scripts/</span> — Training, evaluation, dashboard<br>'
+            '<span style="color:#0369a1;">knowledge_sources/</span> — KG, Tool/API, LLM, PDF<br>'
+            '<span style="color:#047857;">scripts/</span> — Training, evaluation, dashboard<br>'
             '<span style="color:#fbbf24;">utils/</span> — LLM judge, S3 sync<br>'
             '<span style="color:#f472b6;">data/</span> — Hetionet, PDF store, RL models'
             '</div>'
@@ -1665,12 +1659,12 @@ with tab_about:
         section_head("UI & Technology Stack")
         st.markdown(
             '<div class="aks-about-card">'
-            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.9;">'
-            '<strong style="color:#38bdf8;">Streamlit</strong> — Python-native reactive web framework<br>'
-            '<strong style="color:#4ade80;">Plotly</strong> — Interactive charts (bar, heatmap, scatter, pie)<br>'
+            '<div style="font-size:0.82rem;color:#334155;line-height:1.9;">'
+            '<strong style="color:#0369a1;">Streamlit</strong> — Python-native reactive web framework<br>'
+            '<strong style="color:#047857;">Plotly</strong> — Interactive charts (bar, heatmap, scatter, pie)<br>'
             '<strong style="color:#c084fc;">PyTorch</strong> — Neural network & RL training<br>'
             '<strong style="color:#fbbf24;">FAISS</strong> — Vector similarity search<br>'
-            '<strong style="color:#f87171;">Sentence Transformers</strong> — Query embeddings (all-MiniLM-L6-v2)<br>'
+            '<strong style="color:#dc2626;">Sentence Transformers</strong> — Query embeddings (all-MiniLM-L6-v2)<br>'
             '<strong style="color:#f472b6;">CSS Glassmorphism</strong> — Dark theme with blur, gradients & 3D effects<br>'
             '<strong style="color:#60a5fa;">NetworkX</strong> — Knowledge graph data structure<br>'
             '<strong style="color:#a78bfa;">AWS Bedrock</strong> — LLM inference (Nova 2 Lite)'
@@ -1685,9 +1679,9 @@ with tab_about:
     section_head("Key RL Concepts")
     concepts = [
         ("🧠", "#a78bfa", "Deep Q-Network (DQN)", "Value-based RL algorithm for discrete action spaces — predicts Q-values for each source"),
-        ("🔄", "#38bdf8", "Experience Replay", "Stores transitions (state, action, reward, next state) for stable off-policy learning"),
-        ("🎲", "#4ade80", "Epsilon-Greedy", "Balances exploration vs exploitation — decays ε from 1.0 to 0.05 during training"),
-        ("⚖️", "#fbbf24", "LLM-as-Judge", "Uses LLMs to evaluate AI system outputs for correctness, relevance, and completeness"),
+        ("🔄", "#0369a1", "Experience Replay", "Stores transitions (state, action, reward, next state) for stable off-policy learning"),
+        ("🎲", "#047857", "Epsilon-Greedy", "Balances exploration vs exploitation — decays ε from 1.0 to 0.05 during training"),
+        ("⚖️", "#b45309", "LLM-as-Judge", "Uses LLMs to evaluate AI system outputs for correctness, relevance, and completeness"),
     ]
     c1, c2 = st.columns(2)
     for i, (ico, clr, title, desc) in enumerate(concepts):
@@ -1697,7 +1691,7 @@ with tab_about:
                 f'<div class="aks-source-row" style="border-color:rgba(255,255,255,0.06);">'
                 f'<div style="font-size:1.5rem;flex-shrink:0;">{ico}</div>'
                 f'<div><div style="font-size:0.88rem;font-weight:700;color:{clr};margin-bottom:3px;">{title}</div>'
-                f'<div style="font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5;">{desc}</div></div>'
+                f'<div style="font-size:0.78rem;color:#64748b;line-height:1.5;">{desc}</div></div>'
                 f'</div>',
                 unsafe_allow_html=True,
             )
@@ -1707,18 +1701,18 @@ with tab_about:
     # Milestones
     section_head("Project Milestones")
     milestones = [
-        ("✅", "#4ade80", "Multi-source knowledge integration (4 sources)"),
-        ("✅", "#4ade80", "Hetionet knowledge graph (47K nodes, 2.25M edges)"),
-        ("✅", "#4ade80", "FAISS semantic search for PDF corpus (1,649 chunks)"),
-        ("✅", "#4ade80", "Deep Q-Network (DQN) with experience replay"),
-        ("✅", "#4ade80", "Two-phase training: supervised pre-training + RL fine-tuning"),
-        ("✅", "#4ade80", "Automatic reward computation (no human feedback)"),
-        ("✅", "#4ade80", "LLM-as-Judge quality evaluation"),
-        ("✅", "#4ade80", "ML metrics: accuracy 86.7%, KG F1 0.924, Tool F1 0.961"),
-        ("✅", "#4ade80", "Online learning with auto-retraining every 16 queries"),
-        ("✅", "#4ade80", "S3 model versioning and team sync"),
-        ("✅", "#4ade80", "Streamlit Web UI with glassmorphism dark theme"),
-        ("✅", "#4ade80", "Interactive Plotly charts & real-time query testing"),
+        ("✅", "#047857", "Multi-source knowledge integration (4 sources)"),
+        ("✅", "#047857", "Hetionet knowledge graph (47K nodes, 2.25M edges)"),
+        ("✅", "#047857", "FAISS semantic search for PDF corpus (1,649 chunks)"),
+        ("✅", "#047857", "Deep Q-Network (DQN) with experience replay"),
+        ("✅", "#047857", "Two-phase training: supervised pre-training + RL fine-tuning"),
+        ("✅", "#047857", "Automatic reward computation (no human feedback)"),
+        ("✅", "#047857", "LLM-as-Judge quality evaluation"),
+        ("✅", "#047857", "ML metrics: accuracy 86.7%, KG F1 0.924, Tool F1 0.961"),
+        ("✅", "#047857", "Online learning with auto-retraining every 16 queries"),
+        ("✅", "#047857", "S3 model versioning and team sync"),
+        ("✅", "#047857", "Streamlit Web UI with glassmorphism dark theme"),
+        ("✅", "#047857", "Interactive Plotly charts & real-time query testing"),
         ("🎯", "#a78bfa", "Multi-source ensemble (query multiple, synthesize)"),
         ("🎯", "#a78bfa", "Cost-aware routing (latency & API cost signals)"),
         ("🎯", "#a78bfa", "User feedback integration (thumbs up/down)"),
@@ -1731,7 +1725,7 @@ with tab_about:
             st.markdown(
                 f'<div class="aks-milestone">'
                 f'<span style="font-size:1rem;">{icon}</span>'
-                f'<span style="color:rgba(255,255,255,0.65);font-size:0.83rem;">{text}</span>'
+                f'<span style="color:#334155;font-size:0.83rem;">{text}</span>'
                 f'</div>',
                 unsafe_allow_html=True,
             )
@@ -1744,7 +1738,7 @@ with tab_about:
         '<div class="aks-about-card" style="text-align:center;">'
         '<div style="font-size:0.88rem;color:rgba(255,255,255,0.7);line-height:1.8;">'
         '<strong style="color:#a78bfa;">CSE 579</strong> — Knowledge Representation & Reasoning<br>'
-        '<strong style="color:#38bdf8;">Arizona State University</strong> · Spring 2026<br>'
+        '<strong style="color:#0369a1;">Arizona State University</strong> · Spring 2026<br>'
         '<span style="color:rgba(255,255,255,0.45);">Students: Rashi Sharma, Harsh Tita, Harpreet Kaur Brar, Shashwat Dwivedi, Sarthak Singh</span>'
         '</div>'
         '</div>',
@@ -1754,7 +1748,7 @@ with tab_about:
     # Footer
     st.markdown(
         '<div style="text-align:center;padding:20px 0 8px;">'
-        '<span style="color:rgba(255,255,255,0.25);font-size:0.78rem;">'
+        '<span style="color:#94a3b8;font-size:0.78rem;">'
         
         '</span>'
         '</div>',
