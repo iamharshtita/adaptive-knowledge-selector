@@ -42,7 +42,7 @@ class InteractiveDashboard:
             # Try to download latest model from S3 (team collaboration)
             try:
                 print("  📥 Checking S3 for latest model...")
-                self.s3_sync.download_model()
+                self.s3_sync.download('model')
                 print("  ✓ Downloaded latest model from S3")
             except Exception as e:
                 print(f"  ℹ Using local model (S3 download skipped: {str(e)[:50]})")
@@ -283,7 +283,7 @@ class InteractiveDashboard:
         if self.s3_sync:
             try:
                 print(f"    📤 Uploading to S3...")
-                self.s3_sync.upload_model(message=f"Dashboard retraining after {self.count_experiences()} experiences")
+                self.s3_sync.upload('model', message=f"Dashboard retraining after {self.count_experiences()} experiences")
                 print(f"    ✓ Model uploaded to S3")
             except Exception as e:
                 print(f"    ⚠ S3 upload failed: {e}")

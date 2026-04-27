@@ -742,6 +742,15 @@ def load_system():
     from sentence_transformers import SentenceTransformer
     from models.adaptive_selector import AdaptiveSelector
     from scripts.train_rl_agent import TrainingSystem
+    from utils.s3_sync import S3TeamSync
+
+    # Try to download latest model from S3
+    try:
+        s3 = S3TeamSync()
+        s3.download('model')
+    except Exception as e:
+        st.warning(f"⚠️ S3 download failed: {str(e)[:100]}. Using local model.")
+        pass  # Use local if S3 fails
 
     encoder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     agent   = AdaptiveSelector(input_dim=384, num_sources=4)
