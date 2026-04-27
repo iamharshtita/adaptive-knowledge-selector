@@ -32,6 +32,25 @@ class InteractiveDashboard:
         self.agent = AdaptiveSelector(input_dim=384, num_sources=4, lr=0.001)
 
         model_path = "data/rl_selector/adaptive_dqn.pth"
+
+        # S3 sync setup (initialize early for download)
+        self.s3_sync = None
+        try:
+            self.s3_sync = S3TeamSync()
+            print("  ✓ S3 connection established")
+
+            # Try to download latest model from S3 (team collaboration)
+            try:
+                print("  📥 Checking S3 for latest model...")
+                self.s3_sync.download_model()
+                print("  ✓ Downloaded latest model from S3")
+            except Exception as e:
+                print(f"  ℹ Using local model (S3 download skipped: {str(e)[:50]})")
+
+        except Exception as e:
+            print(f"  ⚠ S3 sync disabled: {str(e)[:50]}")
+
+        # Load model (either fresh from S3 or local)
         if not self.agent.load(model_path):
             print(f"ERROR: Could not load model from {model_path}")
             sys.exit(1)
@@ -51,14 +70,6 @@ class InteractiveDashboard:
         self.query_count = 0
         self.batch_size = 16  # Trigger training after 16 experiences
         self.model_path = model_path
-
-        # S3 sync setup (optional)
-        self.s3_sync = None
-        try:
-            self.s3_sync = S3TeamSync()
-            print("  ✓ S3 auto-upload enabled")
-        except Exception as e:
-            print(f"  ⚠ S3 auto-upload disabled: {e}")
 
         print("\n" + "=" * 80)
 
@@ -262,6 +273,11 @@ class InteractiveDashboard:
         print(f"    💾 Saving model...")
         self.agent.save(self.model_path)
         print(f"    ✓ Model saved to {self.model_path}")
+
+        # Reload model with updated weights
+        print(f"    🔄 Reloading updated model...")
+        self.agent.load(self.model_path)
+        print(f"    ✓ Model reloaded with new weights")
 
         # Upload to S3
         if self.s3_sync:
