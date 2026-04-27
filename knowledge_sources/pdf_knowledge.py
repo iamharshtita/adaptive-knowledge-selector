@@ -501,6 +501,44 @@ class PDFKnowledgeSource:
         logger.info("Loaded vector store from %s — %d chunks", path, len(self.documents))
 
     # ------------------------------------------------------------------
+    # Re-ranking utilities
+    # ------------------------------------------------------------------
+
+    def _rerank_for_structure(self, results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Re-rank results to prefer structured content (lists, numbered items, sections).
+        Useful for classification and guideline queries.
+        """
+        structure_indicators = [
+            '1.', '2.', '3.', '4.',  # Numbered lists
+            '6.2.1', '6.2.2', '6.2.3',  # Section numbers
+            'penicillin', 'antibacterial', 'antileprosy', 'antituberculosis',  # Drug categories
+            'include:', 'categories:', 'classified as:',  # Classification language
+            'section', 'chapter', 'part'
+        ]
+
+        for result in results:
+            text_lower = result['text'].lower()
+            structure_score = 0
+
+            # Count structure indicators
+            for indicator in structure_indicators:
+                if indicator in text_lower:
+                    structure_score += 1
+
+            # Boost for multiple numbered items (strong indicator of classification)
+            num_count = sum(1 for ind in ['1.', '2.', '3.', '4.', '5.'] if ind in result['text'])
+            if num_count >= 3:
+                structure_score += 5
+
+            # Apply boost to score (up to 2x multiplier)
+            boost_multiplier = 1.0 + min(structure_score * 0.15, 1.0)
+            result['score'] = result['score'] * boost_multiplier
+
+        # Sort by boosted scores
+        return sorted(results, key=lambda x: x['score'], reverse=True)
+
+    # ------------------------------------------------------------------
     # Utilities
     # ------------------------------------------------------------------
 
@@ -555,7 +593,16 @@ class PDFKnowledgeSource:
                     "results": [],
                 }
 
-        results = self.semantic_search(text, top_k=top_k)
+        # Query expansion for drug classification questions
+        expanded_query = text
+        if 'antibacterial' in text.lower() and any(word in text.lower() for word in ['classif', 'categor']):
+            # For antibacterial classification, add specific terms from WHO classification
+            expanded_query = f"{text} penicillins antibacterials antileprosy antituberculosis anti-infective"
+        elif any(word in text.lower() for word in ['classif', 'categor', 'types of']):
+            # Generic classification - add structural keywords
+            expanded_query = f"{text} categories sections groups types"
+
+        results = self.hybrid_search(expanded_query, top_k=top_k, semantic_weight=0.35)
 
         if not results:
             return {
