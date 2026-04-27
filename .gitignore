@@ -73,6 +73,9 @@ credentials.json
 *.h5
 *.ckpt
 
+# User-specific experience logs
+data/rl_selector/online_experiences.jsonl
+
 # Temporary files
 tmp/
 temp/

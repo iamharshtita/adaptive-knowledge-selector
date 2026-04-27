@@ -356,6 +356,7 @@ class InteractiveDashboard:
         print("    'quit' or 'exit' - Exit dashboard")
         print("    'stats' - Show experience statistics")
         print("    'examples' - Show sample queries")
+        print("    'train' - Manually trigger model retraining (any number of experiences)")
         print("\n" + "=" * 80)
 
         while True:
@@ -376,6 +377,16 @@ class InteractiveDashboard:
 
                 if query.lower() == 'examples':
                     self.show_examples()
+                    continue
+
+                if query.lower() == 'train':
+                    # Manual training trigger
+                    num_experiences = self.count_experiences()
+                    if num_experiences == 0:
+                        print("\n⚠ No experiences logged yet. Run some queries first.")
+                    else:
+                        print(f"\n🎓 Manual training triggered with {num_experiences} experiences...")
+                        self.retrain_model()
                     continue
 
                 self.process_query(query)
