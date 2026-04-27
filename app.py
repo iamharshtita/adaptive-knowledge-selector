@@ -184,50 +184,50 @@ box-shadow: 0 2px 12px rgba(245,158,11,0.35) !important;
 }
 
 /* ─── TEXT INPUT ──────────────────────────────────────────────────────────── */
+/* ─── TEXT INPUT ─────────────────────────────────────────────────────── */
 div[data-baseweb="input"],
 div[data-baseweb="base-input"],
 [data-testid="stTextInput"] div[data-baseweb="input"] {
-background: rgba(20,28,55,0.95) !important;
-border-color: rgba(255,255,255,0.18) !important;
-border-radius: 16px !important;
+background: #18181b !important;
+border: 1px solid #3f3f46 !important;
+border-radius: 8px !important;
 }
 
-/* Force white text — Streamlit overrides color via its own stylesheet */
 div[data-baseweb="input"] input,
 div[data-baseweb="base-input"] input,
 .stTextInput input,
 [data-testid="stTextInput"] input,
 .stTextInput > div > div > input,
 input[aria-label] {
-background: rgba(20,28,55,0.95) !important;
-color: #f0f0ff !important;
-caret-color: #f0f0ff !important;
-border-radius: 16px !important;
-font-size: 1.05rem !important;
-font-weight: 500 !important;
-padding: 14px 20px !important;
-border: 1.5px solid rgba(255,255,255,0.18) !important;
-box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
-transition: all 0.22s ease !important;
--webkit-text-fill-color: #f0f0ff !important;
+background: #18181b !important;
+color: #fafafa !important;
+caret-color: #fafafa !important;
+border-radius: 8px !important;
+font-size: 1rem !important;
+font-weight: 400 !important;
+padding: 12px 16px !important;
+border: 1px solid #3f3f46 !important;
+box-shadow: none !important;
+transition: border-color 0.15s ease !important;
+-webkit-text-fill-color: #fafafa !important;
 opacity: 1 !important;
 }
 
 div[data-baseweb="input"] input::placeholder,
 .stTextInput input::placeholder,
 [data-testid="stTextInput"] input::placeholder {
-color: rgba(200,210,255,0.45) !important;
--webkit-text-fill-color: rgba(200,210,255,0.45) !important;
+color: #52525b !important;
+-webkit-text-fill-color: #52525b !important;
 }
 
 div[data-baseweb="input"] input:focus,
 .stTextInput input:focus,
 [data-testid="stTextInput"] input:focus {
-border-color: rgba(124,58,237,0.8) !important;
-box-shadow: 0 0 0 3px rgba(124,58,237,0.2), 0 4px 20px rgba(0,0,0,0.3) !important;
-background: rgba(25,35,75,1) !important;
--webkit-text-fill-color: #ffffff !important;
-color: #ffffff !important;
+border-color: #f59e0b !important;
+box-shadow: 0 0 0 2px rgba(245,158,11,0.15) !important;
+background: #1c1c1f !important;
+-webkit-text-fill-color: #fafafa !important;
+color: #fafafa !important;
 outline: none !important;
 }
 
@@ -276,29 +276,78 @@ margin: 28px 0 !important;
 
 /* ─── EXPANDER ────────────────────────────────────────────────────────────── */
 [data-testid="stExpander"] {
-background: rgba(255,255,255,0.02) !important;
-border: 1px solid rgba(255,255,255,0.06) !important;
-border-radius: 14px !important;
-backdrop-filter: blur(20px) !important;
+background: #18181b !important;
+border: 1px solid #27272a !important;
+border-radius: 10px !important;
 overflow: hidden;
 }
 
+[data-testid="stExpander"] details {
+background: #18181b !important;
+}
+
 [data-testid="stExpander"] summary {
-color: rgba(255,255,255,0.6) !important;
+color: #a1a1aa !important;
 font-weight: 600 !important;
 padding: 14px 18px !important;
+background: #18181b !important;
 }
 
 [data-testid="stExpander"] summary:hover {
-color: rgba(255,255,255,0.88) !important;
-background: rgba(255,255,255,0.03) !important;
+color: #fafafa !important;
+background: #1c1c1f !important;
 }
 
-/* ─── DATAFRAME ───────────────────────────────────────────────────────────── */
+[data-testid="stExpander"] [data-testid="stExpanderDetails"],
+[data-testid="stExpander"] .streamlit-expanderContent {
+background: #18181b !important;
+color: #d4d4d8 !important;
+}
+
+/* ─── TOOLTIPS (help ? icon) ──────────────────────────────────────────────── */
+[data-testid="stTooltipContent"],
+div[data-baseweb="tooltip"] div,
+div[data-baseweb="popover"] div[data-baseweb="typo-paragraphsmall"] {
+background: #27272a !important;
+color: #d4d4d8 !important;
+border: 1px solid #3f3f46 !important;
+border-radius: 6px !important;
+}
+
+div[data-baseweb="tooltip"],
+div[data-baseweb="popover"] {
+background: transparent !important;
+}
+
+div[data-baseweb="tooltip"] > div:first-child,
+div[data-baseweb="popover"] > div:first-child {
+background: #27272a !important;
+color: #d4d4d8 !important;
+border: 1px solid #3f3f46 !important;
+border-radius: 6px !important;
+box-shadow: 0 4px 16px rgba(0,0,0,0.5) !important;
+}
+
+/* ─── DATAFRAME / TABLE ──────────────────────────────────────────────────── */
 [data-testid="stDataFrame"] {
-border-radius: 14px !important;
+border-radius: 10px !important;
 overflow: hidden !important;
-border: 1px solid rgba(255,255,255,0.06) !important;
+border: 1px solid #27272a !important;
+box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03) !important;
+}
+
+/* Force dark bg on all table/dataframe elements */
+[data-testid="stDataFrame"] iframe,
+[data-testid="stDataFrame"] > div {
+border-radius: 10px !important;
+}
+
+.stDataFrame [data-testid="glideDataEditor"],
+.stDataFrame th,
+.stDataFrame td {
+background: #18181b !important;
+color: #d4d4d8 !important;
+border-color: #27272a !important;
 }
 
 /* ─── CHECKBOX ────────────────────────────────────────────────────────────── */
@@ -613,6 +662,29 @@ margin-bottom: 6px;
 font-size: 0.84rem;
 color: rgba(255,255,255,0.65);
 }
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+.aks-hero { flex-direction: column; padding: 20px 16px; gap: 14px; }
+.aks-badges { flex-wrap: wrap; gap: 5px; }
+.stTabs [data-baseweb="tab"] { padding: 10px 14px !important; font-size: 0.78rem !important; }
+[data-testid="stMetric"] { padding: 12px 14px !important; }
+.aks-answer-inner { padding: 14px 16px; font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+.aks-hero { padding: 16px 12px; }
+.aks-title { font-size: 1.15rem !important; }
+.stTabs [data-baseweb="tab"] { padding: 8px 10px !important; font-size: 0.72rem !important; }
+}
+
+/* Ensure main content doesn't overflow on small screens */
+.stApp > .main > .block-container {
+max-width: 100% !important;
+padding-left: clamp(12px, 3vw, 40px) !important;
+padding-right: clamp(12px, 3vw, 40px) !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -704,73 +776,80 @@ _AXIS = {"gridcolor": "rgba(255,255,255,0.06)", "zerolinecolor": "rgba(255,255,2
 
 
 def chart_qvalues(qtable, selected):
-    """Horizontal bar chart showing DQN Q-values. Clear, ranked, no toolbar."""
+    """Clean ranked bar chart: one row per source, value label on right, selected highlighted."""
     items = sorted(qtable.items(), key=lambda x: x[1], reverse=True)
+    n = len(items)
 
-    # Build descriptive y-labels: rank + icon + name + selected marker
-    y_labels, bar_colors, bar_opacities, bar_texts = [], [], [], []
+    y_labels, bar_colors, values, customdata = [], [], [], []
     for rank, (k, v) in enumerate(items, 1):
-        name  = SHORT_NAMES.get(k, k)
-        icon  = SOURCE_ICONS.get(k, "")
+        name   = SHORT_NAMES.get(k, k)
+        icon   = SOURCE_ICONS.get(k, "")
         is_sel = k == selected
-        marker = "  ← SELECTED" if is_sel else ""
-        y_labels.append(f"{icon} {name}{marker}")
-        bar_colors.append(SOURCE_COLORS.get(k, "#aaa") if is_sel else f"rgba({SOURCE_RGB.get(k,'136,136,136')},0.3)")
-        bar_opacities.append(1.0 if is_sel else 0.7)
-        bar_texts.append(f"  {v:+.3f}")
+        sel_txt = " ✦ SELECTED" if is_sel else ""
+        y_labels.append(f"#{rank}  {icon} {name}{sel_txt}")
+        bar_colors.append(SOURCE_COLORS.get(k, "#aaa") if is_sel
+                          else f"rgba({SOURCE_RGB.get(k, '136,136,136')},0.25)")
+        values.append(v)
+        customdata.append(name)
 
-    values = [v for _, v in items]
-    text_pos = ["outside" if v >= 0 else "outside" for _ in values]
+    # Determine axis range so labels never clip
+    vmin = min(values)
+    vmax = max(values)
+    pad  = (vmax - vmin) * 0.35 if vmax != vmin else 0.5
+    x_range = [vmin - 0.1, vmax + pad]
 
-    fig = go.Figure(go.Bar(
-        x=values, y=y_labels,
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=values,
+        y=y_labels,
         orientation="h",
-        marker=dict(color=bar_colors, line=dict(width=0),
-                    opacity=bar_opacities),
-        text=bar_texts,
+        marker=dict(
+            color=bar_colors,
+            line=dict(width=0),
+            cornerradius=4,
+        ),
+        text=[f" {v:+.3f}" for v in values],
         textposition="outside",
         cliponaxis=False,
-        textfont=dict(color="rgba(255,255,255,0.9)", size=12,
-                      family="Space Mono, monospace"),
+        textfont=dict(
+            color="rgba(255,255,255,0.85)",
+            size=12,
+            family="Space Mono, monospace",
+        ),
+        hovertemplate="<b>%{customdata}</b><br>Q-Score: %{x:+.4f}<extra></extra>",
+        customdata=customdata,
     ))
 
-    # Zero-line
-    fig.add_vline(x=0, line_dash="solid",
-                  line_color="rgba(255,255,255,0.2)", line_width=1.5)
-
-    # Explanation annotation
-    fig.add_annotation(
-        text="Higher score = agent prefers this source for your query",
-        xref="paper", yref="paper",
-        x=0.5, y=-0.22, showarrow=False,
-        font=dict(color="rgba(255,255,255,0.35)", size=10,
-                  family="Space Grotesk"),
-        align="center",
-    )
+    # Zero reference line
+    fig.add_vline(x=0, line_color="rgba(255,255,255,0.15)", line_width=1)
 
     return _lay(fig,
         title=dict(
-            text="Agent Routing Decision — Knowledge Source Scores",
-            font=dict(size=12, color="rgba(255,255,255,0.55)",
-                      family="Space Grotesk"),
+            text="Routing Decision — Q-Score per Knowledge Source",
+            font=dict(size=12, color="rgba(255,255,255,0.45)", family="Space Grotesk"),
+            x=0,
         ),
-        height=270,
-        margin=dict(l=10, r=100, t=48, b=50),
+        height=n * 72 + 60,
+        margin=dict(l=20, r=90, t=44, b=30),
+        bargap=0.35,
         xaxis=dict(
-            gridcolor="rgba(255,255,255,0.06)",
-            zerolinecolor="rgba(255,255,255,0.2)",
-            zerolinewidth=1.5,
+            range=x_range,
+            showgrid=True,
+            gridcolor="rgba(255,255,255,0.05)",
+            zerolinecolor="rgba(255,255,255,0.15)",
             zeroline=True,
-            title=dict(text="Q-Score",
-                       font=dict(size=10, color="rgba(255,255,255,0.35)")),
-            tickfont=dict(size=10, color="rgba(255,255,255,0.45)"),
+            showticklabels=True,
+            tickfont=dict(size=10, color="rgba(255,255,255,0.35)"),
+            title=dict(
+                text="← worse    Q-Score    better →",
+                font=dict(size=9, color="rgba(255,255,255,0.25)"),
+                standoff=4,
+            ),
         ),
         yaxis=dict(
             gridcolor="rgba(0,0,0,0)",
-            zerolinecolor="rgba(255,255,255,0.08)",
             autorange="reversed",
-            tickfont=dict(size=12, color="rgba(255,255,255,0.88)",
-                         family="Space Grotesk"),
+            tickfont=dict(size=12, color="rgba(255,255,255,0.82)", family="Space Grotesk"),
             automargin=True,
         ),
     )
@@ -793,7 +872,7 @@ def chart_kg_graph(query: str, answer: str):
     if not entities:
         return None
 
-    center_label = (query[:28] + '...') if len(query) > 28 else query
+    center_label = query  # full query text, no truncation
     positions = {}
     for i, e in enumerate(entities):
         angle = 2 * math.pi * i / len(entities) - math.pi / 2
@@ -813,25 +892,34 @@ def chart_kg_graph(query: str, answer: str):
         mode='markers+text',
         marker=dict(color='rgba(52,211,153,0.85)', size=13,
                     line=dict(width=1.5, color='rgba(255,255,255,0.15)')),
-        text=[e[:22] for e in entities], textposition='top center',
-        textfont=dict(color='rgba(255,255,255,0.72)', size=8.5, family='Space Grotesk'),
+        text=[f'<b>{e}</b>' for e in entities], textposition='top center',
+        textfont=dict(color='rgba(255,255,255,0.85)', size=10, family='Space Grotesk'),
         hovertext=entities, hoverinfo='text', showlegend=False,
     ))
     fig.add_trace(go.Scatter(
         x=[0], y=[0], mode='markers+text',
-        marker=dict(color='#818cf8', size=26,
+        marker=dict(color='#818cf8', size=30,
                     line=dict(width=2, color='rgba(165,180,252,0.5)')),
-        text=[center_label], textposition='bottom center',
-        textfont=dict(color='#a5b4fc', size=9.5, family='Space Grotesk'),
-        hoverinfo='text', showlegend=False,
+        text=[f'<b>{center_label}</b>'], textposition='bottom center',
+        textfont=dict(color='#a5b4fc', size=10, family='Space Grotesk'),
+        hovertext=[center_label], hoverinfo='text', showlegend=False,
     ))
     return _lay(fig,
         title=dict(text='Knowledge Graph — Entity Relationship Map',
-                   font=dict(size=12, color='rgba(255,255,255,0.5)', family='Space Grotesk')),
-        height=380, showlegend=False,
-        margin=dict(l=30, r=30, t=48, b=30),
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8]),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8]),
+                   font=dict(size=12, color='rgba(255,255,255,0.45)', family='Space Grotesk'),
+                   x=0),
+        height=500, showlegend=False,
+        margin=dict(l=40, r=40, t=52, b=60),
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8],
+                   fixedrange=True),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8],
+                   fixedrange=True),
+        annotations=[dict(
+            text="Query → extracted entities from the Knowledge Graph answer",
+            xref="paper", yref="paper", x=0.5, y=-0.05,
+            showarrow=False,
+            font=dict(size=9, color="rgba(255,255,255,0.25)", family="Space Grotesk"),
+        )],
     )
 
 
@@ -866,16 +954,23 @@ def chart_per_source_metrics(sm):
         fig.add_trace(go.Bar(
             name=metric.capitalize(), x=short,
             y=[sm[s][metric] for s in sources],
-            marker={"color": color, "opacity": 0.85, "line": {"width": 0}},
+            marker={"color": color, "opacity": 0.88, "line": {"width": 0},
+                     "cornerradius": 3},
             text=[f"{sm[s][metric]:.2f}" for s in sources],
-            textposition="outside", textfont={"size": 11, "color": "rgba(255,255,255,0.65)"},
+            textposition="outside",
+            cliponaxis=False,
+            textfont={"size": 10, "color": "rgba(255,255,255,0.7)"},
         ))
     return _lay(fig,
         barmode="group",
-        title={"text": "Per-Source Classification Metrics", "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
-        yaxis={**_AXIS, "title": "Score", "range": [0, 1.2], "tickformat": ".2f"},
-        xaxis={**_AXIS, "tickfont": {"color": "rgba(255,255,255,0.65)"}},
-        height=320,
+        bargap=0.25,
+        bargroupgap=0.08,
+        title={"text": "Per-Source Classification Metrics", "font": {"size": 12, "color": "rgba(255,255,255,0.45)"}},
+        yaxis={**_AXIS, "title": "Score", "range": [0, 1.18], "tickformat": ".1f",
+               "dtick": 0.2},
+        xaxis={**_AXIS, "tickfont": {"color": "rgba(255,255,255,0.65)", "size": 11}},
+        height=380,
+        margin=dict(t=60, b=40),
         legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1,
                 "font": {"color": "rgba(255,255,255,0.6)", "size": 11}, "bgcolor": "rgba(0,0,0,0)"},
     )
@@ -1055,23 +1150,47 @@ with tab_query:
 
     st.divider()
 
-    # Process query
+    # ── Process query ────────────────────────────────────────────────────────────
     if ask_clicked and raw_query.strip():
         from models.reward_evaluator import RewardEvaluator, classify_query
-        with st.spinner("Routing query through knowledge sources…"):
-            qtype       = classify_query(raw_query)
-            emb         = encoder.encode([raw_query])[0]
-            qtable      = agent.get_q_table(emb)
-            action_idx  = agent.select_action(emb, epsilon=0.0)
-            source_name = agent.sources[action_idx]
-            results     = system.query_source(source_name, raw_query)
-            if isinstance(results, dict):
-                answer     = results.get("answer", str(results))
-                confidence = results.get("confidence", 0.5)
-            else:
-                answer     = str(results) if results else "No answer returned."
-                confidence = 0.5
-            rwd = RewardEvaluator.compute_reward(raw_query, source_name, results)
+
+        prog = st.empty()
+        prog.markdown(
+            '<div style="background:#18181b;border:1px solid #27272a;border-radius:8px;'
+            'padding:16px 20px;margin-bottom:12px;">'
+            '<div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;'
+            'color:#f59e0b;margin-bottom:10px;">⏳ Processing query…</div>'
+            + "".join([
+                f'<div style="display:flex;align-items:center;gap:10px;padding:5px 0;'
+                f'font-size:0.78rem;color:#52525b;">'
+                f'<span style="width:7px;height:7px;border-radius:50%;background:#27272a;flex-shrink:0;"></span>'
+                f'{step}</div>'
+                for step in [
+                    "Classifying query type…",
+                    "Embedding query into 384-dim vector…",
+                    "Computing Q-scores for all knowledge sources…",
+                    "Selecting optimal source (greedy policy)…",
+                    "Retrieving answer…",
+                ]
+            ])
+            + "</div>",
+            unsafe_allow_html=True,
+        )
+
+        qtype       = classify_query(raw_query)
+        emb         = encoder.encode([raw_query])[0]
+        qtable      = agent.get_q_table(emb)
+        action_idx  = agent.select_action(emb, epsilon=0.0)
+        source_name = agent.sources[action_idx]
+        results     = system.query_source(source_name, raw_query)
+        if isinstance(results, dict):
+            answer     = results.get("answer", str(results))
+            confidence = results.get("confidence", 0.5)
+        else:
+            answer     = str(results) if results else "No answer returned."
+            confidence = 0.5
+        rwd = RewardEvaluator.compute_reward(raw_query, source_name, results)
+        prog.empty()
 
         st.session_state["result"] = dict(
             query=raw_query, qtype=qtype, qtable=qtable,
@@ -1083,55 +1202,85 @@ with tab_query:
     elif ask_clicked:
         st.warning("Please enter a query first.")
 
-    # Display results
+    # ── Display results (ordered steps) ──────────────────────────────────────────
     if "result" in st.session_state:
         res      = st.session_state["result"]
-        src      = res["source_name"]
-        clr      = SOURCE_COLORS.get(src, "#888")
-        rgb      = SOURCE_RGB.get(src, "136,136,136")
-        icon     = SOURCE_ICONS.get(src, "")
-        short    = SHORT_NAMES.get(src, src)
+        src_name = res["source_name"]
+        clr      = SOURCE_COLORS.get(src_name, "#888")
+        rgb      = SOURCE_RGB.get(src_name, "136,136,136")
+        icon     = SOURCE_ICONS.get(src_name, "")
+        short    = SHORT_NAMES.get(src_name, src_name)
         conf_pct = int(res["confidence"] * 100)
         rwd_clr  = "#22c55e" if res["reward"] > 0 else "#ef4444"
+        best_q   = max(res["qtable"].values())
 
-        # Compact routing info bar (full width)
+        # ── 1 · Query Type ────────────────────────────────────────────────────
+        section_head("1 · Query Classification")
         st.markdown(
-            f'<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:14px 20px;'
-            f'background:#18181b;border:1px solid #27272a;border-radius:8px;margin-bottom:12px;">'
-            f'<div><div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#52525b;margin-bottom:3px;">Query Type</div>'
-            f'<span style="padding:2px 8px;border-radius:4px;font-size:0.69rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;background:#27272a;color:#a1a1aa;">{res["qtype"]}</span></div>'
-            f'<div style="width:1px;height:32px;background:#27272a;flex-shrink:0;"></div>'
-            f'<div><div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#52525b;margin-bottom:3px;">Routed To</div>'
-            f'<span style="padding:3px 10px;border-radius:5px;font-size:0.78rem;font-weight:700;color:{clr};border:1px solid rgba({rgb},0.3);background:rgba({rgb},0.08);">{icon} {short}</span></div>'
-            f'<div style="width:1px;height:32px;background:#27272a;flex-shrink:0;"></div>'
-            f'<div><div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#52525b;margin-bottom:3px;">Confidence</div>'
-            f'<span style="font-size:0.9rem;font-weight:700;color:#fafafa;font-family:Space Mono,monospace;">{conf_pct}%</span></div>'
-            f'<div style="width:1px;height:32px;background:#27272a;flex-shrink:0;"></div>'
-            f'<div><div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#52525b;margin-bottom:3px;">Reward</div>'
-            f'<span style="font-size:0.9rem;font-weight:700;color:{rwd_clr};font-family:Space Mono,monospace;">{res["reward"]:+.3f}</span></div>'
+            f'<div style="display:flex;align-items:center;gap:16px;padding:14px 18px;'
+            f'background:#18181b;border:1px solid #27272a;border-radius:8px;margin-bottom:4px;">'
+            f'<span style="padding:4px 12px;border-radius:5px;font-size:0.78rem;font-weight:700;'
+            f'text-transform:uppercase;letter-spacing:0.08em;background:#27272a;color:#e4e4e7;">'
+            f'{res["qtype"]}</span>'
+            f'<span style="font-size:0.8rem;color:#52525b;line-height:1.6;">'
+            f'Classified as <strong style="color:#a1a1aa;">{res["qtype"]}</strong> — '
+            f'guides which knowledge sources are likely most relevant.</span>'
             f'</div>',
             unsafe_allow_html=True,
         )
 
-        # Q-Values chart (full width)
-        st.plotly_chart(chart_qvalues(res["qtable"], res["source_name"]),
-                        use_container_width=True, config={"displayModeBar": False})
-
-        # Agent decision explanation
-        best_src = SHORT_NAMES.get(res["source_name"], res["source_name"])
-        best_q   = max(res["qtable"].values())
+        # ── 2 · Pipeline Steps ───────────────────────────────────────────────
+        section_head("2 · Routing Pipeline")
+        pipeline = [
+            ("💬", "Query",       res["query"],                                           "#a1a1aa"),
+            ("📐", "Embedding",   "Encoded to 384-dim vector via sentence-transformer",   "#71717a"),
+            ("🧠", "DQN Scoring", f"Q-values computed for {len(res['qtable'])} sources","#71717a"),
+            ("✅",      "Selected",    f"{icon} {short}  —  Q = {best_q:+.3f}", clr),
+        ]
+        rows = "".join(
+            f'<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;'
+            f'{"" if i==len(pipeline)-1 else "border-bottom:1px solid #27272a;"}">'
+            f'<span style="font-size:1rem;margin-top:1px;flex-shrink:0;">{ico}</span>'
+            f'<div><div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;'
+            f'letter-spacing:0.1em;color:#52525b;margin-bottom:2px;">{lbl}</div>'
+            f'<div style="font-size:0.82rem;color:{dc};">{dtl}</div></div></div>'
+            for i, (ico, lbl, dtl, dc) in enumerate(pipeline)
+        )
         st.markdown(
-            f'<div style="background:#18181b;border:1px solid #27272a;border-left:2px solid #f59e0b;'
-            f'border-radius:6px;padding:10px 16px;margin-bottom:8px;font-size:0.77rem;color:#71717a;line-height:1.7;">'
-            f'<strong style="color:#f59e0b;">How the agent decided — </strong>'
-            f'DQN embedded your query (384-dim) and scored all 4 sources. '
-            f'<strong style="color:#d4d4d8;">{best_src}</strong> scored '
-            f'<code style="color:#22c55e;font-size:0.75rem;background:#0f2318;padding:1px 5px;border-radius:3px;">Q = {best_q:+.3f}</code>'
-            f' — highest → selected.</div>',
+            f'<div style="padding:0 18px;background:#18181b;border:1px solid #27272a;'
+            f'border-radius:8px;margin-bottom:4px;">{rows}</div>',
             unsafe_allow_html=True,
         )
 
-        section_head("Answer")
+        # ── 3 · Routing Decision (Q-values chart) ────────────────────────────
+        section_head("3 · Routing Decision")
+        st.plotly_chart(chart_qvalues(res["qtable"], src_name),
+                        use_container_width=True, config={"displayModeBar": False})
+
+        # ── 4 · Decision Explanation ──────────────────────────────────────────
+        section_head("4 · Decision Explanation")
+        scores_html = " · ".join(
+            f'<span style="color:{SOURCE_COLORS.get(k,"#888")};font-weight:600;">'
+            f'{SHORT_NAMES.get(k,k)} <code style="font-size:0.75rem;">{v:+.3f}</code></span>'
+            for k, v in sorted(res["qtable"].items(), key=lambda x: x[1], reverse=True)
+        )
+        st.markdown(
+            f'<div style="background:#18181b;border:1px solid #27272a;border-left:3px solid #f59e0b;'
+            f'border-radius:8px;padding:14px 18px;font-size:0.82rem;color:#a1a1aa;line-height:1.8;">'
+            f'<div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;'
+            f'color:#52525b;margin-bottom:8px;">How the DQN Decided</div>'
+            f'The query embedding was fed through the DQN policy network, which outputs a Q-value '
+            f'representing expected reward per source.<br>'
+            f'<span style="color:#71717a;">All scores: {scores_html}</span><br>'
+            f'<strong style="color:{clr};">{icon} {short}</strong> had the highest Q-score '
+            f'(<code style="color:#22c55e;background:#0f2318;padding:1px 6px;border-radius:3px;">'
+            f'Q = {best_q:+.3f}</code>) — selected as optimal source.'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
+        # ── 5 · Answer ───────────────────────────────────────────────────────
+        section_head("5 · Answer")
         st.markdown(
             f'<div class="aks-answer-outer">'
             f'<div class="aks-answer-inner">{res["answer"]}</div>'
@@ -1139,16 +1288,22 @@ with tab_query:
             unsafe_allow_html=True,
         )
 
-
-        # KG network visualization
-        if res["source_name"] == "KnowledgeGraphSource":
+        # ── 6 · KG Visualization ─────────────────────────────────────────────
+        if src_name == "KnowledgeGraphSource":
             kg_fig = chart_kg_graph(res["query"], res["answer"])
             if kg_fig:
-                section_head("Knowledge Graph — Relationship Map")
+                section_head("6 · Knowledge Graph — Entity Map")
+                st.markdown(
+                    f'<div style="font-size:0.78rem;color:#52525b;margin-bottom:8px;line-height:1.6;">'
+                    f'Entities extracted from the KG answer for query: '
+                    f'<em style="color:#a1a1aa;">"{res["query"]}"</em></div>',
+                    unsafe_allow_html=True,
+                )
                 st.plotly_chart(kg_fig, use_container_width=True,
                                 config={"displayModeBar": False})
 
-        section_head("LLM Judge Evaluation")
+        # ── 7 · LLM Judge Evaluation ──────────────────────────────────────────
+        section_head("7 · LLM Judge Evaluation")
         run_judge = st.checkbox("Run LLM Judge  *(requires AWS Bedrock credentials)*",
                                 value=False, key="judge_toggle")
 
@@ -1557,7 +1712,7 @@ with tab_about:
         '<div style="font-size:0.88rem;color:rgba(255,255,255,0.7);line-height:1.8;">'
         '<strong style="color:#a78bfa;">CSE 579</strong> — Knowledge Representation & Reasoning<br>'
         '<strong style="color:#38bdf8;">Arizona State University</strong> · Spring 2026<br>'
-        '<span style="color:rgba(255,255,255,0.45);">Student: Rashi Sharma, Harsh Tita, Harpreet Kaur Brar, Shashwat Dwivedi, Sarthak Singh</span>'
+        '<span style="color:rgba(255,255,255,0.45);">Students: Rashi Sharma, Harsh Tita, Harpreet Kaur Brar, Shashwat Dwivedi, Sarthak Singh</span>'
         '</div>'
         '</div>',
         unsafe_allow_html=True,
