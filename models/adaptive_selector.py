@@ -78,6 +78,7 @@ class AdaptiveSelector:
             return np.random.randint(len(self.sources))
 
         # Get Q-values and pick best
+        self.policy_net.eval()  # Set to eval mode to disable dropout
         with torch.no_grad():
             state_tensor = torch.FloatTensor(state).unsqueeze(0).to(self.device)
             q_values = self.policy_net(state_tensor)
@@ -90,6 +91,8 @@ class AdaptiveSelector:
         We're doing simple immediate-reward learning here:
         teach the network that Q(query, source) should equal the reward we got.
         """
+        self.policy_net.train()  # Set to train mode to enable dropout
+
         state_batch = torch.FloatTensor(states).to(self.device)
         action_batch = torch.LongTensor(actions).to(self.device)
         reward_batch = torch.FloatTensor(rewards).to(self.device)
@@ -116,6 +119,7 @@ class AdaptiveSelector:
 
     def get_q_table(self, state):
         """Get predicted Q-values for all sources given a query embedding"""
+        self.policy_net.eval()  # Set to eval mode to disable dropout
         with torch.no_grad():
             state_tensor = torch.FloatTensor(state).unsqueeze(0).to(self.device)
             q_values = self.policy_net(state_tensor).squeeze().cpu().numpy()

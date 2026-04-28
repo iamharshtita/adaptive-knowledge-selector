@@ -16,6 +16,7 @@ load_dotenv()
 
 from models.adaptive_selector import AdaptiveSelector
 from utils.s3_sync import S3TeamSync
+from utils.reward_blending import extract_rewards_from_experiences
 
 
 def manual_train():
@@ -54,7 +55,13 @@ def manual_train():
     # Extract training data
     states = [e['embedding'] for e in experiences]
     actions = [e['action_idx'] for e in experiences]
-    rewards = [e['reward'] for e in experiences]
+
+    # Use blended rewards (30% automatic + 70% LLM quality)
+    rewards = extract_rewards_from_experiences(experiences, alpha=0.3, beta=0.7)
+
+    # Count how many experiences used LLM evaluation
+    llm_count = sum(1 for e in experiences if e.get('llm_evaluation', {}).get('quality', 0) > 0)
+    print(f"  Using blended rewards: {llm_count}/{num_exp} with LLM evaluation")
 
     state_batch = torch.FloatTensor(states)
     action_batch = torch.LongTensor(actions)

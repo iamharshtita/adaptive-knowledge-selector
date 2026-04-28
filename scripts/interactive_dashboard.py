@@ -16,6 +16,7 @@ from models.reward_evaluator import RewardEvaluator, classify_query
 from scripts.train_rl_agent import TrainingSystem
 from utils.llm_judge import LLMJudge
 from utils.s3_sync import S3TeamSync
+from utils.reward_blending import extract_rewards_from_experiences
 
 
 class InteractiveDashboard:
@@ -256,7 +257,9 @@ class InteractiveDashboard:
         # Extract states, actions, rewards
         states = [e['embedding'] for e in batch]
         actions = [e['action_idx'] for e in batch]
-        rewards = [e['reward'] for e in batch]
+
+        # Use blended rewards (30% automatic + 70% LLM quality)
+        rewards = extract_rewards_from_experiences(batch, alpha=0.3, beta=0.7)
 
         # Convert to tensors
         state_batch = torch.FloatTensor(states)

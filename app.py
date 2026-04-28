@@ -1,5 +1,5 @@
 """
-Streamlit Web UI — Adaptive Knowledge Selector  (Modern Dark Theme)
+Streamlit Web UI — Adaptive Knowledge Selector  (Premium Vibrant Theme)
 Run with:  streamlit run app.py
 """
 
@@ -24,16 +24,22 @@ sys.path.insert(0, ROOT)
 
 # ── Source metadata ───────────────────────────────────────────────────────────
 SOURCE_COLORS = {
-    "KnowledgeGraphSource": "#0369a1",
-    "ToolAPISource":        "#047857",
-    "LLMSource":            "#6d28d9",
-    "PDFKnowledgeSource":   "#b45309",
+    "KnowledgeGraphSource": "#2563eb",
+    "ToolAPISource":        "#059669",
+    "LLMSource":            "#7c3aed",
+    "PDFKnowledgeSource":   "#ea580c",
+}
+SOURCE_GRADIENTS = {
+    "KnowledgeGraphSource": "linear-gradient(135deg, #2563eb, #3b82f6)",
+    "ToolAPISource":        "linear-gradient(135deg, #059669, #10b981)",
+    "LLMSource":            "linear-gradient(135deg, #7c3aed, #8b5cf6)",
+    "PDFKnowledgeSource":   "linear-gradient(135deg, #ea580c, #f97316)",
 }
 SOURCE_RGB = {
-    "KnowledgeGraphSource": "3,105,161",
-    "ToolAPISource":        "4,120,87",
-    "LLMSource":            "109,40,217",
-    "PDFKnowledgeSource":   "180,83,9",
+    "KnowledgeGraphSource": "37,99,235",
+    "ToolAPISource":        "5,150,105",
+    "LLMSource":            "124,58,237",
+    "PDFKnowledgeSource":   "234,88,12",
 }
 SOURCE_ICONS = {
     "KnowledgeGraphSource": "🕸️",
@@ -63,40 +69,32 @@ st.set_page_config(
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  GLOBAL CSS
+#  GLOBAL CSS — Vibrant Premium Theme
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ── BASE ──────────────────────────────────────────────────────────────────── */
 html, body, .stApp {
-font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 .stApp {
-background: linear-gradient(145deg, #f0f4ff 0%, #fafbff 40%, #f5f0ff 100%) !important;
-background-attachment: fixed !important;
-min-height: 100vh;
-}
-
-.stApp::before {
-content: '';
-position: fixed;
-inset: 0;
-background-image:
-  linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
-  linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
-background-size: 40px 40px;
-pointer-events: none;
-z-index: 0;
+  background: #0f0f1a !important;
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(99,102,241,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 20%, rgba(139,92,246,0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 80%, rgba(59,130,246,0.06) 0%, transparent 50%) !important;
+  background-attachment: fixed !important;
+  min-height: 100vh;
 }
 
 [data-testid="stAppViewContainer"] > .main { position: relative; z-index: 1; }
 
 [data-testid="stAppViewContainer"] .block-container {
-padding-top: 1.5rem !important;
-max-width: 1300px;
+  padding-top: 1.5rem !important;
+  max-width: 1300px;
 }
 
 /* ── HIDE CHROME ───────────────────────────────────────────────────────────── */
@@ -106,56 +104,71 @@ footer, #MainMenu,
 [data-testid="stDecoration"] { display: none !important; }
 
 /* ── SCROLLBAR ─────────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #818cf8; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(15,15,26,0.5); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6366f1, #8b5cf6);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #818cf8, #a78bfa); }
 
 /* ── TYPOGRAPHY ────────────────────────────────────────────────────────────── */
-h1,h2,h3,h4,h5,h6 { color: #0f172a !important; font-weight: 700 !important; letter-spacing: -0.02em; }
-p, li { color: #334155; }
-code { background: #ede9fe !important; color: #6d28d9 !important; border-radius: 4px !important; padding: 1px 7px !important; font-family: 'JetBrains Mono', monospace !important; }
-pre code { color: #1e293b !important; background: #f8fafc !important; }
-strong { color: #0f172a; }
+h1,h2,h3,h4,h5,h6 {
+  color: #f1f5f9 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+}
+p, li, span { color: #cbd5e1; }
+code {
+  background: rgba(139,92,246,0.15) !important;
+  color: #a78bfa !important;
+  border-radius: 6px !important;
+  padding: 2px 8px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.82em !important;
+  border: 1px solid rgba(139,92,246,0.2) !important;
+}
+pre code { color: #e2e8f0 !important; background: rgba(30,30,50,0.8) !important; }
+strong { color: #f1f5f9; }
 
 /* ── TABS ──────────────────────────────────────────────────────────────────── */
 .stTabs [data-baseweb="tab-list"] {
-background: transparent !important;
-border-radius: 0 !important;
-padding: 0 !important;
-border: none !important;
-border-bottom: 2px solid #e2e8f0 !important;
-gap: 0 !important;
-justify-content: center !important;
-align-items: flex-end !important;
-overflow: hidden !important;
+  background: rgba(255,255,255,0.04) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 16px !important;
+  padding: 6px !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  gap: 4px !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  margin-bottom: 12px !important;
 }
 
 .stTabs [data-baseweb="tab"] {
-border-radius: 0 !important;
-font-weight: 500 !important;
-font-size: 0.875rem !important;
-letter-spacing: 0.005em !important;
-padding: 12px 28px !important;
-color: #64748b !important;
-transition: all 0.18s ease !important;
-background: transparent !important;
-border: none !important;
-border-bottom: 2px solid transparent !important;
-white-space: nowrap !important;
-flex-shrink: 0 !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  padding: 10px 24px !important;
+  color: rgba(255,255,255,0.45) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  white-space: nowrap !important;
 }
 
 .stTabs [data-baseweb="tab"]:hover {
-color: #4f46e5 !important;
-background: rgba(99,102,241,0.04) !important;
+  color: rgba(255,255,255,0.8) !important;
+  background: rgba(255,255,255,0.05) !important;
 }
 
 .stTabs [aria-selected="true"] {
-background: transparent !important;
-color: #4f46e5 !important;
-border-bottom: 2px solid #4f46e5 !important;
-font-weight: 700 !important;
+  background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.2)) !important;
+  color: #fff !important;
+  border: 1px solid rgba(99,102,241,0.3) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.2), inset 0 1px 0 rgba(255,255,255,0.1) !important;
 }
 
 .stTabs [data-baseweb="tab-highlight"] { display: none !important; }
@@ -164,36 +177,63 @@ font-weight: 700 !important;
 
 /* ── BUTTON ────────────────────────────────────────────────────────────────── */
 .stButton > button {
-border-radius: 10px !important;
-font-weight: 600 !important;
-font-size: 0.9rem !important;
-letter-spacing: 0.01em !important;
-padding: 0.65rem 1.6rem !important;
-transition: all 0.18s ease !important;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  padding: 0.7rem 1.8rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .stButton > button[kind="primary"] {
-background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
-color: #ffffff !important;
-border: none !important;
-font-weight: 700 !important;
-box-shadow: 0 2px 8px rgba(99,102,241,0.35), 0 1px 0 rgba(255,255,255,0.2) inset !important;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow:
+    0 6px 24px rgba(99,102,241,0.4),
+    0 2px 8px rgba(139,92,246,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.2) !important;
 }
 
 .stButton > button[kind="primary"]:hover {
-background: linear-gradient(135deg, #4338ca, #4f46e5) !important;
-transform: translateY(-1px) !important;
-box-shadow: 0 6px 20px rgba(99,102,241,0.45) !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #8b5cf6 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 10px 36px rgba(99,102,241,0.5),
+    0 4px 12px rgba(139,92,246,0.35) !important;
+}
+
+.stButton > button[kind="primary"]:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.3), inset 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+.stButton > button:not([kind="primary"]) {
+  background: rgba(255,255,255,0.05) !important;
+  color: rgba(255,255,255,0.7) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+}
+
+.stButton > button:not([kind="primary"]):hover {
+  background: rgba(255,255,255,0.08) !important;
+  color: #fff !important;
+  border-color: rgba(99,102,241,0.3) !important;
+  transform: translateY(-1px) !important;
 }
 
 /* ── TEXT INPUT ────────────────────────────────────────────────────────────── */
 div[data-baseweb="input"],
 div[data-baseweb="base-input"],
 [data-testid="stTextInput"] div[data-baseweb="input"] {
-background: #ffffff !important;
-border: 1.5px solid #e2e8f0 !important;
-border-radius: 12px !important;
-box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+  background: rgba(255,255,255,0.06) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  transition: all 0.25s ease !important;
 }
 
 div[data-baseweb="input"] input,
@@ -202,494 +242,590 @@ div[data-baseweb="base-input"] input,
 [data-testid="stTextInput"] input,
 .stTextInput > div > div > input,
 input[aria-label] {
-background: #ffffff !important;
-color: #0f172a !important;
-caret-color: #4f46e5 !important;
-border-radius: 12px !important;
-font-size: 1rem !important;
-font-weight: 400 !important;
-padding: 13px 18px !important;
-border: none !important;
-box-shadow: none !important;
-transition: all 0.18s ease !important;
--webkit-text-fill-color: #0f172a !important;
-opacity: 1 !important;
+  background: transparent !important;
+  color: #f1f5f9 !important;
+  caret-color: #818cf8 !important;
+  border-radius: 14px !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  padding: 14px 20px !important;
+  border: none !important;
+  box-shadow: none !important;
+  -webkit-text-fill-color: #f1f5f9 !important;
+  opacity: 1 !important;
 }
 
 div[data-baseweb="input"] input::placeholder,
 .stTextInput input::placeholder,
 [data-testid="stTextInput"] input::placeholder {
-color: #94a3b8 !important;
--webkit-text-fill-color: #94a3b8 !important;
-}
-
-div[data-baseweb="input"] input:focus,
-.stTextInput input:focus,
-[data-testid="stTextInput"] input:focus {
--webkit-text-fill-color: #0f172a !important;
-color: #0f172a !important;
-outline: none !important;
+  color: rgba(255,255,255,0.3) !important;
+  -webkit-text-fill-color: rgba(255,255,255,0.3) !important;
 }
 
 div[data-baseweb="input"]:focus-within,
 [data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
-border-color: #4f46e5 !important;
-box-shadow: 0 0 0 3px rgba(99,102,241,0.12), 0 1px 3px rgba(0,0,0,0.06) !important;
+  border-color: rgba(99,102,241,0.5) !important;
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.15), 0 4px 16px rgba(0,0,0,0.2) !important;
 }
 
-/* ── METRIC CARDS ──────────────────────────────────────────────────────────── */
+/* ── METRIC CARDS ─────────────────────────────────────────────────────────── */
 [data-testid="stMetric"] {
-background: #ffffff !important;
-border: 1px solid #e2e8f0 !important;
-border-top: 3px solid #4f46e5 !important;
-border-radius: 14px !important;
-padding: 20px 22px !important;
-transition: all 0.18s ease !important;
-box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+  background: rgba(255,255,255,0.04) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  border-radius: 18px !important;
+  padding: 22px 24px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+[data-testid="stMetric"]::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #a78bfa, #818cf8);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
 }
 
 [data-testid="stMetric"]:hover {
-box-shadow: 0 8px 24px rgba(99,102,241,0.12) !important;
-transform: translateY(-2px) !important;
-border-color: #c7d2fe !important;
+  background: rgba(255,255,255,0.07) !important;
+  box-shadow: 0 8px 32px rgba(99,102,241,0.15), 0 0 40px rgba(99,102,241,0.05) !important;
+  transform: translateY(-3px) !important;
+  border-color: rgba(99,102,241,0.15) !important;
 }
 
+[data-testid="stMetric"]:hover::before { opacity: 1; }
+
 [data-testid="stMetricValue"] {
-color: #0f172a !important;
-font-size: 1.7rem !important;
-font-weight: 800 !important;
-letter-spacing: -0.04em;
-line-height: 1.2 !important;
-font-family: 'Plus Jakarta Sans', sans-serif !important;
+  color: #f8fafc !important;
+  font-size: 1.8rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em;
+  line-height: 1.2 !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
 [data-testid="stMetricLabel"] {
-color: #64748b !important;
-font-size: 0.68rem !important;
-font-weight: 700 !important;
-text-transform: uppercase !important;
-letter-spacing: 0.1em !important;
+  color: rgba(255,255,255,0.5) !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
 }
 
 [data-testid="stMetricDelta"] {
-color: #64748b !important;
-font-size: 0.74rem !important;
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 0.74rem !important;
 }
 
 /* ── DIVIDER ───────────────────────────────────────────────────────────────── */
 hr {
-border: none !important;
-height: 1px !important;
-background: linear-gradient(90deg, transparent, #e2e8f0, transparent) !important;
-margin: 28px 0 !important;
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.2), rgba(139,92,246,0.15), transparent) !important;
+  margin: 32px 0 !important;
 }
 
 /* ── EXPANDER ──────────────────────────────────────────────────────────────── */
 [data-testid="stExpander"] {
-background: #ffffff !important;
-border: 1px solid #e2e8f0 !important;
-border-radius: 12px !important;
-overflow: hidden;
-box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+  background: rgba(255,255,255,0.03) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 14px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
 }
 
 [data-testid="stExpander"] details,
 [data-testid="stExpander"] summary {
-background: #ffffff !important;
-color: #475569 !important;
-font-weight: 600 !important;
-padding: 14px 18px !important;
+  background: transparent !important;
+  color: rgba(255,255,255,0.7) !important;
+  font-weight: 600 !important;
+  padding: 14px 20px !important;
 }
 
 [data-testid="stExpander"] summary:hover {
-color: #0f172a !important;
-background: #f8fafc !important;
+  color: #fff !important;
 }
 
 [data-testid="stExpander"] [data-testid="stExpanderDetails"],
 [data-testid="stExpander"] .streamlit-expanderContent {
-background: #ffffff !important;
-color: #334155 !important;
+  background: transparent !important;
+  color: rgba(255,255,255,0.6) !important;
 }
 
 /* ── TOOLTIPS ──────────────────────────────────────────────────────────────── */
 [data-testid="stTooltipContent"],
 div[data-baseweb="tooltip"] > div:first-child,
 div[data-baseweb="popover"] > div:first-child {
-background: #1e293b !important;
-color: #f1f5f9 !important;
-border: 1px solid #334155 !important;
-border-radius: 8px !important;
-box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+  background: rgba(15,15,26,0.95) !important;
+  backdrop-filter: blur(24px) !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(99,102,241,0.2) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 20px rgba(99,102,241,0.1) !important;
 }
 
 /* ── DATAFRAME ─────────────────────────────────────────────────────────────── */
 [data-testid="stDataFrame"] {
-border-radius: 12px !important;
-overflow: hidden !important;
-border: 1px solid #e2e8f0 !important;
-box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
 }
 
 /* ── CHECKBOX ──────────────────────────────────────────────────────────────── */
-[data-testid="stCheckbox"] label { color: #475569 !important; font-size: 0.87rem !important; }
+[data-testid="stCheckbox"] label { color: rgba(255,255,255,0.6) !important; font-size: 0.87rem !important; }
 
 /* ── ALERTS ────────────────────────────────────────────────────────────────── */
-[data-testid="stAlert"] { border-radius: 12px !important; }
+[data-testid="stAlert"] { border-radius: 14px !important; }
 
 /* ── CAPTION ───────────────────────────────────────────────────────────────── */
-[data-testid="stCaptionContainer"] { color: #64748b !important; font-size: 0.77rem !important; }
+[data-testid="stCaptionContainer"] { color: rgba(255,255,255,0.35) !important; font-size: 0.77rem !important; }
 
-/* ── SELECT / SPINNER ──────────────────────────────────────────────────────── */
-[data-testid="stSpinner"] { color: #4f46e5 !important; }
+/* ── SPINNER ──────────────────────────────────────────────────────────────── */
+[data-testid="stSpinner"] { color: #818cf8 !important; }
 
-/* ── HERO HEADER ───────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════════
+   HERO HEADER
+   ══════════════════════════════════════════════════════════════════════════════ */
 .aks-hero {
-display: flex;
-align-items: center;
-justify-content: space-between;
-flex-wrap: wrap;
-gap: 20px;
-padding: 32px 40px;
-background: linear-gradient(135deg, #4f46e5 0%, #6366f1 40%, #8b5cf6 80%, #a78bfa 100%);
-border-radius: 20px;
-margin-bottom: 24px;
-position: relative;
-overflow: hidden;
-box-shadow: 0 8px 32px rgba(99,102,241,0.35), 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 38px 48px;
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #3730a3 50%, #4338ca 75%, #4f46e5 100%);
+  border-radius: 24px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 16px 48px rgba(99,102,241,0.25),
+    0 4px 16px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 .aks-hero::before {
-content: '';
-position: absolute;
-inset: 0;
-background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 60%),
-  radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 50%);
-pointer-events: none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 40%, rgba(129,140,248,0.2) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 30%, rgba(167,139,250,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(99,102,241,0.12) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 .aks-hero::after {
-content: '';
-position: absolute;
-top: -60px; right: -60px;
-width: 280px; height: 280px;
-border-radius: 50%;
-background: rgba(255,255,255,0.06);
-pointer-events: none;
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 350px; height: 350px;
+  border-radius: 50%;
+  background: rgba(129,140,248,0.08);
+  pointer-events: none;
+  animation: hero-pulse 8s ease-in-out infinite alternate;
 }
 
-.aks-hero-left { display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; }
+@keyframes hero-pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.aks-hero-left { display: flex; align-items: center; gap: 20px; position: relative; z-index: 1; }
 
 .aks-icon {
-font-size: 2.8rem;
-display: inline-block;
-filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
-animation: aks-float 4s ease-in-out infinite alternate;
+  font-size: 3.2rem;
+  display: inline-block;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+  animation: aks-float 4s ease-in-out infinite alternate;
 }
 
 @keyframes aks-float {
-from { transform: translateY(0px) rotate(-2deg); }
-to   { transform: translateY(-6px) rotate(2deg); }
+  from { transform: translateY(0px) rotate(-2deg); }
+  to   { transform: translateY(-8px) rotate(2deg); }
 }
 
 .aks-title {
-font-size: 1.7rem;
-font-weight: 800;
-letter-spacing: -0.03em;
-color: #ffffff;
-margin: 0 0 4px;
-line-height: 1.2;
-display: block;
-text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin: 0 0 4px;
+  line-height: 1.2;
+  display: block;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .aks-sub {
-color: rgba(255,255,255,0.75);
-font-size: 0.78rem;
-font-weight: 400;
-letter-spacing: 0.02em;
-margin: 0;
-display: block;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin: 0;
+  display: block;
 }
 
 .aks-badges {
-display: flex;
-align-items: center;
-gap: 8px;
-flex-wrap: wrap;
-position: relative;
-z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 .aks-badge {
-padding: 5px 12px;
-border-radius: 100px;
-font-size: 0.7rem;
-font-weight: 700;
-letter-spacing: 0.04em;
-text-transform: uppercase;
-background: rgba(255,255,255,0.15);
-color: rgba(255,255,255,0.92);
-border: 1px solid rgba(255,255,255,0.2);
-backdrop-filter: blur(8px);
-display: inline-block;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
 }
 
-/* ── RESULT / SOURCE CARD ──────────────────────────────────────────────────── */
-.aks-src-card {
-border-radius: 16px;
-padding: 22px 24px;
-background: #ffffff;
-position: relative;
-overflow: hidden;
-box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-border: 1px solid #e2e8f0;
-transition: all 0.22s ease;
+.aks-badge:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.aks-src-card:hover {
-box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-transform: translateY(-2px);
+/* ══════════════════════════════════════════════════════════════════════════════
+   GLASS CARD — reusable container
+   ══════════════════════════════════════════════════════════════════════════════ */
+.glass-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 8px 32px rgba(99,102,241,0.1), 0 0 40px rgba(99,102,241,0.04);
+  transform: translateY(-2px);
+  border-color: rgba(99,102,241,0.12);
 }
 
 /* ── ANSWER CARD ───────────────────────────────────────────────────────────── */
 .aks-answer-outer {
-border-radius: 14px;
-padding: 0;
-margin-top: 12px;
-border: 1px solid #e2e8f0;
-overflow: hidden;
-box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 18px;
+  padding: 0;
+  margin-top: 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(16px);
 }
 
 .aks-answer-inner {
-border-radius: 0;
-padding: 22px 26px;
-background: #f8fafc;
-font-family: 'JetBrains Mono', 'Fira Code', monospace;
-font-size: 0.875rem;
-line-height: 1.8;
-color: #1e293b;
-white-space: pre-wrap;
-word-break: break-word;
+  padding: 24px 28px;
+  background: rgba(15,15,40,0.4);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.85;
+  color: #e2e8f0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 /* ── SECTION HEADING ───────────────────────────────────────────────────────── */
 .aks-section-head {
-font-size: 0.67rem;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 0.14em;
-color: #64748b;
-margin: 28px 0 12px;
-display: flex;
-align-items: center;
-gap: 8px;
+  font-size: 0.67rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.4);
+  margin: 32px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .aks-section-head::before {
-content: '▸';
-color: #4f46e5;
-font-size: 0.75rem;
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #a78bfa);
+  box-shadow: 0 0 10px rgba(99,102,241,0.5);
+  flex-shrink: 0;
 }
 
 .aks-section-head::after {
-content: '';
-flex: 1;
-height: 1px;
-background: #e2e8f0;
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(99,102,241,0.2), transparent);
 }
 
-/* ── MISC ──────────────────────────────────────────────────────────────────── */
+/* ── MISC COMPONENTS ──────────────────────────────────────────────────────── */
 .aks-card-label {
-font-size: 0.67rem;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 0.12em;
-color: #64748b;
-margin-bottom: 5px;
-}
-
-.aks-qtype {
-display: inline-block;
-padding: 3px 11px;
-border-radius: 6px;
-font-size: 0.68rem;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 0.09em;
-background: #ede9fe;
-color: #5b21b6;
-border: 1px solid #ddd6fe;
-}
-
-.aks-pill {
-display: inline-flex;
-align-items: center;
-gap: 7px;
-padding: 6px 16px;
-border-radius: 100px;
-font-size: 0.82rem;
-font-weight: 700;
-letter-spacing: 0.02em;
-border: 1.5px solid;
-background: #f8fafc;
-}
-
-.aks-stat {
-display: inline-flex;
-align-items: baseline;
-gap: 4px;
-padding: 4px 12px;
-border-radius: 8px;
-background: #f1f5f9;
-border: 1px solid #e2e8f0;
-font-size: 0.82rem;
-color: #475569;
-font-weight: 600;
-}
-
-.aks-stat strong {
-color: #0f172a;
-font-size: 0.9rem;
-font-weight: 800;
+  font-size: 0.67rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 6px;
 }
 
 .aks-ex-cat {
-font-size: 0.68rem;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 0.1em;
-color: #64748b;
-margin-bottom: 8px;
-display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 8px;
+  display: block;
 }
 
 .aks-ex-q {
-padding: 7px 13px;
-margin: 4px 0;
-border-radius: 8px;
-font-size: 0.8rem;
-color: #475569;
-border: 1px solid #e2e8f0;
-background: #f8fafc;
-transition: all 0.15s ease;
+  padding: 8px 14px;
+  margin: 5px 0;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  transition: all 0.25s ease;
+  cursor: default;
 }
 
-.aks-ex-q:hover { background: #f1f5f9; border-color: #c7d2fe; color: #0f172a; }
-
-@keyframes aks-glow {
-0%,100% { box-shadow: 0 0 0 2px var(--gc, rgba(99,102,241,0.2)); }
-50%      { box-shadow: 0 0 0 4px var(--gc, rgba(99,102,241,0.35)); }
+.aks-ex-q:hover {
+  background: rgba(99,102,241,0.08);
+  border-color: rgba(99,102,241,0.2);
+  color: rgba(255,255,255,0.8);
+  transform: translateX(4px);
 }
 
-.aks-glow { animation: aks-glow 2.8s ease-in-out infinite; }
-
-/* ── ABOUT CARDS ───────────────────────────────────────────────────────────── */
+/* ── ABOUT CARD ───────────────────────────────────────────────────────────── */
 .aks-about-card {
-background: #ffffff;
-border: 1px solid #e2e8f0;
-border-radius: 16px;
-padding: 24px 28px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-margin-bottom: 16px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 28px 32px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.aks-about-card:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(99,102,241,0.1);
 }
 
 .aks-big-stat {
-font-size: 2.6rem;
-font-weight: 900;
-letter-spacing: -0.05em;
-background: linear-gradient(135deg, #4f46e5, #8b5cf6);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-line-height: 1.1;
-display: block;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(139,92,246,0.2));
 }
 
 .aks-stat-label {
-font-size: 0.7rem;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 0.1em;
-color: #64748b;
-margin-top: 4px;
-display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35);
+  margin-top: 4px;
+  display: block;
 }
 
 .aks-source-row {
-display: flex;
-align-items: flex-start;
-gap: 16px;
-padding: 16px 20px;
-border-radius: 12px;
-border: 1px solid #e2e8f0;
-background: #f8fafc;
-margin-bottom: 10px;
-transition: all 0.15s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
-.aks-source-row:hover { background: #f1f5f9; border-color: #c7d2fe; }
+.aks-source-row:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(99,102,241,0.15);
+  transform: translateX(4px) translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
 
 .aks-source-icon-big { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
 
 .aks-source-name {
-font-size: 0.95rem;
-font-weight: 700;
-color: #0f172a;
-margin-bottom: 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
-.aks-source-desc { font-size: 0.82rem; color: #475569; line-height: 1.5; }
+.aks-source-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.55; }
 
 .aks-milestone {
-display: flex;
-align-items: center;
-gap: 12px;
-padding: 10px 16px;
-border-radius: 10px;
-background: #f8fafc;
-border: 1px solid #e2e8f0;
-margin-bottom: 6px;
-font-size: 0.84rem;
-color: #334155;
-transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 6px;
+  font-size: 0.84rem;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.25s ease;
 }
 
-.aks-milestone:hover { background: #f1f5f9; border-color: #c7d2fe; }
+.aks-milestone:hover {
+  background: rgba(99,102,241,0.06);
+  border-color: rgba(99,102,241,0.15);
+  transform: translateX(4px);
+}
+
+/* ── PIPELINE / CLASSIFY / EXPLAIN ────────────────────────────────────────── */
+.aks-pipeline-card {
+  padding: 4px 22px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.aks-pipeline-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 0;
+}
+
+.aks-pipeline-step:not(:last-child) {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.aks-classify-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 22px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.aks-explain-card {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid #f59e0b;
+  border-radius: 16px;
+  padding: 18px 22px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+/* ── PROCESSING ANIMATION ─────────────────────────────────────────────────── */
+.aks-processing {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.aks-processing-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+}
+
+.aks-processing-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #a78bfa);
+  flex-shrink: 0;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+@keyframes aks-glow {
+  0%,100% { box-shadow: 0 0 0 2px var(--gc, rgba(99,102,241,0.2)); }
+  50%      { box-shadow: 0 0 0 4px var(--gc, rgba(99,102,241,0.35)); }
+}
+
+.aks-glow { animation: aks-glow 2.8s ease-in-out infinite; }
 
 /* ── RESPONSIVE ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-.aks-hero { flex-direction: column; padding: 22px 20px; gap: 16px; }
-.aks-badges { flex-wrap: wrap; gap: 6px; }
-.stTabs [data-baseweb="tab"] { padding: 10px 14px !important; font-size: 0.78rem !important; }
-[data-testid="stMetric"] { padding: 14px 16px !important; }
-.aks-answer-inner { padding: 14px 16px; font-size: 0.82rem; }
+  .aks-hero { flex-direction: column; padding: 24px 22px; gap: 16px; }
+  .aks-badges { flex-wrap: wrap; gap: 6px; }
+  .stTabs [data-baseweb="tab"] { padding: 10px 14px !important; font-size: 0.78rem !important; }
+  [data-testid="stMetric"] { padding: 14px 16px !important; }
+  .aks-answer-inner { padding: 16px 18px; font-size: 0.82rem; }
 }
 
 @media (max-width: 480px) {
-.aks-hero { padding: 18px 14px; }
-.aks-title { font-size: 1.2rem !important; }
-.stTabs [data-baseweb="tab"] { padding: 8px 10px !important; font-size: 0.72rem !important; }
+  .aks-hero { padding: 18px 14px; }
+  .aks-title { font-size: 1.3rem !important; }
+  .stTabs [data-baseweb="tab"] { padding: 8px 10px !important; font-size: 0.72rem !important; }
 }
 
 .stApp > .main > .block-container {
-max-width: 100% !important;
-padding-left: clamp(12px, 3vw, 40px) !important;
-padding-right: clamp(12px, 3vw, 40px) !important;
+  max-width: 100% !important;
+  padding-left: clamp(12px, 3vw, 40px) !important;
+  padding-right: clamp(12px, 3vw, 40px) !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ── JavaScript: force white text in search input (Streamlit overrides CSS) ───
+# ── JavaScript: force correct text colors ────────────────────────────────────
 st.markdown("""
 <script>
 (function() {
   function fixInputs() {
     document.querySelectorAll('input').forEach(function(el) {
-      el.style.setProperty('color', '#0f172a', 'important');
-      el.style.setProperty('-webkit-text-fill-color', '#0f172a', 'important');
+      el.style.setProperty('color', '#f1f5f9', 'important');
+      el.style.setProperty('-webkit-text-fill-color', '#f1f5f9', 'important');
       el.style.setProperty('opacity', '1', 'important');
     });
   }
@@ -763,11 +899,14 @@ def load_judge():
         return None
 
 
-# ── Chart builders ────────────────────────────────────────────────────────────
+# ── Chart builders — Dark theme, single clean bars, vibrant colors ───────────
+_DARK_BG = "rgba(0,0,0,0)"
+_CHART_FONT = {"color": "rgba(255,255,255,0.5)", "family": "Inter, sans-serif", "size": 12}
+
 _BASE = dict(
-    plot_bgcolor="#ffffff",
-    paper_bgcolor="#f8fafc",
-    font={"color": "#475569", "family": "Plus Jakarta Sans, sans-serif", "size": 12},
+    plot_bgcolor=_DARK_BG,
+    paper_bgcolor=_DARK_BG,
+    font=_CHART_FONT,
     margin={"l": 0, "r": 0, "t": 46, "b": 0},
 )
 
@@ -775,11 +914,16 @@ def _lay(fig, **kw):
     fig.update_layout(**{**_BASE, **kw})
     return fig
 
-_AXIS = {"gridcolor": "#f1f5f9", "zerolinecolor": "#e2e8f0", "color": "#64748b"}
+_AXIS = {
+    "gridcolor": "rgba(255,255,255,0.04)",
+    "zerolinecolor": "rgba(255,255,255,0.08)",
+    "color": "rgba(255,255,255,0.4)",
+    "gridwidth": 1,
+}
 
 
 def chart_qvalues(qtable, selected):
-    """Clean ranked bar chart: one row per source, value label on right, selected highlighted."""
+    """Single clean bar chart — one bar per source, selected highlighted."""
     items = sorted(qtable.items(), key=lambda x: x[1], reverse=True)
     n = len(items)
 
@@ -788,14 +932,13 @@ def chart_qvalues(qtable, selected):
         name   = SHORT_NAMES.get(k, k)
         icon   = SOURCE_ICONS.get(k, "")
         is_sel = k == selected
-        sel_txt = " ✦ SELECTED" if is_sel else ""
+        sel_txt = "  ✦ SELECTED" if is_sel else ""
         y_labels.append(f"#{rank}  {icon} {name}{sel_txt}")
-        bar_colors.append(SOURCE_COLORS.get(k, "#aaa") if is_sel
+        bar_colors.append(SOURCE_COLORS.get(k, "#888") if is_sel
                           else f"rgba({SOURCE_RGB.get(k, '136,136,136')},0.25)")
         values.append(v)
         customdata.append(name)
 
-    # Determine axis range so labels never clip
     vmin = min(values)
     vmax = max(values)
     pad  = (vmax - vmin) * 0.35 if vmax != vmin else 0.5
@@ -809,50 +952,50 @@ def chart_qvalues(qtable, selected):
         marker=dict(
             color=bar_colors,
             line=dict(width=0),
-            cornerradius=4,
+            cornerradius=6,
         ),
         text=[f" {v:+.3f}" for v in values],
         textposition="outside",
         cliponaxis=False,
         textfont=dict(
-            color="rgba(255,255,255,0.85)",
+            color="rgba(255,255,255,0.6)",
             size=12,
-            family="Space Mono, monospace",
+            family="JetBrains Mono, monospace",
         ),
         hovertemplate="<b>%{customdata}</b><br>Q-Score: %{x:+.4f}<extra></extra>",
         customdata=customdata,
+        showlegend=False,
     ))
 
-    # Zero reference line
-    fig.add_vline(x=0, line_color="#e2e8f0", line_width=1)
+    fig.add_vline(x=0, line_color="rgba(255,255,255,0.08)", line_width=1)
 
     return _lay(fig,
         title=dict(
-            text="Routing Decision — Q-Score per Knowledge Source",
-            font=dict(size=12, color="rgba(255,255,255,0.45)", family="Space Grotesk"),
+            text="<b>Q-Score per Knowledge Source</b>",
+            font=dict(size=14, color="rgba(255,255,255,0.7)", family="Inter"),
             x=0,
         ),
-        height=n * 72 + 60,
-        margin=dict(l=20, r=90, t=44, b=30),
+        height=n * 80 + 60,
+        margin=dict(l=20, r=100, t=48, b=35),
         bargap=0.35,
         xaxis=dict(
             range=x_range,
             showgrid=True,
-            gridcolor="rgba(255,255,255,0.05)",
-            zerolinecolor="rgba(255,255,255,0.15)",
+            gridcolor="rgba(255,255,255,0.03)",
+            zerolinecolor="rgba(255,255,255,0.06)",
             zeroline=True,
             showticklabels=True,
-            tickfont=dict(size=10, color="rgba(255,255,255,0.35)"),
+            tickfont=dict(size=10, color="rgba(255,255,255,0.3)"),
             title=dict(
                 text="← worse    Q-Score    better →",
-                font=dict(size=9, color="#64748b"),
+                font=dict(size=9, color="rgba(255,255,255,0.25)"),
                 standoff=4,
             ),
         ),
         yaxis=dict(
             gridcolor="rgba(0,0,0,0)",
             autorange="reversed",
-            tickfont=dict(size=12, color="rgba(255,255,255,0.82)", family="Space Grotesk"),
+            tickfont=dict(size=12, color="rgba(255,255,255,0.7)", family="Inter"),
             automargin=True,
         ),
     )
@@ -862,7 +1005,6 @@ def chart_kg_graph(query: str, answer: str):
     """Network graph visualization for Knowledge Graph query results."""
     import re, math
 
-    # Patterns that flag section headers / query echoes — not real drug entities
     _SKIP_RE = re.compile(
         r'for\s*:|interactions?\s+(for|of)|results?\s+for|found\s+\d+|'
         r'no\s+results|source\s*:|answer\s*:|query\s*:',
@@ -880,7 +1022,6 @@ def chart_kg_graph(query: str, answer: str):
             continue
         if _SKIP_RE.search(clean):
             continue
-        # Skip lines that substantially repeat the query
         clean_norm = re.sub(r'[^a-z0-9 ]', '', clean.lower()).strip()
         if clean_norm in query_norm or query_norm in clean_norm:
             continue
@@ -894,8 +1035,8 @@ def chart_kg_graph(query: str, answer: str):
     if not entities:
         return None
 
-    n_nodes = len(entities) + 1   # entities + center hub
-    n_edges = len(entities)        # one spoke per entity
+    n_nodes = len(entities) + 1
+    n_edges = len(entities)
 
     center_label = query
     positions = {}
@@ -904,48 +1045,50 @@ def chart_kg_graph(query: str, answer: str):
         positions[e] = (1.9 * math.cos(angle), 1.9 * math.sin(angle))
 
     fig = go.Figure()
+
+    # Edges with glow
     for e in entities:
         x1, y1 = positions[e]
         fig.add_trace(go.Scatter(
             x=[0, x1, None], y=[0, y1, None], mode='lines',
-            line=dict(color='rgba(99,102,241,0.2)', width=1.2),
+            line=dict(color='rgba(99,102,241,0.2)', width=2),
             hoverinfo='none', showlegend=False,
         ))
+
+    # Entity nodes
     fig.add_trace(go.Scatter(
         x=[positions[e][0] for e in entities],
         y=[positions[e][1] for e in entities],
         mode='markers+text',
-        marker=dict(color='#059669', size=13,
-                    line=dict(width=1.5, color='#e2e8f0')),
+        marker=dict(color='#10b981', size=15,
+                    line=dict(width=2, color='rgba(16,185,129,0.3)')),
         text=[f'<b>{e}</b>' for e in entities], textposition='top center',
-        textfont=dict(color='#0f172a', size=10, family='Plus Jakarta Sans'),
+        textfont=dict(color='rgba(255,255,255,0.7)', size=10, family='Inter'),
         hovertext=entities, hoverinfo='text', showlegend=False,
     ))
+
+    # Center hub
     fig.add_trace(go.Scatter(
         x=[0], y=[0], mode='markers+text',
-        marker=dict(color='#4f46e5', size=30,
-                    line=dict(width=2, color='#c7d2fe')),
+        marker=dict(color='#6366f1', size=34,
+                    line=dict(width=3, color='rgba(99,102,241,0.3)')),
         text=[f'<b>{center_label}</b>'], textposition='bottom center',
-        textfont=dict(color='#4f46e5', size=10, family='Plus Jakarta Sans'),
+        textfont=dict(color='#818cf8', size=10, family='Inter'),
         hovertext=[center_label], hoverinfo='text', showlegend=False,
     ))
+
     return _lay(fig,
         title=dict(
-            text=f'Knowledge Graph — Entity Map  <span style="font-size:11px;color:#FDFAF6;font-weight:500;">{n_nodes} nodes · {n_edges} edges</span>',
-            font=dict(size=12, color='#334155', family='Plus Jakarta Sans'),
-            x=0,
+            text=f'<b>Entity Map</b>  <span style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400;">{n_nodes} nodes · {n_edges} edges</span>',
+            font=dict(size=14, color='rgba(255,255,255,0.7)', family='Inter'), x=0,
         ),
         height=500, showlegend=False,
         margin=dict(l=40, r=40, t=52, b=60),
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8],
-                   fixedrange=True),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8],
-                   fixedrange=True),
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8], fixedrange=True),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2.8, 2.8], fixedrange=True),
         annotations=[dict(
-            text="Query → extracted entities from the Knowledge Graph answer",
-            xref="paper", yref="paper", x=0.5, y=-0.05,
-            showarrow=False,
-            font=dict(size=9, color="#64748b", family="Space Grotesk"),
+            text="Query → entities from Knowledge Graph", xref="paper", yref="paper", x=0.5, y=-0.05,
+            showarrow=False, font=dict(size=9, color="rgba(255,255,255,0.25)", family="Inter"),
         )],
     )
 
@@ -958,48 +1101,81 @@ def chart_confusion_matrix(cm):
     text    = [[str(int(matrix[i][j])) for j in range(len(sources))] for i in range(len(sources))]
     fig = go.Figure(go.Heatmap(
         z=z_norm, x=short, y=short, text=text, texttemplate="%{text}",
-        textfont={"size": 15, "color": "#0f172a"},
-        colorscale=[[0.0, "#f5f3ff"], [0.5, "#a78bfa"], [1.0, "#4f46e5"]],
+        textfont={"size": 15, "color": "#fff"},
+        colorscale=[
+            [0.0, "rgba(30,30,60,0.8)"],
+            [0.3, "rgba(99,102,241,0.3)"],
+            [0.6, "rgba(139,92,246,0.5)"],
+            [1.0, "rgba(99,102,241,0.9)"],
+        ],
         showscale=True, zmin=0, zmax=1,
-        colorbar={"title": {"text": "Row %", "font": {"color": "#64748b", "size": 11}},
-                  "tickformat": ".0%", "tickfont": {"color": "#64748b"}, "thickness": 10, "len": 0.85},
+        colorbar={"title": {"text": "Row %", "font": {"color": "rgba(255,255,255,0.4)", "size": 11}},
+                  "tickformat": ".0%", "tickfont": {"color": "rgba(255,255,255,0.4)"}, "thickness": 10, "len": 0.85},
         hovertemplate="True: %{y}<br>Predicted: %{x}<br>Count: %{text}<extra></extra>",
     ))
     return _lay(fig,
-        title={"text": "Confusion Matrix  (row=true, col=predicted)", "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
-        xaxis={**_AXIS, "title": "Predicted", "side": "bottom", "tickfont": {"color": "#475569"}},
-        yaxis={**_AXIS, "title": "True", "autorange": "reversed", "tickfont": {"color": "#475569"}},
-        height=360,
+        title={"text": "<b>Confusion Matrix</b>  <span style='font-size:11px;color:rgba(255,255,255,0.3);'>(row=true, col=predicted)</span>",
+               "font": {"size": 14, "color": "rgba(255,255,255,0.7)"}},
+        xaxis={**_AXIS, "title": "Predicted", "side": "bottom", "tickfont": {"color": "rgba(255,255,255,0.5)"}},
+        yaxis={**_AXIS, "title": "True", "autorange": "reversed", "tickfont": {"color": "rgba(255,255,255,0.5)"}},
+        height=380,
     )
 
 
 def chart_per_source_metrics(sm):
     sources = list(sm.keys())
     short   = [SHORT_NAMES.get(s, s) for s in sources]
+    icons   = [SOURCE_ICONS.get(s, "") for s in sources]
+    x_labels = [f"{ico}  {nm}" for ico, nm in zip(icons, short)]
+
+    metric_styles = [
+        ("precision", "#3b82f6", "Precision"),
+        ("recall",    "#10b981", "Recall"),
+        ("f1",        "#f59e0b", "F1 Score"),
+    ]
     fig = go.Figure()
-    for metric, color in [("precision", "#0369a1"), ("recall", "#047857"), ("f1", "#b45309")]:
+    for metric, color, label in metric_styles:
+        vals = [sm[s][metric] for s in sources]
         fig.add_trace(go.Bar(
-            name=metric.capitalize(), x=short,
-            y=[sm[s][metric] for s in sources],
-            marker={"color": color, "opacity": 0.88, "line": {"width": 0},
-                     "cornerradius": 3},
-            text=[f"{sm[s][metric]:.2f}" for s in sources],
+            name=label,
+            x=x_labels,
+            y=vals,
+            marker={"color": color, "opacity": 0.88, "line": {"width": 0}, "cornerradius": 6},
+            text=[f"{v:.2f}" for v in vals],
             textposition="outside",
             cliponaxis=False,
-            textfont={"size": 10, "color": "#475569"},
+            textfont={"size": 11, "color": "rgba(255,255,255,0.55)", "family": "JetBrains Mono, monospace"},
+            hovertemplate=(
+                "<b style='color:#f1f5f9'>%{x}</b><br>"
+                f"<span style='color:{color}'>{label}</span>: "
+                "<b style='color:#f1f5f9'>%{y:.3f}</b>"
+                "<extra></extra>"
+            ),
         ))
+    fig.update_layout(
+        hoverlabel=dict(
+            bgcolor="rgba(15,15,26,0.97)",
+            bordercolor="rgba(99,102,241,0.35)",
+            font=dict(color="#f1f5f9", size=13, family="Inter, sans-serif"),
+        ),
+    )
     return _lay(fig,
-        barmode="group",
-        bargap=0.25,
-        bargroupgap=0.08,
-        title={"text": "Per-Source Classification Metrics", "font": {"size": 12, "color": "#334155"}},
-        yaxis={**_AXIS, "title": "Score", "range": [0, 1.18], "tickformat": ".1f",
-               "dtick": 0.2},
-        xaxis={**_AXIS, "tickfont": {"color": "#475569", "size": 11}},
-        height=380,
-        margin=dict(t=60, b=40),
-        legend={"orientation": "h", "yanchor": "bottom", "y": 1.02, "xanchor": "right", "x": 1,
-                "font": {"color": "rgba(255,255,255,0.6)", "size": 11}, "bgcolor": "rgba(0,0,0,0)"},
+        barmode="group", bargap=0.3, bargroupgap=0.06,
+        title={"text": "<b>Precision · Recall · F1  per Knowledge Source</b>",
+               "font": {"size": 14, "color": "rgba(255,255,255,0.7)", "family": "Inter"},
+               "x": 0},
+        yaxis={**_AXIS, "title": "Score", "range": [0, 1.22], "tickformat": ".1f", "dtick": 0.2},
+        xaxis={**_AXIS, "tickfont": {"color": "rgba(255,255,255,0.6)", "size": 12, "family": "Inter"}},
+        height=420,
+        margin=dict(t=56, b=20, l=10, r=10),
+        legend={
+            "orientation": "h",
+            "yanchor": "bottom", "y": 1.02,
+            "xanchor": "right", "x": 1,
+            "font": {"color": "rgba(255,255,255,0.55)", "size": 12, "family": "Inter"},
+            "bgcolor": "rgba(0,0,0,0)",
+            "traceorder": "normal",
+        },
     )
 
 
@@ -1009,50 +1185,51 @@ def chart_reward_history(rewards):
     rolling = [np.mean(rewards[max(0, i - window):i + 1]) for i in range(len(rewards))]
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=eps, y=rewards, mode="lines", name="Episode Reward",
-                             line={"color": "rgba(192,132,252,0.35)", "width": 1.2}))
+                             line={"color": "rgba(139,92,246,0.25)", "width": 1.5}))
     fig.add_trace(go.Scatter(x=eps, y=rolling, mode="lines", name=f"{window}-ep Rolling Avg",
-                             line={"color": "#c084fc", "width": 2.5},
-                             fill="tozeroy", fillcolor="rgba(192,132,252,0.07)"))
-    fig.add_hline(y=0, line_dash="dot", line_color="#e2e8f0", line_width=1)
+                             line={"color": "#a78bfa", "width": 3, "shape": "spline"},
+                             fill="tozeroy", fillcolor="rgba(139,92,246,0.06)"))
+    fig.add_hline(y=0, line_dash="dot", line_color="rgba(255,255,255,0.06)", line_width=1)
     return _lay(fig,
-        title={"text": "Training Reward per Episode", "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
-        xaxis={**_AXIS, "title": "Episode"}, yaxis={**_AXIS, "title": "Reward"}, height=270,
+        title={"text": "<b>Reward per Episode</b>", "font": {"size": 14, "color": "rgba(255,255,255,0.7)"}},
+        xaxis={**_AXIS, "title": "Episode"}, yaxis={**_AXIS, "title": "Reward"}, height=300,
         legend={"orientation": "h", "yanchor": "bottom", "y": 1.02,
-                "font": {"color": "#64748b", "size": 11}, "bgcolor": "rgba(0,0,0,0)"},
+                "font": {"color": "rgba(255,255,255,0.4)", "size": 11}, "bgcolor": "rgba(0,0,0,0)"},
     )
 
 
 def chart_loss(losses):
     if not losses:
         fig = go.Figure()
-        return _lay(fig, title="Training Loss", height=270,
+        return _lay(fig, title="Training Loss", height=300,
                     annotations=[{"text": "No loss data", "showarrow": False,
                                   "xref": "paper", "yref": "paper", "x": 0.5, "y": 0.5,
-                                  "font": {"color": "rgba(255,255,255,0.6)"}}])
+                                  "font": {"color": "rgba(255,255,255,0.4)"}}])
     fig = go.Figure(go.Scatter(
         x=list(range(1, len(losses) + 1)), y=losses, mode="lines",
-        line={"color": "#047857", "width": 2.2},
-        fill="tozeroy", fillcolor="rgba(74,222,128,0.08)",
+        line={"color": "#10b981", "width": 2.5, "shape": "spline"},
+        fill="tozeroy", fillcolor="rgba(16,185,129,0.06)",
     ))
     return _lay(fig,
-        title={"text": "Training Loss (MSE)", "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
-        xaxis={**_AXIS, "title": "Batch"}, yaxis={**_AXIS, "title": "Loss"}, height=270,
+        title={"text": "<b>Training Loss (MSE)</b>", "font": {"size": 14, "color": "rgba(255,255,255,0.7)"}},
+        xaxis={**_AXIS, "title": "Batch"}, yaxis={**_AXIS, "title": "Loss"}, height=300,
     )
 
 
 def chart_source_distribution(picks):
     labels = [SHORT_NAMES.get(k, k) for k in picks]
-    colors = [SOURCE_COLORS.get(k, "#aaa") for k in picks]
+    colors = [SOURCE_COLORS.get(k, "#888") for k in picks]
     fig = go.Figure(go.Pie(
-        labels=labels, values=list(picks.values()), hole=0.52,
-        marker={"colors": colors, "line": {"color": "#f8fafc", "width": 2}},
+        labels=labels, values=list(picks.values()), hole=0.55,
+        marker={"colors": colors, "line": {"color": "rgba(15,15,26,0.8)", "width": 3}},
         textinfo="label+percent",
-        textfont={"color": "#334155", "size": 11},
+        textfont={"color": "rgba(255,255,255,0.7)", "size": 11},
         hovertemplate="%{label}: %{value} episodes<extra></extra>",
+        rotation=20,
     ))
     return _lay(fig,
-        title={"text": "Source Selection During Training", "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
-        height=270, showlegend=False,
+        title={"text": "<b>Source Selection</b>", "font": {"size": 14, "color": "rgba(255,255,255,0.7)"}},
+        height=300, showlegend=False,
     )
 
 
@@ -1060,42 +1237,42 @@ def chart_epsilon(episodes):
     eps_vals = [e["epsilon"] for e in episodes]
     fig = go.Figure(go.Scatter(
         x=list(range(1, len(eps_vals) + 1)), y=eps_vals, mode="lines",
-        line={"color": "#b45309", "width": 2.2},
-        fill="tozeroy", fillcolor="rgba(251,191,36,0.08)",
+        line={"color": "#f59e0b", "width": 2.5, "shape": "spline"},
+        fill="tozeroy", fillcolor="rgba(245,158,11,0.06)",
     ))
     return _lay(fig,
-        title={"text": "Epsilon (Exploration) Decay", "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
-        xaxis={**_AXIS, "title": "Episode"}, yaxis={**_AXIS, "title": "Epsilon"}, height=270,
+        title={"text": "<b>Epsilon Decay</b>", "font": {"size": 14, "color": "rgba(255,255,255,0.7)"}},
+        xaxis={**_AXIS, "title": "Episode"}, yaxis={**_AXIS, "title": "Epsilon"}, height=300,
     )
 
 
 def chart_judge_scores(scores):
     dims   = ["Correctness", "Relevance", "Completeness"]
     vals   = [scores["correctness"], scores["relevance"], scores["completeness"]]
-    colors = ["#0369a1", "#047857", "#c084fc"]
+    colors = ["#3b82f6", "#10b981", "#a78bfa"]
     fig = go.Figure(go.Bar(
         x=dims, y=vals,
-        marker={"color": colors, "opacity": 0.85, "line": {"width": 0}},
+        marker={"color": colors, "opacity": 0.9, "line": {"width": 0}, "cornerradius": 5},
         text=[f"{v:.2f}" for v in vals], textposition="outside",
-        textfont={"color": "#475569", "size": 12},
+        textfont={"color": "rgba(255,255,255,0.5)", "size": 12},
         cliponaxis=False,
     ))
     return _lay(fig,
-        title={"text": f"LLM Judge Scores — Overall Quality: {scores['quality']:.2f}",
-               "font": {"size": 12, "color": "rgba(255,255,255,0.5)"}},
+        title={"text": f"<b>LLM Judge</b> — Quality: {scores['quality']:.2f}",
+               "font": {"size": 14, "color": "rgba(255,255,255,0.7)"}},
         yaxis={**_AXIS, "range": [0, 1.28], "title": "Score", "tickformat": ".2f"},
-        xaxis={**_AXIS, "tickfont": {"color": "#475569", "size": 12}},
-        height=240, showlegend=False,
+        xaxis={**_AXIS, "tickfont": {"color": "rgba(255,255,255,0.5)", "size": 12}},
+        height=280, showlegend=False,
     )
 
 
-# ── Helper: inline section heading ───────────────────────────────────────────
+# ── Helper ────────────────────────────────────────────────────────────────────
 def section_head(label):
     st.markdown(f'<div class="aks-section-head">{label}</div>', unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  HERO HEADER  (no 4-space indentation inside HTML — avoids markdown code block)
+#  HERO HEADER
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown(
 '<div class="aks-hero">'
@@ -1105,10 +1282,10 @@ st.markdown(
 '<span class="aks-sub">Reinforcement Learning · Medical Query Routing · ASU KRR 2026</span></div>'
 '</div>'
 '<div class="aks-badges">'
-'<span class="aks-badge" style="color:#0369a1;border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.06);">🕸️ Knowledge Graph</span>'
-'<span class="aks-badge" style="color:#047857;border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06);">🔧 Tool / API</span>'
-'<span class="aks-badge" style="color:#c084fc;border-color:rgba(192,132,252,0.3);background:rgba(192,132,252,0.06);">🤖 LLM</span>'
-'<span class="aks-badge" style="color:#fbbf24;border-color:rgba(251,191,36,0.3);background:rgba(251,191,36,0.06);">📚 PDF Search</span>'
+'<span class="aks-badge">🕸️ Knowledge Graph</span>'
+'<span class="aks-badge">🔧 Tool / API</span>'
+'<span class="aks-badge">🤖 LLM</span>'
+'<span class="aks-badge">📚 PDF Search</span>'
 '</div>'
 '</div>',
 unsafe_allow_html=True,
@@ -1177,30 +1354,28 @@ with tab_query:
 
     st.divider()
 
-    # ── Process query ────────────────────────────────────────────────────────────
+    # ── Process query ────────────────────────────────────────────────────────
     if ask_clicked and raw_query.strip():
         from models.reward_evaluator import RewardEvaluator, classify_query
 
         prog = st.empty()
-        prog.markdown(
-            '<div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;'
-            'padding:16px 20px;margin-bottom:12px;">'
-            '<div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;'
-            'color:#f59e0b;margin-bottom:10px;">⏳ Processing query…</div>'
-            + "".join([
-                f'<div style="display:flex;align-items:center;gap:10px;padding:5px 0;'
-                f'font-size:0.78rem;color:#64748b;">'
-                f'<span style="width:7px;height:7px;border-radius:50%;background:#e2e8f0;flex-shrink:0;"></span>'
-                f'{step}</div>'
-                for step in [
-                    "Classifying query type…",
-                    "Embedding query into 384-dim vector…",
-                    "Computing Q-scores for all knowledge sources…",
-                    "Selecting optimal source (greedy policy)…",
-                    "Retrieving answer…",
-                ]
+        steps_html = "".join([
+            f'<div class="aks-processing-step">'
+            f'<span class="aks-processing-dot" style="animation-delay:{i*0.2}s;"></span>'
+            f'{step}</div>'
+            for i, step in enumerate([
+                "Classifying query type…",
+                "Embedding query into 384-dim vector…",
+                "Computing Q-scores for all knowledge sources…",
+                "Selecting optimal source (greedy policy)…",
+                "Retrieving answer…",
             ])
-            + "</div>",
+        ])
+        prog.markdown(
+            f'<div class="aks-processing">'
+            f'<div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;'
+            f'color:#f59e0b;margin-bottom:10px;">⏳ Processing query…</div>'
+            f'{steps_html}</div>',
             unsafe_allow_html=True,
         )
 
@@ -1217,19 +1392,55 @@ with tab_query:
             answer     = str(results) if results else "No answer returned."
             confidence = 0.5
         rwd = RewardEvaluator.compute_reward(raw_query, source_name, results)
+
+        # Always run LLM Judge for quality evaluation (consistent with interactive_dashboard)
+        judge = load_judge()
+        llm_evaluation = None
+        if judge:
+            try:
+                llm_evaluation = judge.evaluate_quality(raw_query, answer, source_name)
+                st.session_state["judge_result"] = llm_evaluation
+            except Exception:
+                # LLM judge failed - continue without it
+                st.session_state.pop("judge_result", None)
+
         prog.empty()
+
+        # Log experience for RL training (matching interactive_dashboard.py)
+        from datetime import datetime
+        experience = {
+            "timestamp": datetime.now().isoformat(),
+            "query": raw_query,
+            "query_type": qtype,
+            "embedding": emb.tolist(),
+            "source_selected": source_name,
+            "action_idx": action_idx,
+            "q_values": qtable,
+            "confidence": confidence,
+            "reward": rwd,
+            "answer_preview": answer[:200]
+        }
+
+        # Include LLM evaluation if available
+        if llm_evaluation:
+            experience["llm_evaluation"] = llm_evaluation
+
+        # Append to experience log
+        experience_log = os.path.join(ROOT, "data", "rl_selector", "online_experiences.jsonl")
+        os.makedirs(os.path.dirname(experience_log), exist_ok=True)
+        with open(experience_log, 'a') as f:
+            f.write(json.dumps(experience) + '\n')
 
         st.session_state["result"] = dict(
             query=raw_query, qtype=qtype, qtable=qtable,
             source_name=source_name, answer=answer,
             confidence=confidence, reward=rwd,
         )
-        st.session_state.pop("judge_result", None)
 
     elif ask_clicked:
         st.warning("Please enter a query first.")
 
-    # ── Display results (ordered steps) ──────────────────────────────────────────
+    # ── Display results ──────────────────────────────────────────────────────
     if "result" in st.session_state:
         res      = st.session_state["result"]
         src_name = res["source_name"]
@@ -1241,113 +1452,91 @@ with tab_query:
         rwd_clr  = "#22c55e" if res["reward"] > 0 else "#ef4444"
         best_q   = max(res["qtable"].values())
 
-        # ── 1 · Query Type ────────────────────────────────────────────────────
+        # ── 1 · Query Type
         section_head("1 · Query Classification")
         st.markdown(
-            f'<div style="display:flex;align-items:center;gap:16px;padding:14px 18px;'
-            f'background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:4px;">'
-            f'<span style="padding:4px 12px;border-radius:5px;font-size:0.78rem;font-weight:700;'
-            f'text-transform:uppercase;letter-spacing:0.08em;background:#ede9fe;color:#4f46e5;">'
+            f'<div class="aks-classify-card">'
+            f'<span style="padding:5px 14px;border-radius:8px;font-size:0.78rem;font-weight:700;'
+            f'text-transform:uppercase;letter-spacing:0.08em;background:rgba(99,102,241,0.15);'
+            f'color:#818cf8;border:1px solid rgba(99,102,241,0.2);">'
             f'{res["qtype"]}</span>'
-            f'<span style="font-size:0.8rem;color:#94a3b8;line-height:1.6;">'
-            f'Classified as <strong style="color:#475569;">{res["qtype"]}</strong> — '
-            f'guides which knowledge sources are likely most relevant.</span>'
-            f'</div>',
+            f'<span style="font-size:0.8rem;color:rgba(255,255,255,0.4);line-height:1.6;">'
+            f'Classified as <strong style="color:rgba(255,255,255,0.7);">{res["qtype"]}</strong> — '
+            f'guides which knowledge sources are likely most relevant.</span></div>',
             unsafe_allow_html=True,
         )
 
-        # ── 2 · Pipeline Steps ───────────────────────────────────────────────
+        # ── 2 · Pipeline Steps
         section_head("2 · Routing Pipeline")
         pipeline = [
-            ("💬", "Query",       res["query"],                                           "#a1a1aa"),
-            ("📐", "Embedding",   "Encoded to 384-dim vector via sentence-transformer",   "#a8b8cc"),
-            ("🧠", "DQN Scoring", f"Q-values computed for {len(res['qtable'])} sources","#a8b8cc"),
-            ("✅",      "Selected",    f"{icon} {short}  —  Q = {best_q:+.3f}", clr),
+            ("💬", "Query",       res["query"],                                     "rgba(255,255,255,0.6)"),
+            ("📐", "Embedding",   "Encoded to 384-dim vector via sentence-transformer", "rgba(255,255,255,0.45)"),
+            ("🧠", "DQN Scoring", f"Q-values computed for {len(res['qtable'])} sources", "rgba(255,255,255,0.45)"),
+            ("✅", "Selected",    f"{icon} {short}  —  Q = {best_q:+.3f}", clr),
         ]
         rows = "".join(
-            f'<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;'
-            f'{"" if i==len(pipeline)-1 else "border-bottom:1px solid #f1f5f9;"}">'
-            f'<span style="font-size:1rem;margin-top:1px;flex-shrink:0;">{ico}</span>'
+            f'<div class="aks-pipeline-step">'
+            f'<span style="font-size:1.1rem;margin-top:1px;flex-shrink:0;">{ico}</span>'
             f'<div><div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;'
-            f'letter-spacing:0.1em;color:#94a3b8;margin-bottom:2px;">{lbl}</div>'
+            f'letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-bottom:2px;">{lbl}</div>'
             f'<div style="font-size:0.82rem;color:{dc};">{dtl}</div></div></div>'
             for i, (ico, lbl, dtl, dc) in enumerate(pipeline)
         )
-        st.markdown(
-            f'<div style="padding:0 18px;background:#ffffff;border:1px solid #e2e8f0;'
-            f'border-radius:8px;margin-bottom:4px;">{rows}</div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown(f'<div class="aks-pipeline-card">{rows}</div>', unsafe_allow_html=True)
 
-        # ── 3 · Routing Decision (Q-values chart) ────────────────────────────
+        # ── 3 · Routing Decision (Q-values chart)
         section_head("3 · Routing Decision")
         st.plotly_chart(chart_qvalues(res["qtable"], src_name),
                         use_container_width=True, config={"displayModeBar": False})
 
-        # ── 4 · Decision Explanation ──────────────────────────────────────────
+        # ── 4 · Decision Explanation
         section_head("4 · Decision Explanation")
-        scores_html = " · ".join(
+        scores_html = " · ".join(
             f'<span style="color:{SOURCE_COLORS.get(k,"#888")};font-weight:600;">'
-            f'{SHORT_NAMES.get(k,k)} <code style="font-size:0.75rem;">{v:+.3f}</code></span>'
+            f'{SHORT_NAMES.get(k,k)} <code>{v:+.3f}</code></span>'
             for k, v in sorted(res["qtable"].items(), key=lambda x: x[1], reverse=True)
         )
         st.markdown(
-            f'<div style="background:#ffffff;border:1px solid #e2e8f0;border-left:3px solid #f59e0b;'
-            f'border-radius:8px;padding:14px 18px;font-size:0.82rem;color:#475569;line-height:1.8;">'
+            f'<div class="aks-explain-card">'
             f'<div style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;'
-            f'color:#475569;margin-bottom:8px;">How the DQN Decided</div>'
+            f'color:rgba(255,255,255,0.5);margin-bottom:8px;">How the DQN Decided</div>'
             f'The query embedding was fed through the DQN policy network, which outputs a Q-value '
             f'representing expected reward per source.<br>'
-            f'<span style="color:#64748b;">All scores: {scores_html}</span><br>'
+            f'<span style="color:rgba(255,255,255,0.4);">All scores: {scores_html}</span><br>'
             f'<strong style="color:{clr};">{icon} {short}</strong> had the highest Q-score '
-            f'(<code style="color:#22c55e;background:#0f2318;padding:1px 6px;border-radius:3px;">'
-            f'Q = {best_q:+.3f}</code>) — selected as optimal source.'
-            f'</div>',
+            f'(<code>Q = {best_q:+.3f}</code>) — selected as optimal source.</div>',
             unsafe_allow_html=True,
         )
 
-        # ── 5 · Answer ───────────────────────────────────────────────────────
+        # ── 5 · Answer
         section_head("5 · Answer")
         st.markdown(
-            f'<div class="aks-answer-outer" style="border-color:rgba({rgb},0.3);">'
-            f'<div class="aks-answer-inner">{res["answer"]}</div>'
-            f'</div>',
+            f'<div class="aks-answer-outer" style="border-color:rgba({rgb},0.15);">'
+            f'<div class="aks-answer-inner">{res["answer"]}</div></div>',
             unsafe_allow_html=True,
         )
 
-        # ── 6 · KG Visualization ─────────────────────────────────────────────
+        # ── 6 · KG graph
         if src_name == "KnowledgeGraphSource":
             kg_fig = chart_kg_graph(res["query"], res["answer"])
             if kg_fig:
                 section_head("6 · Knowledge Graph — Entity Map")
                 st.markdown(
-                    f'<div style="font-size:0.78rem;color:#cbd5e1;margin-bottom:8px;line-height:1.6;">'
-                    f'Entities extracted from the KG answer for query: '
-                    f'<em style="color:#e2e8f0;">"{res["query"]}"</em></div>',
+                    f'<div style="font-size:0.78rem;color:rgba(255,255,255,0.35);margin-bottom:8px;">'
+                    f'Entities from KG for: <em style="color:rgba(255,255,255,0.5);">"{res["query"]}"</em></div>',
                     unsafe_allow_html=True,
                 )
-                st.plotly_chart(kg_fig, use_container_width=True,
-                                config={"displayModeBar": False})
+                st.plotly_chart(kg_fig, use_container_width=True, config={"displayModeBar": False})
 
-        # ── 7 · LLM Judge Evaluation ──────────────────────────────────────────
+        # ── 7 · LLM Judge (automatically run)
         section_head("7 · LLM Judge Evaluation")
-        run_judge = st.checkbox("Run LLM Judge  *(requires AWS Bedrock credentials)*",
-                                value=False, key="judge_toggle")
+        st.markdown(
+            '<div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:12px;">'
+            'LLM-based quality evaluation (automatically executed for every query)</div>',
+            unsafe_allow_html=True
+        )
 
-        if run_judge:
-            if "judge_result" not in st.session_state:
-                judge = load_judge()
-                if judge:
-                    with st.spinner("Evaluating answer quality with LLM Judge…"):
-                        try:
-                            st.session_state["judge_result"] = judge.evaluate_quality(
-                                res["query"], res["answer"], res["source_name"])
-                        except Exception as exc:
-                            st.error(f"LLM Judge failed: {exc}")
-                else:
-                    st.info("LLM Judge is unavailable — set AWS credentials in `.env`.")
-
-            if "judge_result" in st.session_state:
+        if "judge_result" in st.session_state:
                 jr = st.session_state["judge_result"]
                 q_score = jr["quality"]
                 if q_score >= 0.7:
@@ -1371,7 +1560,7 @@ with tab_query:
                     f"**Reason:** {jr.get('explanation', '—')}"
                 )
         else:
-            st.caption("Enable the checkbox above to evaluate this answer with the LLM Judge.")
+            st.info("LLM Judge evaluation unavailable — check AWS Bedrock credentials in `.env`")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1383,79 +1572,106 @@ with tab_metrics:
     if not metrics:
         st.warning("No evaluation metrics found. Run `python scripts/evaluate_model_metrics.py`.")
     else:
+        import pandas as pd
         data           = metrics.get("manual", metrics)
         accuracy       = data["accuracy"]
         source_metrics = data["source_metrics"]
         cm_data        = data["confusion_matrix"]
+        total_support  = sum(sm["support"] for sm in source_metrics.values())
 
-        total_support = sum(sm["support"] for sm in source_metrics.values())
-        st.markdown(
-            f'<div class="aks-about-card" style="text-align:center;background:linear-gradient(135deg,#f5f3ff,#eff6ff);border-color:#ddd6fe;">'
-            f'<div class="aks-card-label">Overall Model Accuracy</div>'
-            f'<span class="aks-big-stat">{accuracy:.1%}</span>'
-            f'<span style="color:#64748b;font-size:0.8rem;">evaluated on {total_support} holdout queries</span>'
-            f'</div>',
-            unsafe_allow_html=True,
-        )
+        # ── Row 1: Accuracy hero + 4 F1 KPI cards
+        acc_col, kg_col, tool_col, llm_col, pdf_col = st.columns([1.6, 1, 1, 1, 1])
 
-        section_head("Per-Source Performance")
-        st.markdown(
-            '<div style="font-size:0.74rem;color:rgba(255,255,255,0.35);margin:-8px 0 14px;">'  
-            '🟢 ≥ 0.90 — Excellent • '
-            '🟡 0.75– 0.90 — Good • '
-            '🔴 < 0.75 — Needs improvement'
-            '</div>',
-            unsafe_allow_html=True,
-        )
-        cols_src = st.columns(4)
-        for col, src in zip(cols_src, ["KnowledgeGraphSource", "ToolAPISource", "LLMSource", "PDFKnowledgeSource"]):
-            sm = source_metrics.get(src, {})
-            f1 = sm.get('f1', 0)
-            badge = '🟢' if f1 >= 0.90 else ('🟡' if f1 >= 0.75 else '🔴')
-            tip = ('Excellent routing accuracy' if f1 >= 0.90
-                   else ('Good — minor misrouting on ambiguous queries' if f1 >= 0.75
-                         else 'Lower — open-ended queries are harder to classify'))
-            col.metric(
-                f"{SOURCE_ICONS.get(src,'')}  {SHORT_NAMES.get(src, src)}  F1  {badge}",
-                f"{f1:.3f}",
-                f"P {sm.get('precision',0):.2f} · R {sm.get('recall',0):.2f}",
-                help=tip,
+        src_list = ["KnowledgeGraphSource", "ToolAPISource", "LLMSource", "PDFKnowledgeSource"]
+        kpi_cols = [kg_col, tool_col, llm_col, pdf_col]
+
+        # Accuracy card
+        f1_avg = np.mean([source_metrics.get(s, {}).get("f1", 0) for s in src_list])
+        with acc_col:
+            st.markdown(
+                f'<div class="aks-about-card" style="text-align:center;padding:28px 20px;">'
+                f'<div class="aks-card-label" style="margin-bottom:6px;">Overall Accuracy</div>'
+                f'<span class="aks-big-stat" style="font-size:2.6rem;">{accuracy:.1%}</span>'
+                f'<span style="display:block;color:rgba(255,255,255,0.3);font-size:0.74rem;margin-top:6px;">{total_support} holdout queries</span>'
+                f'<span style="display:block;color:rgba(255,255,255,0.2);font-size:0.7rem;margin-top:2px;">avg F1: {f1_avg:.3f}</span>'
+                f'</div>',
+                unsafe_allow_html=True,
             )
+
+        # Per-source KPI cards
+        for col, src in zip(kpi_cols, src_list):
+            sm   = source_metrics.get(src, {})
+            f1   = sm.get("f1", 0)
+            prec = sm.get("precision", 0)
+            rec  = sm.get("recall", 0)
+            clr  = SOURCE_COLORS.get(src, "#888")
+            rgb  = SOURCE_RGB.get(src, "136,136,136")
+            ico  = SOURCE_ICONS.get(src, "")
+            nm   = SHORT_NAMES.get(src, src)
+            badge_clr = "#10b981" if f1 >= 0.90 else ("#f59e0b" if f1 >= 0.75 else "#ef4444")
+            badge_lbl = "Excellent" if f1 >= 0.90 else ("Good" if f1 >= 0.75 else "Fair")
+            with col:
+                st.markdown(
+                    f'<div class="aks-about-card" style="padding:20px 18px;border-left:3px solid rgba({rgb},0.5);">'
+                    f'<div style="font-size:1.4rem;margin-bottom:6px;">{ico}</div>'
+                    f'<div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;'
+                    f'color:rgba(255,255,255,0.4);margin-bottom:4px;">{nm}</div>'
+                    f'<div style="font-size:1.65rem;font-weight:800;letter-spacing:-0.03em;color:{clr};line-height:1;margin-bottom:8px;">'
+                    f'{f1:.3f}</div>'
+                    f'<div style="font-size:0.65rem;color:rgba(255,255,255,0.3);line-height:1.8;">'
+                    f'P <span style="color:rgba(255,255,255,0.55);font-weight:600;">{prec:.2f}</span>&nbsp;&nbsp;'
+                    f'R <span style="color:rgba(255,255,255,0.55);font-weight:600;">{rec:.2f}</span></div>'
+                    f'<div style="display:inline-block;margin-top:8px;padding:2px 10px;border-radius:100px;'
+                    f'background:rgba({rgb},0.12);color:{badge_clr};font-size:0.62rem;font-weight:700;'
+                    f'text-transform:uppercase;letter-spacing:0.08em;border:1px solid rgba({rgb},0.2);">{badge_lbl}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
 
         st.divider()
 
-        section_head("Charts")
+        # ── Row 2: Full-width bar chart
+        section_head("Precision · Recall · F1 by Source")
+        st.plotly_chart(
+            chart_per_source_metrics(source_metrics),
+            use_container_width=True,
+            config={"displayModeBar": False},
+        )
+
+        st.divider()
+
+        # ── Row 3: Confusion matrix full-width
+        section_head("Routing Confusion Matrix")
         st.markdown(
-            '<div style="font-size:0.74rem;color:rgba(255,255,255,0.32);margin:-10px 0 10px;">'  
-            'Left: Per-source F1/Precision/Recall bar chart.  '
-            'Right: Confusion matrix — <strong style="color:rgba(165,180,252,0.7);">rows = Actual source</strong>, '
-            '<strong style="color:rgba(52,211,153,0.7);">columns = Predicted source</strong>. '
-            'On-diagonal — correct routing. Off-diagonal — misrouted queries.'
+            '<div style="font-size:0.74rem;color:rgba(255,255,255,0.25);margin:-10px 0 14px;">'
+            'Rows = actual source · Columns = predicted source · Cell = query count'
             '</div>',
             unsafe_allow_html=True,
         )
-        bar_col, cm_col = st.columns(2)
-        with bar_col:
-            st.plotly_chart(chart_per_source_metrics(source_metrics), use_container_width=True)
-        with cm_col:
-            st.plotly_chart(chart_confusion_matrix(cm_data), use_container_width=True)
+        st.plotly_chart(
+            chart_confusion_matrix(cm_data),
+            use_container_width=True,
+            config={"displayModeBar": False},
+        )
 
-        section_head("Detailed Metrics")
-        import pandas as pd
-        rows = [{"Source": f"{SOURCE_ICONS.get(s,'')}  {SHORT_NAMES.get(s, s)}",
-                 "Precision": round(sm["precision"], 4),
-                 "Recall":    round(sm["recall"],    4),
-                 "F1 Score":  round(sm["f1"],        4),
-                 "Support":   sm["support"]}
-                for s, sm in source_metrics.items()]
-        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+        st.divider()
 
-        with st.expander("📋  Raw Confusion Matrix Values"):
-            sources  = list(cm_data.keys())
-            cm_rows  = [{"True \\ Predicted": f"{SOURCE_ICONS.get(t,'')} {SHORT_NAMES.get(t, t)}",
-                         **{SHORT_NAMES.get(p, p): cm_data[t].get(p, 0) for p in sources}}
-                        for t in sources]
-            st.dataframe(pd.DataFrame(cm_rows), use_container_width=True, hide_index=True)
+        # ── Row 4: Clean summary table
+        section_head("Summary Table")
+        rows_data = []
+        for s in src_list:
+            sm = source_metrics.get(s, {})
+            f1 = sm.get("f1", 0)
+            badge = "Excellent" if f1 >= 0.90 else ("Good" if f1 >= 0.75 else "Fair")
+            rows_data.append({
+                "Source":    f"{SOURCE_ICONS.get(s,'')}  {SHORT_NAMES.get(s, s)}",
+                "F1 Score":  round(f1, 4),
+                "Precision": round(sm.get("precision", 0), 4),
+                "Recall":    round(sm.get("recall", 0), 4),
+                "Support":   sm.get("support", 0),
+                "Rating":    badge,
+            })
+        st.dataframe(pd.DataFrame(rows_data), use_container_width=True, hide_index=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1512,12 +1728,12 @@ with tab_training:
 # ══════════════════════════════════════════════════════════════════════════════
 with tab_about:
 
-    # Project overview card
+    # Project overview
     st.markdown(
-        '<div class="aks-about-card" style="background:linear-gradient(135deg,#eff6ff,#f5f3ff);border-color:#ddd6fe;">'
-        '<span class="aks-title" style="font-size:1.8rem;margin-bottom:10px;display:block;">Adaptive Knowledge Selector for Medical Queries</span>'
-        '<p style="color:#475569;font-size:0.92rem;line-height:1.7;margin:0 0 12px;">An intelligent reinforcement learning system that dynamically selects the best knowledge source — Knowledge Graph, Tools/APIs, LLM, or Documents — for medical and pharmaceutical queries. Built with Deep Q-Networks (DQN) and evaluated with LLM-as-Judge quality metrics.</p>'
-        '<p style="color:#64748b;font-size:0.84rem;line-height:1.6;margin:0;">The system intelligently routes medical queries to the most appropriate knowledge source using a trained RL agent. It integrates four distinct biomedical knowledge sources and learns optimal routing decisions through reinforcement learning with automatic reward signals.</p>'
+        '<div class="aks-about-card" style="border-top:2px solid rgba(99,102,241,0.3);">'
+        '<span class="aks-title" style="font-size:1.7rem;margin-bottom:12px;display:block;">Adaptive Knowledge Selector for Medical Queries</span>'
+        '<p style="color:rgba(255,255,255,0.6);font-size:0.92rem;line-height:1.7;margin:0 0 12px;">An intelligent reinforcement learning system that dynamically selects the best knowledge source — Knowledge Graph, Tools/APIs, LLM, or Documents — for medical and pharmaceutical queries. Built with Deep Q-Networks (DQN) and evaluated with LLM-as-Judge quality metrics.</p>'
+        '<p style="color:rgba(255,255,255,0.4);font-size:0.84rem;line-height:1.6;margin:0;">The system intelligently routes medical queries to the most appropriate knowledge source using a trained RL agent. It integrates four distinct biomedical knowledge sources and learns optimal routing decisions through reinforcement learning with automatic reward signals.</p>'
         '</div>',
         unsafe_allow_html=True,
     )
@@ -1555,11 +1771,11 @@ with tab_about:
         rgb = SOURCE_RGB.get(src, "136,136,136")
         ico = SOURCE_ICONS.get(src, "")
         st.markdown(
-            f'<div class="aks-source-row" style="border-color:rgba({rgb},0.15);background:linear-gradient(90deg,rgba({rgb},0.05),transparent);">'
+            f'<div class="aks-source-row" style="border-left:3px solid rgba({rgb},0.4);">'
             f'<div class="aks-source-icon-big">{ico}</div>'
             f'<div><div class="aks-source-name" style="color:{clr};">{name}</div>'
             f'<div class="aks-source-desc">{desc}</div>'
-            f'<div style="margin-top:6px;font-size:0.76rem;color:rgba({rgb},0.8);font-weight:600;">{use}</div></div>'
+            f'<div style="margin-top:6px;font-size:0.76rem;color:rgba({rgb},0.7);font-weight:600;">{use}</div></div>'
             f'</div>',
             unsafe_allow_html=True,
         )
@@ -1573,49 +1789,47 @@ with tab_about:
         section_head("System Architecture")
         st.markdown(
             '<div class="aks-about-card">'
-            '<p style="color:#334155;font-size:0.88rem;line-height:1.7;margin:0 0 12px;">'
+            '<p style="color:rgba(255,255,255,0.6);font-size:0.88rem;line-height:1.7;margin:0 0 12px;">'
             'Queries are embedded into 384-dimensional vectors using Sentence Transformers, '
-            'then passed through a <strong style="color:#a78bfa;">Deep Q-Network</strong> (384→256→128→64→4) '
+            'then passed through a <strong style="color:#818cf8;">Deep Q-Network</strong> (384→256→128→64→4) '
             'that predicts Q-values for each knowledge source. The source with the highest Q-value is selected '
             '(greedy policy, ε=0 at inference).</p>'
-            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.45);font-family:monospace;">'
+            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.3);font-family:JetBrains Mono,monospace;'
+            'background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);">'
             'Query → Encoder (384-dim) → DQN → Q-values → argmax → Source → Answer → Reward'
-            '</div>'
-            '</div>',
+            '</div></div>',
             unsafe_allow_html=True,
         )
 
         section_head("Reward Function")
         st.markdown(
             '<div class="aks-about-card">'
-            '<div style="font-size:0.82rem;color:#334155;font-family:monospace;line-height:1.8;">'
-            'Correct source + results  →  <span style="color:#047857;">+1.00</span><br>'
-            'Correct source, no results  →  <span style="color:#fbbf24;">-0.20</span><br>'
-            'Wrong source + results  →  <span style="color:#fbbf24;">0.00</span><br>'
-            'Wrong source, no results  →  <span style="color:#dc2626;">-0.50</span><br>'
-            'Confidence bonus  →  <span style="color:#0369a1;">+0.2 × conf</span><br>'
-            'Perfect routing bonus  →  <span style="color:#047857;">+0.15</span><br>'
-            'Misrouting penalty  →  <span style="color:#dc2626;">-0.2 to -0.5</span>'
-            '</div>'
-            '</div>',
+            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.55);font-family:JetBrains Mono,monospace;line-height:1.8;">'
+            'Correct source + results  →  <span style="color:#10b981;">+1.00</span><br>'
+            'Correct source, no results  →  <span style="color:#f59e0b;">-0.20</span><br>'
+            'Wrong source + results  →  <span style="color:#f59e0b;">0.00</span><br>'
+            'Wrong source, no results  →  <span style="color:#ef4444;">-0.50</span><br>'
+            'Confidence bonus  →  <span style="color:#3b82f6;">+0.2 × conf</span><br>'
+            'Perfect routing bonus  →  <span style="color:#10b981;">+0.15</span><br>'
+            'Misrouting penalty  →  <span style="color:#ef4444;">-0.2 to -0.5</span>'
+            '</div></div>',
             unsafe_allow_html=True,
         )
 
         section_head("Evaluation & Metrics")
         st.markdown(
             '<div class="aks-about-card">'
-            '<div style="font-size:0.82rem;color:#334155;line-height:1.8;">'
-            '<strong style="color:#60a5fa;">ML Metrics (250-query test set)</strong><br>'
+            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.8;">'
+            '<strong style="color:#3b82f6;">ML Metrics (250-query test set)</strong><br>'
             '• Overall Accuracy, Per-Source Precision, Recall, F1<br>'
             '• Confusion Matrix for source routing patterns<br>'
             '• 63 KG + 63 Tool + 63 LLM + 61 PDF test queries<br><br>'
-            '<strong style="color:#f472b6;">LLM-as-Judge Evaluation</strong><br>'
+            '<strong style="color:#a78bfa;">LLM-as-Judge Evaluation</strong><br>'
             '• Correctness — Is the answer factually accurate?<br>'
             '• Relevance — Does it answer the question?<br>'
             '• Completeness — Is sufficient detail provided?<br>'
             '• Cost: ~$0.0001 per evaluation (AWS Nova Lite)'
-            '</div>'
-            '</div>',
+            '</div></div>',
             unsafe_allow_html=True,
         )
 
@@ -1624,18 +1838,18 @@ with tab_about:
         st.markdown(
             '<div class="aks-about-card">'
             '<div style="margin-bottom:14px;">'
-            '<div style="font-size:0.82rem;font-weight:700;color:#6d28d9;margin-bottom:4px;">Phase 1 — Supervised Pre-training</div>'
-            '<div style="font-size:0.82rem;color:#475569;line-height:1.6;">'
+            '<div style="font-size:0.82rem;font-weight:700;color:#a78bfa;margin-bottom:4px;">Phase 1 — Supervised Pre-training</div>'
+            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.6;">'
             '600 labeled queries · 80/20 train/val split · 50 epochs with early stopping · Cross-entropy loss · 95.2% train / 88.9% val accuracy'
             '</div></div>'
             '<div style="margin-bottom:14px;">'
-            '<div style="font-size:0.82rem;font-weight:700;color:#0369a1;margin-bottom:4px;">Phase 2 — RL Fine-tuning</div>'
-            '<div style="font-size:0.82rem;color:#475569;line-height:1.6;">'
+            '<div style="font-size:0.82rem;font-weight:700;color:#3b82f6;margin-bottom:4px;">Phase 2 — RL Fine-tuning</div>'
+            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.6;">'
             'Epsilon-greedy exploration (ε: 1.0→0.05) · Experience replay buffer (2000 capacity, batch 32) · 50 training episodes · Avg reward: 0.520'
             '</div></div>'
             '<div>'
-            '<div style="font-size:0.82rem;font-weight:700;color:#047857;margin-bottom:4px;">Phase 3 — Online Learning</div>'
-            '<div style="font-size:0.82rem;color:#475569;line-height:1.6;">'
+            '<div style="font-size:0.82rem;font-weight:700;color:#10b981;margin-bottom:4px;">Phase 3 — Online Learning</div>'
+            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.6;">'
             'Continuous improvement during real usage · Auto-retraining every 16 queries · Incremental model updates · S3 model versioning'
             '</div></div>'
             '</div>',
@@ -1645,31 +1859,30 @@ with tab_about:
         section_head("Project Structure")
         st.markdown(
             '<div class="aks-about-card">'
-            '<div style="font-size:0.8rem;color:rgba(255,255,255,0.6);font-family:monospace;line-height:1.7;">'
-            '<span style="color:#a78bfa;">models/</span> — DQN agent, reward evaluator, replay buffer<br>'
-            '<span style="color:#0369a1;">knowledge_sources/</span> — KG, Tool/API, LLM, PDF<br>'
-            '<span style="color:#047857;">scripts/</span> — Training, evaluation, dashboard<br>'
-            '<span style="color:#fbbf24;">utils/</span> — LLM judge, S3 sync<br>'
-            '<span style="color:#f472b6;">data/</span> — Hetionet, PDF store, RL models'
-            '</div>'
-            '</div>',
+            '<div style="font-size:0.8rem;color:rgba(255,255,255,0.4);font-family:JetBrains Mono,monospace;line-height:1.7;'
+            'background:rgba(255,255,255,0.02);padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);">'
+            '<span style="color:#818cf8;">models/</span> — DQN agent, reward evaluator, replay buffer<br>'
+            '<span style="color:#3b82f6;">knowledge_sources/</span> — KG, Tool/API, LLM, PDF<br>'
+            '<span style="color:#10b981;">scripts/</span> — Training, evaluation, dashboard<br>'
+            '<span style="color:#f59e0b;">utils/</span> — LLM judge, S3 sync<br>'
+            '<span style="color:#ec4899;">data/</span> — Hetionet, PDF store, RL models'
+            '</div></div>',
             unsafe_allow_html=True,
         )
 
         section_head("UI & Technology Stack")
         st.markdown(
             '<div class="aks-about-card">'
-            '<div style="font-size:0.82rem;color:#334155;line-height:1.9;">'
-            '<strong style="color:#0369a1;">Streamlit</strong> — Python-native reactive web framework<br>'
-            '<strong style="color:#047857;">Plotly</strong> — Interactive charts (bar, heatmap, scatter, pie)<br>'
-            '<strong style="color:#c084fc;">PyTorch</strong> — Neural network & RL training<br>'
-            '<strong style="color:#fbbf24;">FAISS</strong> — Vector similarity search<br>'
-            '<strong style="color:#dc2626;">Sentence Transformers</strong> — Query embeddings (all-MiniLM-L6-v2)<br>'
-            '<strong style="color:#f472b6;">CSS Glassmorphism</strong> — Dark theme with blur, gradients & 3D effects<br>'
-            '<strong style="color:#60a5fa;">NetworkX</strong> — Knowledge graph data structure<br>'
-            '<strong style="color:#a78bfa;">AWS Bedrock</strong> — LLM inference (Nova 2 Lite)'
-            '</div>'
-            '</div>',
+            '<div style="font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.9;">'
+            '<strong style="color:#3b82f6;">Streamlit</strong> — Python-native reactive web framework<br>'
+            '<strong style="color:#10b981;">Plotly</strong> — Interactive charts (bar, heatmap, scatter, pie)<br>'
+            '<strong style="color:#a78bfa;">PyTorch</strong> — Neural network & RL training<br>'
+            '<strong style="color:#f59e0b;">FAISS</strong> — Vector similarity search<br>'
+            '<strong style="color:#ef4444;">Sentence Transformers</strong> — Query embeddings (all-MiniLM-L6-v2)<br>'
+            '<strong style="color:#ec4899;">CSS</strong> — Dark theme with glassmorphism & micro-animations<br>'
+            '<strong style="color:#3b82f6;">NetworkX</strong> — Knowledge graph data structure<br>'
+            '<strong style="color:#818cf8;">AWS Bedrock</strong> — LLM inference (Nova 2 Lite)'
+            '</div></div>',
             unsafe_allow_html=True,
         )
 
@@ -1678,20 +1891,20 @@ with tab_about:
     # Key Concepts
     section_head("Key RL Concepts")
     concepts = [
-        ("🧠", "#a78bfa", "Deep Q-Network (DQN)", "Value-based RL algorithm for discrete action spaces — predicts Q-values for each source"),
-        ("🔄", "#0369a1", "Experience Replay", "Stores transitions (state, action, reward, next state) for stable off-policy learning"),
-        ("🎲", "#047857", "Epsilon-Greedy", "Balances exploration vs exploitation — decays ε from 1.0 to 0.05 during training"),
-        ("⚖️", "#b45309", "LLM-as-Judge", "Uses LLMs to evaluate AI system outputs for correctness, relevance, and completeness"),
+        ("🧠", "#818cf8", "Deep Q-Network (DQN)", "Value-based RL algorithm for discrete action spaces — predicts Q-values for each source"),
+        ("🔄", "#3b82f6", "Experience Replay", "Stores transitions (state, action, reward, next state) for stable off-policy learning"),
+        ("🎲", "#10b981", "Epsilon-Greedy", "Balances exploration vs exploitation — decays ε from 1.0 to 0.05 during training"),
+        ("⚖️", "#f59e0b", "LLM-as-Judge", "Uses LLMs to evaluate AI system outputs for correctness, relevance, and completeness"),
     ]
     c1, c2 = st.columns(2)
     for i, (ico, clr, title, desc) in enumerate(concepts):
         col = c1 if i % 2 == 0 else c2
         with col:
             st.markdown(
-                f'<div class="aks-source-row" style="border-color:rgba(255,255,255,0.06);">'
+                f'<div class="aks-source-row">'
                 f'<div style="font-size:1.5rem;flex-shrink:0;">{ico}</div>'
                 f'<div><div style="font-size:0.88rem;font-weight:700;color:{clr};margin-bottom:3px;">{title}</div>'
-                f'<div style="font-size:0.78rem;color:#64748b;line-height:1.5;">{desc}</div></div>'
+                f'<div style="font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.5;">{desc}</div></div>'
                 f'</div>',
                 unsafe_allow_html=True,
             )
@@ -1701,22 +1914,22 @@ with tab_about:
     # Milestones
     section_head("Project Milestones")
     milestones = [
-        ("✅", "#047857", "Multi-source knowledge integration (4 sources)"),
-        ("✅", "#047857", "Hetionet knowledge graph (47K nodes, 2.25M edges)"),
-        ("✅", "#047857", "FAISS semantic search for PDF corpus (1,649 chunks)"),
-        ("✅", "#047857", "Deep Q-Network (DQN) with experience replay"),
-        ("✅", "#047857", "Two-phase training: supervised pre-training + RL fine-tuning"),
-        ("✅", "#047857", "Automatic reward computation (no human feedback)"),
-        ("✅", "#047857", "LLM-as-Judge quality evaluation"),
-        ("✅", "#047857", "ML metrics: accuracy 86.7%, KG F1 0.924, Tool F1 0.961"),
-        ("✅", "#047857", "Online learning with auto-retraining every 16 queries"),
-        ("✅", "#047857", "S3 model versioning and team sync"),
-        ("✅", "#047857", "Streamlit Web UI with glassmorphism dark theme"),
-        ("✅", "#047857", "Interactive Plotly charts & real-time query testing"),
-        ("🎯", "#a78bfa", "Multi-source ensemble (query multiple, synthesize)"),
-        ("🎯", "#a78bfa", "Cost-aware routing (latency & API cost signals)"),
-        ("🎯", "#a78bfa", "User feedback integration (thumbs up/down)"),
-        ("🎯", "#a78bfa", "REST API deployment"),
+        ("✅", "#10b981", "Multi-source knowledge integration (4 sources)"),
+        ("✅", "#10b981", "Hetionet knowledge graph (47K nodes, 2.25M edges)"),
+        ("✅", "#10b981", "FAISS semantic search for PDF corpus (1,649 chunks)"),
+        ("✅", "#10b981", "Deep Q-Network (DQN) with experience replay"),
+        ("✅", "#10b981", "Two-phase training: supervised pre-training + RL fine-tuning"),
+        ("✅", "#10b981", "Automatic reward computation (no human feedback)"),
+        ("✅", "#10b981", "LLM-as-Judge quality evaluation"),
+        ("✅", "#10b981", "ML metrics: accuracy 86.7%, KG F1 0.924, Tool F1 0.961"),
+        ("✅", "#10b981", "Online learning with auto-retraining every 16 queries"),
+        ("✅", "#10b981", "S3 model versioning and team sync"),
+        ("✅", "#10b981", "Streamlit Web UI with dark glassmorphism theme"),
+        ("✅", "#10b981", "Interactive Plotly charts & real-time query testing"),
+        ("🎯", "#818cf8", "Multi-source ensemble (query multiple, synthesize)"),
+        ("🎯", "#818cf8", "Cost-aware routing (latency & API cost signals)"),
+        ("🎯", "#818cf8", "User feedback integration (thumbs up/down)"),
+        ("🎯", "#818cf8", "REST API deployment"),
     ]
     m1, m2 = st.columns(2)
     for i, (icon, clr, text) in enumerate(milestones):
@@ -1725,8 +1938,7 @@ with tab_about:
             st.markdown(
                 f'<div class="aks-milestone">'
                 f'<span style="font-size:1rem;">{icon}</span>'
-                f'<span style="color:#334155;font-size:0.83rem;">{text}</span>'
-                f'</div>',
+                f'<span>{text}</span></div>',
                 unsafe_allow_html=True,
             )
 
@@ -1736,21 +1948,16 @@ with tab_about:
     section_head("Course & Team")
     st.markdown(
         '<div class="aks-about-card" style="text-align:center;">'
-        '<div style="font-size:0.88rem;color:rgba(255,255,255,0.7);line-height:1.8;">'
-        '<strong style="color:#a78bfa;">CSE 579</strong> — Knowledge Representation & Reasoning<br>'
-        '<strong style="color:#0369a1;">Arizona State University</strong> · Spring 2026<br>'
-        '<span style="color:rgba(255,255,255,0.45);">Students: Rashi Sharma, Harsh Tita, Harpreet Kaur Brar, Shashwat Dwivedi, Sarthak Singh</span>'
-        '</div>'
-        '</div>',
+        '<div style="font-size:0.88rem;color:rgba(255,255,255,0.55);line-height:1.8;">'
+        '<strong style="color:#818cf8;">CSE 579</strong> — Knowledge Representation & Reasoning<br>'
+        '<strong style="color:#3b82f6;">Arizona State University</strong> · Spring 2026<br>'
+        '<span style="color:rgba(255,255,255,0.3);">Students: Rashi Sharma, Harsh Tita, Harpreet Kaur Brar, Shashwat Dwivedi, Sarthak Singh</span>'
+        '</div></div>',
         unsafe_allow_html=True,
     )
 
-    # Footer
     st.markdown(
         '<div style="text-align:center;padding:20px 0 8px;">'
-        '<span style="color:#94a3b8;font-size:0.78rem;">'
-        
-        '</span>'
-        '</div>',
+        '<span style="color:rgba(255,255,255,0.15);font-size:0.78rem;"></span></div>',
         unsafe_allow_html=True,
     )
